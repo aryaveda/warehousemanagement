@@ -1,3 +1,6 @@
+<?php
+include('function.php'); // Include the function.php file
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Dashboard - Warehouse BMKG</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -44,11 +47,11 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href="pelaporan.html">
+                            <a class="nav-link" href="pelaporan.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Pelaporan
                             </a>
@@ -59,8 +62,8 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="barangMasuk.html">Barang Masuk</a>
-                                    <a class="nav-link" href="barangKeluar.html">Barang Keluar</a>
+                                    <a class="nav-link" href="barangMasuk.php">Barang Masuk</a>
+                                    <a class="nav-link" href="barangKeluar.php">Barang Keluar</a>
                                 </nav>
                             </div>
                         </div>

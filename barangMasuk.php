@@ -1,3 +1,6 @@
+<?php
+include('function.php'); // Include the function.php file
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Barang Masuk - Warehouse BMKG</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -14,7 +17,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html"><img src="assets/img/logo.png"></a>
+            <a class="navbar-brand ps-3" href="index.php"><img src="assets/img/logo.png"></a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -44,11 +47,11 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="dashboard.html">
+                            <a class="nav-link" href="dashboard.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href="pelaporan.html">
+                            <a class="nav-link" href="pelaporan.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Pelaporan
                             </a>
@@ -59,8 +62,8 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="barangMasuk.html">Barang Masuk</a>
-                                    <a class="nav-link" href="barangKeluar.html">Barang Keluar</a>
+                                    <a class="nav-link" href="barangMasuk.php">Barang Masuk</a>
+                                    <a class="nav-link" href="barangKeluar.php">Barang Keluar</a>
                                 </nav>
                             </div>
                         </div>
@@ -73,7 +76,7 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Barang Masuk</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                             <li class="breadcrumb-item active">Barang Masuk</li>
                         </ol>
                         
@@ -99,18 +102,7 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tbody>
-                                        <tr>
-                                            <td>07/03/2024</td>
-                                            <td>12345</td>
-                                            <td>Digitizer</td>
-                                            <td>gatau</td>
-                                            <td>gatau</td>
-                                            <td>SNI</td>
-                                            <td>Nyuri</td>
-                                            <td>$10,000</td>
-                                        </tr>
-                                    </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
@@ -137,25 +129,25 @@
   
         <!-- Modal body -->
         <div class="modal-body">
-          <form method="post">
+          <form method="post" action="function.php">
             <div class="modal-body">
-                <input type="date" name="tanggal" placeholder="Tanggal Barang Masuk" class="form-control">
+                <input type="date" name="tanggal" placeholder="Tanggal Barang Masuk" class="form-control" required>
                 <br>
-                <input type="text" name="id_barang" placeholder="ID Barang" class="form-control">
+                <input type="text" name="id_barang" placeholder="ID Barang" class="form-control" required>
                 <br>
-                <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control">
+                <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" required>
                 <br>
-                <input type="text" name="jenis_peralatan" placeholder="Jenis Peralatan" class="form-control">
+                <input type="text" name="jenis_peralatan" placeholder="Jenis Peralatan" class="form-control" required>
                 <br>
-                <input type="text" name="merk" placeholder="Merk" class="form-control">
+                <input type="text" name="merk" placeholder="Merk" class="form-control" required>
                 <br>
-                <input type="text" name="sn" placeholder="SN" class="form-control">
+                <input type="text" name="sn" placeholder="SN" class="form-control" required>
                 <br>
-                <input type="text" name="asal_perolehan" placeholder="Asal Perolehan" class="form-control">
+                <input type="text" name="asal_perolehan" placeholder="Asal Perolehan" class="form-control" required>
                 <br>
-                <input type="number" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control">
+                <input type="number" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control" required>
                 <br>
-                <button type="submit" class="btn btn-primary" name="addNewBarang">Submit</button>
+                <button type="submit" class="btn btn-primary" name="addnewbarang">Submit</button>
             </div>
           </form>
         </div>
