@@ -1,6 +1,3 @@
-<?php
-include('function.php'); // Include the function.php file
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -129,7 +126,7 @@ include('function.php'); // Include the function.php file
   
         <!-- Modal body -->
         <div class="modal-body">
-          <form method="post" action="function.php">
+          <form action="includes/formhandler.inc.php" method="post">
             <div class="modal-body">
                 <input type="date" name="tanggal" placeholder="Tanggal Barang Masuk" class="form-control" required>
                 <br>
