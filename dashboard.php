@@ -73,8 +73,9 @@
                 <div class="container-fluid px-4">
                         <h1 class="mt-4">Dashboard</h1>
                         
-                        
-                        
+                    <?php
+                        $con = new mysqli();
+                        ?>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="card mb-4">
@@ -83,8 +84,31 @@
                                         Data Semua Barang
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
-                                    
-                                </div>
+                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                        <script>
+                                              const ctx = document.getElementById('myBarChart');
+                                                new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                                    datasets: [{
+                                                    label: '# of Votes',
+                                                    data: [12, 19, 3, 5, 2, 3],
+                                                    borderWidth: 0
+                                                    }]
+                                                },
+                                                options: {
+                                                    scales: {
+                                                    y: {
+                                                        beginAtZero: true
+                                                    }
+                                                    }
+                                                }
+                                                });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="card mb-4">
@@ -111,11 +135,5 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-        <script src="assets/demo/chart-pie-demo.js"></script>
     </body>
 </html>

@@ -1,3 +1,9 @@
+<?php
+require_once("includes/dbh.inc.php");
+$query = "select * from keluar";
+$result = $pdo->query($query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Barang Masuk - Warehouse BMKG</title>
+        <title>Barang Keluar - Warehouse BMKG</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -71,10 +77,10 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Barang Masuk</h1>
+                        <h1 class="mt-4">Barang Keluar</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Barang Masuk</li>
+                            <li class="breadcrumb-item active">Barang Keluar</li>
                         </ol>
                         
                         <div class="card mb-4">
@@ -98,8 +104,24 @@
                                             <th>Jumlah Barang</th>
                                         </tr>
                                     </thead>
-                                    
-                                    
+                                    <tr>
+                                      <?php
+                                        while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                                            ?>
+                                            <td><?php echo (new DateTime($row['tanggal']))->format('Y-m-d'); ?></td>
+                                            <td><?php echo $row['id_barang']; ?></td>
+                                            <td><?php echo $row['nama_barang']; ?></td>
+                                            <td><?php echo $row['jenis_peralatan']; ?></td>
+                                            <td><?php echo $row['merk']; ?></td>
+                                            <td><?php echo $row['sn']; ?></td>
+                                            <td><?php echo $row['asal_perolehan']; ?></td>
+                                            <td><?php echo $row['jumlah_barang']; ?></td>
+
+
+                                            </tr>
+                                            <?php
+                                        }
+                                      ?>
                                 </table>
                             </div>
                         </div>
@@ -126,9 +148,9 @@
   
         <!-- Modal body -->
         <div class="modal-body">
-          <form method="post" action="function.php">
+          <form action="includes/formhandler.inc.php" method="post">
             <div class="modal-body">
-                <input type="date" name="tanggal" placeholder="Tanggal Barang Masuk" class="form-control" required>
+                <input type="date" name="tanggal" placeholder="Tanggal Barang Keluar" class="form-control" required>
                 <br>
                 <input type="text" name="id_barang" placeholder="ID Barang" class="form-control" required>
                 <br>
@@ -144,7 +166,7 @@
                 <br>
                 <input type="number" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control" required>
                 <br>
-                <button type="submit" class="btn btn-primary" name="addnewbarang">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>

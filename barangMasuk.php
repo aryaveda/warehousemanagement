@@ -1,3 +1,9 @@
+<?php
+require_once("includes/dbh.inc.php");
+$query = "select * from masuk";
+$result = $pdo->query($query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -96,10 +102,43 @@
                                             <th>SN</th>
                                             <th>Asal Perolehan</th>
                                             <th>Jumlah Barang</th>
+                                            <th>Harga</th>
+                                            <th>Keterangan</th>
+                                            <th>Foto</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    
-                                    
+                                    <tbody>
+                                      <?php
+                                        while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                                            ?>
+                                            <tr>
+                                            <td><?php echo (new DateTime($row['tanggal']))->format('Y-m-d'); ?></td>
+                                            <td><?php echo $row['id_barang']; ?></td>
+                                            <td><?php echo $row['nama_barang']; ?></td>
+                                            <td><?php echo $row['jenis_peralatan']; ?></td>
+                                            <td><?php echo $row['merk']; ?></td>
+                                            <td><?php echo $row['sn']; ?></td>
+                                            <td><?php echo $row['asal_perolehan']; ?></td>
+                                            <td><?php echo $row['jumlah_barang']; ?></td>
+                                            <td><?php echo $row['harga']; ?></td>
+                                            <td><?php echo $row['keterangan']; ?></td>
+                                            <td><img src="<?php echo $row['foto']; ?>" alt="Photo"></td>
+                                            <td>
+                                                <!-- <a>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                Edit
+                                                </button>
+                                                </a> -->
+                                                <a><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteId(<?php echo $row['id']; ?>)">
+                                                Delete
+                                                </button></a>
+                                            </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                      ?>
+                                      </tbody>
                                 </table>
                             </div>
                         </div>
@@ -112,8 +151,22 @@
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+  // Function to set the value of the hidden input field before the form is submitted
+  function setDeleteId(id) {
+    document.getElementById("deleteId").value = id;
+  }
+
+  // Event listener to capture the click event on the delete button
+  document.getElementById("deleteButton").addEventListener("click", function() {
+    // Get the ID of the item to be deleted
+    var id = <?php echo $row['id']; ?>;
+    // Set the value of the hidden input field
+    setDeleteId(id);
+  });
+</script>
     </body>
-    <!-- The Modal -->
+    <!-- MODAL BUAT CREATE -->
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -144,7 +197,12 @@
                 <br>
                 <input type="number" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control" required>
                 <br>
-                <button type="submit" class="btn btn-primary" name="addnewbarang">Submit</button>
+                <input type="number" name="harga" placeholder="Harga Barang" class="form-control" required>
+                <br>
+                <input type="text" name="keterangan" placeholder="Keterangan" class="form-control" required>
+                <br>                     
+                <input type="file" name="foto" placeholder="Foto" class="form-control" required>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>
@@ -157,4 +215,71 @@
       </div>
     </div>
   </div>
+
+<!-- EDIT MODAL
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form action="includes/formhandler.inc.php" method="post">
+            <input type="hidden" value="<?php echo $name;?>">
+            <div class="modal-body">
+                <input type="date" name="tanggal" placeholder="Tanggal Barang Masuk" class="form-control" required>
+                <br>
+                <input type="text" name="id_barang" placeholder="ID Barang" class="form-control" required>
+                <br>
+                <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" required>
+                <br>
+                <input type="text" name="jenis_peralatan" placeholder="Jenis Peralatan" class="form-control" required>
+                <br>
+                <input type="text" name="merk" placeholder="Merk" class="form-control" required>
+                <br>
+                <input type="text" name="sn" placeholder="SN" class="form-control" required>
+                <br>
+                <input type="text" name="asal_perolehan" placeholder="Asal Perolehan" class="form-control" required>
+                <br>
+                <input type="number" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control" required>
+                <br>
+                <input type="number" name="harga" placeholder="Harga Barang" class="form-control" required>
+                <br>
+                <input type="text" name="keterangan" placeholder="Keterangan" class="form-control" required>
+                <br>                     
+                <input type="file" name="foto" placeholder="Foto" class="form-control" required>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hapus Data Barang</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <p>Apakah Anda yakin ingin menghapus data ini?</p>
+      </div>
+      <div class="modal-footer">
+        <form action="includes/delete_handler.inc.php" method="post">
+            <input type="hidden" name="id" id="deleteId">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+            <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 </html>
