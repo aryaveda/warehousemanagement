@@ -1,3 +1,8 @@
+<?php
+include('includes/dataChart.inc.php');
+include('includes/jumlahMasuk.inc.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,6 +16,44 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
+    <script>
+window.onload = function() {
+ 
+ var chart = new CanvasJS.Chart("chartContainer", {
+     animationEnabled: true,
+     theme: "light2",
+     title:{
+         text: "Data Semua Barang"
+     },
+     axisY: {
+         title: "Jumlah Barang"
+     },
+     data: [{
+         type: "column",
+         yValueFormatString: "#,##0.## buah",
+         dataPoints: <?php echo json_encode($test, JSON_NUMERIC_CHECK); ?>
+     }]
+ });
+
+var chartPie = new CanvasJS.Chart("chartContainerPie", {
+	animationEnabled: true,
+    theme: "light2",
+	title: {
+		text: "Data Barang Keluar Masuk"
+	},
+	data: [{
+		type: "pie",
+		yValueFormatString: "#,##0.## buah",
+		indexLabel: "{label} ({y})",
+		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+
+chart.render();
+chartPie.render();
+ 
+}
+</script>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -83,29 +126,8 @@
                                         <i class="fas fa-chart-bar me-1"></i>
                                         Data Semua Barang
                                     </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
-                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                                        <script>
-                                              const ctx = document.getElementById('myBarChart');
-                                                new Chart(ctx, {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                                    datasets: [{
-                                                    label: '# of Votes',
-                                                    data: [12, 19, 3, 5, 2, 3],
-                                                    borderWidth: 0
-                                                    }]
-                                                },
-                                                options: {
-                                                    scales: {
-                                                    y: {
-                                                        beginAtZero: true
-                                                    }
-                                                    }
-                                                }
-                                                });
-                                                </script>
+                                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                                    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
                                             </div>
                                         </div>
                                     </div>
@@ -116,8 +138,8 @@
                                         <i class="fas fa-chart-pie me-1"></i>
                                         Data Barang Keluar Masuk
                                     </div>
-                                    <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
-                                   
+                                    <div id="chartContainerPie" style="height: 370px; width: 100%;"></div>
+                                    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
                                 </div>
                             </div>
                         </div>
@@ -135,5 +157,6 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        
     </body>
 </html>

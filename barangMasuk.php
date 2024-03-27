@@ -1,7 +1,13 @@
 <?php
-require_once("includes/dbh.inc.php");
-$query = "select * from masuk";
-$result = $pdo->query($query);
+// require_once("includes/dbh.inc.php");
+// include("includes/delete.inc.php");
+// $query = "select * from masuk";
+// $result = $pdo->query($query);
+    include 'koneksi.php';
+    $query = "SELECT * FROM masuk;";
+    $sql = mysqli_query($conn, $query);
+    $no = 0;
+    
 ?>
 
 <!DOCTYPE html>
@@ -15,12 +21,13 @@ $result = $pdo->query($query);
         <title>Barang Masuk - Warehouse BMKG</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="fontawesome/css/font-awesome.min.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.php"><img src="assets/img/logo.png"></a>
+            <a class="navbar-brand ps-3" href="dashboard.php"><img src="assets/img/logo.png"></a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -79,21 +86,24 @@ $result = $pdo->query($query);
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Barang Masuk</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                             <li class="breadcrumb-item active">Barang Masuk</li>
                         </ol>
                         
                         <div class="card mb-4">
                             <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <a href="kelola.php" type="button" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i>
                                     Tambah Barang
-                                  </button>
+                                  </a>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
+                            <!-- <div class="card-body"> -->
+                            <div class="table-responsive">
+                                <table class="table align-middle table-bordered table-hover" id="datatablesSimple">
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Tanggal</th>
                                             <th>ID Barang</th>
                                             <th>Nama Barang</th>
@@ -110,29 +120,28 @@ $result = $pdo->query($query);
                                     </thead>
                                     <tbody>
                                       <?php
-                                        while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                                        while($result = mysqli_fetch_assoc($sql)) {
                                             ?>
                                             <tr>
-                                            <td><?php echo (new DateTime($row['tanggal']))->format('Y-m-d'); ?></td>
-                                            <td><?php echo $row['id_barang']; ?></td>
-                                            <td><?php echo $row['nama_barang']; ?></td>
-                                            <td><?php echo $row['jenis_peralatan']; ?></td>
-                                            <td><?php echo $row['merk']; ?></td>
-                                            <td><?php echo $row['sn']; ?></td>
-                                            <td><?php echo $row['asal_perolehan']; ?></td>
-                                            <td><?php echo $row['jumlah_barang']; ?></td>
-                                            <td><?php echo $row['harga']; ?></td>
-                                            <td><?php echo $row['keterangan']; ?></td>
-                                            <td><img src="<?php echo $row['foto']; ?>" alt="Photo"></td>
+                                            <td><?php echo ++$no; ?></td>
+                                            <td><?php echo (new DateTime($result['tanggal']))->format('Y-m-d'); ?></td>
+                                            <td><?php echo $result['id_barang']; ?></td>
+                                            <td><?php echo $result['nama_barang']; ?></td>
+                                            <td><?php echo $result['jenis_peralatan']; ?></td>
+                                            <td><?php echo $result['merk']; ?></td>
+                                            <td><?php echo $result['sn']; ?></td>
+                                            <td><?php echo $result['asal_perolehan']; ?></td>
+                                            <td><?php echo $result['jumlah_barang']; ?></td>
+                                            <td><?php echo $result['harga']; ?></td>
+                                            <td><?php echo $result['keterangan']; ?></td>
+                                            <td><img src="/uploads/<?php echo $result['foto']; ?>" alt="Photo"></td>
                                             <td>
-                                                <!-- <a>
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
-                                                Edit
-                                                </button>
-                                                </a> -->
-                                                <a><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteId(<?php echo $row['id']; ?>)">
-                                                Delete
-                                                </button></a>
+                                                <a href="kelola.php?ubah=<?php echo $result['id'];?>" type="button" class="btn btn-success btn-sm">
+                                                      <i class="fa-solid fa-pencil"></i>
+                                                </a>
+                                                <a href="proses.php?hapus=<?php echo $result['id'];?>" type="button" class="btn btn-danger btn-sm">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
                                             </td>
                                             </tr>
                                             <?php
@@ -152,19 +161,14 @@ $result = $pdo->query($query);
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
         <script>
-  // Function to set the value of the hidden input field before the form is submitted
-  function setDeleteId(id) {
-    document.getElementById("deleteId").value = id;
-  }
-
-  // Event listener to capture the click event on the delete button
-  document.getElementById("deleteButton").addEventListener("click", function() {
-    // Get the ID of the item to be deleted
-    var id = <?php echo $row['id']; ?>;
-    // Set the value of the hidden input field
-    setDeleteId(id);
-  });
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener("click", function() {
+            var id = this.getAttribute('data-id');
+            document.getElementById('delete-link').href = 'includes/delete.inc.php?id=' + id;
+        });
+    });
 </script>
+
     </body>
     <!-- MODAL BUAT CREATE -->
 <div class="modal fade" id="myModal">
@@ -214,52 +218,8 @@ $result = $pdo->query($query);
   
       </div>
     </div>
-  </div>
+  </div> 
 
-<!-- EDIT MODAL
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <form action="includes/formhandler.inc.php" method="post">
-            <input type="hidden" value="<?php echo $name;?>">
-            <div class="modal-body">
-                <input type="date" name="tanggal" placeholder="Tanggal Barang Masuk" class="form-control" required>
-                <br>
-                <input type="text" name="id_barang" placeholder="ID Barang" class="form-control" required>
-                <br>
-                <input type="text" name="nama_barang" placeholder="Nama Barang" class="form-control" required>
-                <br>
-                <input type="text" name="jenis_peralatan" placeholder="Jenis Peralatan" class="form-control" required>
-                <br>
-                <input type="text" name="merk" placeholder="Merk" class="form-control" required>
-                <br>
-                <input type="text" name="sn" placeholder="SN" class="form-control" required>
-                <br>
-                <input type="text" name="asal_perolehan" placeholder="Asal Perolehan" class="form-control" required>
-                <br>
-                <input type="number" name="jumlah_barang" placeholder="Jumlah Barang" class="form-control" required>
-                <br>
-                <input type="number" name="harga" placeholder="Harga Barang" class="form-control" required>
-                <br>
-                <input type="text" name="keterangan" placeholder="Keterangan" class="form-control" required>
-                <br>                     
-                <input type="file" name="foto" placeholder="Foto" class="form-control" required>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <!-- DELETE MODAL -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -273,10 +233,9 @@ $result = $pdo->query($query);
       <p>Apakah Anda yakin ingin menghapus data ini?</p>
       </div>
       <div class="modal-footer">
-        <form action="includes/delete_handler.inc.php" method="post">
-            <input type="hidden" name="id" id="deleteId">
+        <form>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-            <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+            <button class="btn btn-danger" ><a id="delete-link" class="btn btn-danger">Ya, Hapus</a> </button>
         </form>
       </div>
     </div>
