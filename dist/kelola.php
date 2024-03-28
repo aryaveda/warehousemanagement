@@ -8,6 +8,38 @@
     $sql = mysqli_query($conn, $query);
     $no = 0;
     
+      $tanggal = '';
+      $id_barang = '';
+      $nama_barang = '';
+      $jenis_peralatan = '';
+      $merk = '';
+      $sn = '';
+      $asal_perolehan = '';
+      $jumlah_barang = '';
+      $harga = '';
+      // $foto = '';
+      $keterangan = '';
+
+    if (isset($_GET['ubah'])){
+      $id = $_GET['ubah'];
+      $queryEdit = "SELECT * FROM masuk WHERE id = '$id';";
+      $sqlEdit = mysqli_query($conn, $queryEdit);
+      $result = mysqli_fetch_assoc($sqlEdit);
+
+      $tanggal = $result['tanggal'];
+      $id_barang = $result['id_barang'];
+      $nama_barang = $result['nama_barang'];
+      $jenis_peralatan = $result['jenis_peralatan'];
+      $merk = $result['merk'];
+      $sn = $result['sn'];
+      $asal_perolehan = $result['asal_perolehan'];
+      $jumlah_barang = $result['jumlah_barang'];
+      $harga = $result['harga'];
+      // $foto = $result['foto'];
+      $keterangan = $result['keterangan'];
+      
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -169,11 +201,22 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Tambahkan Barang Masuk</h4>
+          <?php
+              if(isset($_GET['ubah'])){
+            ?>
+              <h4 class="card-title">Edit Data Barang</h4>
+                                <?php
+                                    } else {
+                                ?>
+                                    <h4 class="card-title">Tambahkan Barang Masuk</h4>
+                                <?php
+                                    }
+                                ?>
           </div>
           <div class="card-content">
             <div class="card-body">
               <form method="POST" action="proses.php" class="form" enctype="multipart/form-data">
+                <input type="hidden" value="<?php echo $id; ?>" name="id">
                 <div class="row">
                   <div class="col-md-6 col-12">
                     <div class="">
@@ -187,6 +230,7 @@
                         class="form-control"
                         placeholder="Tanggal Masuk"
                         name="tanggal"
+                        value="<?php echo $tanggal; ?>"
                       />
                     </div>
                   </div>
@@ -201,7 +245,7 @@
                         class="form-control"
                         placeholder="12345"
                         name="id_barang"
-                        
+                        value="<?php echo $id_barang; ?>"
                       />
                     </div>
                   </div>
@@ -214,6 +258,7 @@
                         class="form-control"
                         placeholder="Nama Barang"
                         name="nama_barang"
+                        value="<?php echo $nama_barang; ?>"
                       />
                     </div>
                   </div>
@@ -228,6 +273,7 @@
                         class="form-control"
                         name="jenis_peralatan"
                         placeholder="Jenis Peralatan"
+                        value="<?php echo $jenis_peralatan; ?>"
                       />
                     </div>
                   </div>
@@ -242,7 +288,9 @@
                         class="form-control"
                         name="merk"
                         placeholder="Merk"
-                    
+                        value="<?php echo $merk; ?>"
+
+                                    
                       />
                     </div>
                   </div>
@@ -257,7 +305,7 @@
                         class="form-control"
                         name="sn"
                         placeholder="Serial Number"
-                    
+                        value="<?php echo $sn; ?>"
                       />
                     </div>
                   </div>
@@ -272,7 +320,8 @@
                         class="form-control"
                         name="asal_perolehan"
                         placeholder="Asal Perolehan"
-                       
+                        value="<?php echo $asal_perolehan; ?>"
+                        
                       />
                     </div>
                   </div>
@@ -287,7 +336,8 @@
                         class="form-control"
                         name="jumlah_barang"
                         placeholder="Jumlah Barang"
-                      
+                        value="<?php echo $jumlah_barang; ?>"
+                        
                       />
                     </div>
                   </div>
@@ -302,6 +352,7 @@
                         class="form-control"
                         name="harga"
                         placeholder="Harga Barang"
+                        value="<?php echo $harga; ?>"
                         
                       />
                     </div>
@@ -332,8 +383,7 @@
                         class="form-control"
                         name="keterangan"
                         placeholder="Keterangan"
-                        row="3"
-                        ></textarea>
+                        row="3" value="<?php echo $keterangan;?>"></textarea>
                     </div>
                   </div>
                 </div>
