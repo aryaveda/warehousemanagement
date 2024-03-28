@@ -12,10 +12,14 @@
             $asal_perolehan = $_POST['asal_perolehan'];
             $jumlah_barang = $_POST['jumlah_barang'];
             $harga = $_POST['harga'];
-            $foto = $_POST['foto'];
+            $foto = $_FILES['foto']['name'];
             $keterangan = $_POST['keterangan'];
           
-            
+            $dir = "../uploads/";
+            $tmpFile = $_FILES['foto']['tmp_name'];
+
+            move_uploaded_file($tmpFile, $dir.$foto);
+
             // echo $tanggal.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
             $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$jumlah_barang','$harga','$foto','$keterangan')"; 
             $sql =  mysqli_query($conn, $query);

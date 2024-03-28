@@ -173,7 +173,7 @@
           </div>
           <div class="card-content">
             <div class="card-body">
-              <form method="POST" action="proses.php" class="form">
+              <form method="POST" action="proses.php" class="form" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-md-6 col-12">
                     <div class="">
