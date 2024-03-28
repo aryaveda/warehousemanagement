@@ -317,6 +317,7 @@
                         class="form-control"
                         name="foto"
                         placeholder="Foto Barang"
+                        accept="image/*"
                         />
                     </div>
                   </div>

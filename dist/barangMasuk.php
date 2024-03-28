@@ -211,7 +211,7 @@
                                   <td><?php echo $result['jumlah_barang']; ?></td>
                                   <td><?php echo $result['harga']; ?></td>
                                   <td><?php echo $result['keterangan']; ?></td>
-                                  <td><img src="../uploads/<?php echo $result['foto']; ?>" alt="Photo"></td>
+                                  <td><img src="../uploads/<?php echo $result['foto']; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
                                   <td>
                                       <a href="kelola.php?ubah=<?php echo $result['id'];?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i>
                                       </a>

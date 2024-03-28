@@ -31,12 +31,19 @@
                 echo $query;
             }
         } else if ($_POST["aksi"]== "edit"){
-            echo "Edit Data";
+            echo "Edit Data"; 
         }
     }
 
     if(isset($_GET['hapus'])){
         $id = $_GET['hapus'];
+
+        $queryShow = "SELECT * from masuk WHERE id = '$id';";
+        $sqlShow = mysqli_query($conn, $queryShow);
+        $result = mysqli_fetch_assoc($sqlShow);
+
+        unlink("../uploads".$result['foto']);
+
         $query = "DELETE FROM masuk WHERE id = '$id';";
         $sql = mysqli_query($conn, $query);
 
