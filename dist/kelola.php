@@ -3,43 +3,41 @@
 // include("includes/delete.inc.php");
 // $query = "select * from masuk";
 // $result = $pdo->query($query);
-    include 'koneksi.php';
-    $query = "SELECT * FROM masuk;";
-    $sql = mysqli_query($conn, $query);
-    $no = 0;
-    
-      $tanggal = '';
-      $id_barang = '';
-      $nama_barang = '';
-      $jenis_peralatan = '';
-      $merk = '';
-      $sn = '';
-      $asal_perolehan = '';
-      $jumlah_barang = '';
-      $harga = '';
-      // $foto = '';
-      $keterangan = '';
+include "koneksi.php";
+$query = "SELECT * FROM masuk;";
+$sql = mysqli_query($conn, $query);
+$no = 0;
 
-    if (isset($_GET['ubah'])){
-      $id = $_GET['ubah'];
-      $queryEdit = "SELECT * FROM masuk WHERE id = '$id';";
-      $sqlEdit = mysqli_query($conn, $queryEdit);
-      $result = mysqli_fetch_assoc($sqlEdit);
+$tanggal = "";
+$id_barang = "";
+$nama_barang = "";
+$jenis_peralatan = "";
+$merk = "";
+$sn = "";
+$asal_perolehan = "";
+$jumlah_barang = "";
+$harga = "";
+// $foto = '';
+$keterangan = "";
 
-      $tanggal = $result['tanggal'];
-      $id_barang = $result['id_barang'];
-      $nama_barang = $result['nama_barang'];
-      $jenis_peralatan = $result['jenis_peralatan'];
-      $merk = $result['merk'];
-      $sn = $result['sn'];
-      $asal_perolehan = $result['asal_perolehan'];
-      $jumlah_barang = $result['jumlah_barang'];
-      $harga = $result['harga'];
-      // $foto = $result['foto'];
-      $keterangan = $result['keterangan'];
-      
-    }
+if (isset($_GET["ubah"])) {
+    $id = $_GET["ubah"];
+    $queryEdit = "SELECT * FROM masuk WHERE id = '$id';";
+    $sqlEdit = mysqli_query($conn, $queryEdit);
+    $result = mysqli_fetch_assoc($sqlEdit);
 
+    $tanggal = $result["tanggal"];
+    $id_barang = $result["id_barang"];
+    $nama_barang = $result["nama_barang"];
+    $jenis_peralatan = $result["jenis_peralatan"];
+    $merk = $result["merk"];
+    $sn = $result["sn"];
+    $asal_perolehan = $result["asal_perolehan"];
+    $jumlah_barang = $result["jumlah_barang"];
+    $harga = $result["harga"];
+    // $foto = $result['foto'];
+    $keterangan = $result["keterangan"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -201,17 +199,11 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-          <?php
-              if(isset($_GET['ubah'])){
-            ?>
+          <?php if (isset($_GET["ubah"])) { ?>
               <h4 class="card-title">Edit Data Barang</h4>
-                                <?php
-                                    } else {
-                                ?>
+                                <?php } else { ?>
                                     <h4 class="card-title">Tambahkan Barang Masuk</h4>
-                                <?php
-                                    }
-                                ?>
+                                <?php } ?>
           </div>
           <div class="card-content">
             <div class="card-body">
@@ -383,29 +375,23 @@
                         class="form-control"
                         name="keterangan"
                         placeholder="Keterangan"
-                        row="3" value="<?php echo $keterangan;?>"></textarea>
+                        row="3" value="<?php echo $keterangan; ?>"></textarea>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12 d-flex justify-content-end">
-                    <?php
-                                    if(isset($_GET['ubah'])){
-                                ?>
+                    <?php if (isset($_GET["ubah"])) { ?>
                                     <button type="submit" name="aksi" value="edit" class="btn icon icon-left btn-primary me-1 mb-1" id="tambah">
                                     <i data-feather="save"></i>
                                         Simpan Perubahan
                                     </button>
-                                <?php
-                                    } else {
-                                ?>
+                                <?php } else { ?>
                                     <button type="submit" name="aksi" value="add" class="btn icon icon-left btn-primary me-1 mb-1" id="tambah">
                                     <i data-feather="save"></i>
                                         Tambahkan
                                     </button>
-                                <?php
-                                    }
-                                ?>
+                                <?php } ?>
                                 <a href="barangMasuk.php" type="button" class="btn icon icon-left btn-danger me-1 mb-1" id="batal">
                                 <i class="bi bi-reply"></i>
                                     Batal

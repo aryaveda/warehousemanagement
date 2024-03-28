@@ -1,9 +1,9 @@
 <?php
-include 'koneksi.php';
+include "koneksi.php";
 
 // Initialize arrays to store data
-$data = array();
-$categories = array();
+$data = [];
+$categories = [];
 
 // Fetch data from the database
 $query = "SELECT * FROM masuk";
@@ -11,8 +11,8 @@ $result = mysqli_query($conn, $query);
 
 // Loop through the results and populate arrays
 while ($row = mysqli_fetch_assoc($result)) {
-    $categories[] = $row['nama_barang'];
-    $data[] = (int)$row['jumlah_barang']; // Ensure quantity is treated as integer
+    $categories[] = $row["nama_barang"];
+    $data[] = (int) $row["jumlah_barang"]; // Ensure quantity is treated as integer
 }
 
 // Convert arrays to JSON format

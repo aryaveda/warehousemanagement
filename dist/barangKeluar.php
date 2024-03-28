@@ -3,11 +3,10 @@
 // include("includes/delete.inc.php");
 // $query = "select * from masuk";
 // $result = $pdo->query($query);
-    include 'koneksi.php';
-    $query = "SELECT * FROM masuk;";
-    $sql = mysqli_query($conn, $query);
-    $no = 0;
-    
+include "koneksi.php";
+$query = "SELECT * FROM masuk;";
+$sql = mysqli_query($conn, $query);
+$no = 0;
 ?>
 
 <!DOCTYPE html>
@@ -196,36 +195,48 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                              while($result = mysqli_fetch_assoc($sql)) {
-                                  ?>
+                            <?php while (
+                                $result = mysqli_fetch_assoc($sql)
+                            ) { ?>
                                   <tr>
                                   
-                                  <td><?php echo (new DateTime($result['tanggal']))->format('Y-m-d'); ?></td>
-                                  <td><?php echo $result['id_barang']; ?></td>
-                                  <td><?php echo $result['nama_barang']; ?></td>
-                                  <td><?php echo $result['jenis_peralatan']; ?></td>
-                                  <td><?php echo $result['merk']; ?></td>
-                                  <td><?php echo $result['sn']; ?></td>
-                                  <td><?php echo $result['asal_perolehan']; ?></td>
-                                  <td><?php echo $result['jumlah_barang']; ?></td>
-                                  <td><?php echo $result['harga']; ?></td>
-                                  <td><?php echo $result['keterangan']; ?></td>
-                                  <td><img src="../uploads/<?php echo $result['foto']; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+                                  <td><?php echo (new DateTime(
+                                      $result["tanggal"]
+                                  ))->format("Y-m-d"); ?></td>
+                                  <td><?php echo $result["id_barang"]; ?></td>
+                                  <td><?php echo $result["nama_barang"]; ?></td>
+                                  <td><?php echo $result[
+                                      "jenis_peralatan"
+                                  ]; ?></td>
+                                  <td><?php echo $result["merk"]; ?></td>
+                                  <td><?php echo $result["sn"]; ?></td>
+                                  <td><?php echo $result[
+                                      "asal_perolehan"
+                                  ]; ?></td>
+                                  <td><?php echo $result[
+                                      "jumlah_barang"
+                                  ]; ?></td>
+                                  <td><?php echo $result["harga"]; ?></td>
+                                  <td><?php echo $result["keterangan"]; ?></td>
+                                  <td><img src="../uploads/<?php echo $result[
+                                      "foto"
+                                  ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
                                   <td>
-                                      <a href="kelola.php?ubah=<?php echo $result['id'];?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i>
+                                      <a href="kelola.php?ubah=<?php echo $result[
+                                          "id"
+                                      ]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i>
                                       </a>
                                       <!-- <button type="button" class="btn icon btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#danger">
                                             <i class="bi bi-trash"></i>
                                         </button> -->
-                                        <a href="#" onclick="confirmDelete(<?php echo $result['id'];?>)" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                        <a href="#" onclick="confirmDelete(<?php echo $result[
+                                            "id"
+                                        ]; ?>)" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
 
                                   </td>
                                   </tr>
-                                  <?php
-                              }
-                            ?>
+                                  <?php } ?>
                             </tbody>
                     </table>
                 </div>
