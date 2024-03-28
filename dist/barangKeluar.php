@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabel Barang Keluar - BMKG Warehouse Management</title>
+    <title>Tabel Barang Masuk - BMKG Warehouse Management</title>
     
     
     
@@ -95,7 +95,7 @@
             <li class="sidebar-title">Menu</li>
             
             <li
-                class="sidebar-item  ">
+                class="sidebar-item ">
                 <a href="index.php" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
@@ -120,7 +120,7 @@
                     
                 </li>
                 
-                <li class="submenu-item active ">
+                <li class="submenu-item  active">
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
@@ -147,14 +147,14 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Barang Keluar</h3>
+                <h3>Data Barang Masuk</h3>
             
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Barang Keluar</li>
+                        <li class="breadcrumb-item active" aria-current="page">Barang Masuk</li>
                     </ol>
                 </nav>
             </div>
@@ -180,7 +180,7 @@
                     <table class="table" id="table1">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <!-- <th>No</th> -->
                                 <th>Tanggal</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
@@ -200,7 +200,7 @@
                               while($result = mysqli_fetch_assoc($sql)) {
                                   ?>
                                   <tr>
-                                  <td><?php echo ++$no; ?></td>
+                                  
                                   <td><?php echo (new DateTime($result['tanggal']))->format('Y-m-d'); ?></td>
                                   <td><?php echo $result['id_barang']; ?></td>
                                   <td><?php echo $result['nama_barang']; ?></td>

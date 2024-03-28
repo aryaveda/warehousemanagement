@@ -12,13 +12,16 @@
             $asal_perolehan = $_POST['asal_perolehan'];
             $jumlah_barang = $_POST['jumlah_barang'];
             $harga = $_POST['harga'];
-            $keterangan = $_POST['keterangan'];
             $foto = $_POST['foto'];
+            $keterangan = $_POST['keterangan'];
+          
             
-            $query = "INSERT INTO masuk VALUES(null, 'tanggal', 'id_barang', 'nama_barang', 'jenis_peralatan', 'merk', 'sn', 'asal_perolehan','jumlah_barang','harga','keterangan','foto')"; 
+            // echo $tanggal.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
+            $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$jumlah_barang','$harga','$foto','$keterangan')"; 
             $sql =  mysqli_query($conn, $query);
 
             if($sql){
+                // echo $tanggal.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
                 header("location: barangMasuk.php");
             } else {
                 echo $query;

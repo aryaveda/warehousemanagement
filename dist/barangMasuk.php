@@ -180,7 +180,7 @@
                     <table class="table" id="table1">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <!-- <th>No</th> -->
                                 <th>Tanggal</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
@@ -200,7 +200,7 @@
                               while($result = mysqli_fetch_assoc($sql)) {
                                   ?>
                                   <tr>
-                                  <td><?php echo ++$no; ?></td>
+                                  
                                   <td><?php echo (new DateTime($result['tanggal']))->format('Y-m-d'); ?></td>
                                   <td><?php echo $result['id_barang']; ?></td>
                                   <td><?php echo $result['nama_barang']; ?></td>

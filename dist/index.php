@@ -1,16 +1,23 @@
 <?php
 include 'koneksi.php';
-$dataBarang = array();
-$count = 0;
-$query = "SELECT * FROM masuk;";
-$sql = mysqli_query($conn, $query);
 
-while ($row = mysqli_fetch_array($sql)){
-    $dataBarang[$count]["label"] = $row["nama_barang"];
-    $dataBarang[$count]["y"] = $row["jumlah_barang"];
-    $count++;
+// Initialize arrays to store data
+$data = array();
+$categories = array();
+
+// Fetch data from the database
+$query = "SELECT * FROM masuk";
+$result = mysqli_query($conn, $query);
+
+// Loop through the results and populate arrays
+while ($row = mysqli_fetch_assoc($result)) {
+    $categories[] = $row['nama_barang'];
+    $data[] = (int)$row['jumlah_barang']; // Ensure quantity is treated as integer
 }
 
+// Convert arrays to JSON format
+$data_json = json_encode($data);
+$categories_json = json_encode($categories);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,23 +53,76 @@ while ($row = mysqli_fetch_array($sql)){
                     logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
                 }
             });
-            var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	theme: "light2",
-	title:{
-		text: "Data Semua Barang"
-	},
-	axisY: {
-		title: "Jumlah Barang"
-	},
-	data: [{
-		type: "column",
-		yValueFormatString: "#,##0.## buah",
-		dataBarang: <?php echo json_encode($dataBarang, JSON_NUMERIC_CHECK); ?>
-	}]
-});
-chart.render();
- 
+            var options = {
+        series: [{
+            name: 'Jumlah Barang',
+            data: <?php echo $data_json; ?>
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: <?php echo $categories_json; ?>
+        },
+        yaxis: {
+            title: {
+                text: 'Jumlah Barang'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " buah"
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+        var optionsPie = {
+          series: [44, 55, 13, 43, 22],
+          chart: {
+          width: 380,
+          type: 'pie',
+        },
+        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chartPie = new ApexCharts(document.querySelector("#chartPie"), optionsPie);
+        chartPie.render();
+        chart.render();
+
         };
     </script>
     <div id="app">
@@ -168,26 +228,28 @@ chart.render();
     <section class="row">
             
                 <div class="row">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Data Semua Barang</h4>
-                        </div>
-                        <div class="card-body">
-                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                        </div>
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Data Semua Barang</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart"></div>
                     </div>
                 </div>
+                </div>
             
-        <div class="row">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Data Barang Keluar Masuk</h4>
-                </div>
-                <div class="card-body">
-                    <div id="chart-visitors-profile"></div>
-                </div>
+                <div class="row">
+    <div class="card">
+        <div class="card-header text-center">
+            <h4>Data Barang Keluar Masuk</h4>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-center"> <!-- Center the chartPie horizontally -->
+                <div id="chartPie"></div>
             </div>
         </div>
+    </div>
+</div>
     </section>
 </div>
 
@@ -213,9 +275,11 @@ chart.render();
 
     
 <!-- Need: Apexcharts -->
-<script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
+<!-- <script src="assets/extensions/apexcharts/apexcharts.min.js"></script> -->
 <script src="assets/static/js/pages/dashboard.js"></script>
-
+<script src="assets/extensions/dayjs/dayjs.min.js"></script>
+<script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
+<script src="assets/static/js/pages/ui-apexchart.js"></script>
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 
