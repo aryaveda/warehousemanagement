@@ -218,7 +218,7 @@ $no = 0;
                                   ]; ?></td>
                                   <td><?php echo $result["harga"]; ?></td>
                                   <td><?php echo $result["keterangan"]; ?></td>
-                                  <td><img src="../uploads/<?php echo $result[
+                                  <td><img src="./uploads/<?php echo $result[
                                       "foto"
                                   ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
                                   <td>

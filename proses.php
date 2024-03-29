@@ -15,7 +15,7 @@ if (isset($_POST["aksi"])) {
         $foto = $_FILES["foto"]["name"];
         $keterangan = $_POST["keterangan"];
 
-        $dir = "../uploads/";
+        $dir = "./uploads/";
         $tmpFile = $_FILES["foto"]["tmp_name"];
 
         move_uploaded_file($tmpFile, $dir . $foto);
@@ -72,10 +72,10 @@ if (isset($_POST["aksi"])) {
             $foto = $result["foto"];
         } else {
             $foto = $_FILES["foto"]["name"];
-            unlink("../uploads" . $result["foto"]);
+            unlink("./uploads" . $result["foto"]);
             move_uploaded_file(
                 $_FILES["foto"]["tmp_name"],
-                "../uploads/" . $_FILES["foto"]["name"]
+                "./uploads/" . $_FILES["foto"]["name"]
             );
         }
 
@@ -98,7 +98,7 @@ if (isset($_GET["hapus"])) {
     $sqlShow = mysqli_query($conn, $queryShow);
     $result = mysqli_fetch_assoc($sqlShow);
 
-    unlink("../uploads" . $result["foto"]);
+    unlink("./uploads" . $result["foto"]);
 
     $query = "DELETE FROM masuk WHERE id = '$id';";
     $sql = mysqli_query($conn, $query);
