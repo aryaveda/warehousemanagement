@@ -181,6 +181,7 @@ $no = 0;
                             <tr>
                                 <!-- <th>No</th> -->
                                 <th>Tanggal</th>
+                                <th>barcode</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jenis Peralatan</th>
@@ -203,6 +204,10 @@ $no = 0;
                                   <td><?php echo (new DateTime(
                                       $result["tanggal"]
                                   ))->format("Y-m-d"); ?></td>
+                                  <td>
+                                    <img alt="barcode" src="barcode.php?codetype=COde39&size40&
+                                    text=TESTING&print=true" />
+                                  </td>
                                   <td><?php echo $result["id_barang"]; ?></td>
                                   <td><?php echo $result["nama_barang"]; ?></td>
                                   <td><?php echo $result[

@@ -4,6 +4,7 @@ include "koneksi.php";
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         $tanggal = $_POST["tanggal"];
+        $barcode = $_POST["barcode"];
         $id_barang = $_POST["id_barang"];
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
@@ -21,6 +22,8 @@ if (isset($_POST["aksi"])) {
         move_uploaded_file($tmpFile, $dir . $foto);
 
         echo $tanggal .
+            "" .
+            $barcode .
             "" .
             $id_barang .
             "" .
@@ -40,11 +43,11 @@ if (isset($_POST["aksi"])) {
             "" .
             $keterangan .
             "";
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$jumlah_barang','$harga','$foto','$keterangan')";
+        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$barcode', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$jumlah_barang','$harga','$foto','$keterangan')";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
-            // echo $tanggal.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
+            // echo $tanggal.''.$barcode.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
             header("location: barangMasuk.php");
         } else {
             echo $query;
@@ -53,6 +56,7 @@ if (isset($_POST["aksi"])) {
         echo "Edit Data";
         $id = $_POST["id"];
         $tanggal = $_POST["tanggal"];
+        $barcode = $_POST["barcode"];
         $id_barang = $_POST["id_barang"];
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
@@ -79,11 +83,11 @@ if (isset($_POST["aksi"])) {
             );
         }
 
-        $query = "UPDATE masuk SET tanggal='$tanggal',id_barang='$id_barang',nama_barang='$nama_barang',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',jumlah_barang='$jumlah_barang',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
+        $query = "UPDATE masuk SET tanggal='$tanggal', barcode='$barcode', id_barang='$id_barang',nama_barang='$nama_barang',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',jumlah_barang='$jumlah_barang',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
-            // echo $tanggal.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
+            // echo $tanggal.''.$barcode.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
             header("location: barangMasuk.php");
         } else {
             echo $query;

@@ -9,6 +9,7 @@ $sql = mysqli_query($conn, $query);
 $no = 0;
 
 $tanggal = "";
+$barcode = "";
 $id_barang = "";
 $nama_barang = "";
 $jenis_peralatan = "";
@@ -27,6 +28,7 @@ if (isset($_GET["ubah"])) {
     $result = mysqli_fetch_assoc($sqlEdit);
 
     $tanggal = $result["tanggal"];
+    $barcode = $result["barcode"];
     $id_barang = $result["id_barang"];
     $nama_barang = $result["nama_barang"];
     $jenis_peralatan = $result["jenis_peralatan"];
