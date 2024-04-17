@@ -207,7 +207,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                   
                                   <td><?php echo (new DateTime(
                                       $result["tanggal"]
-                                  ))->format("Y-m-d"); ?></td>
+                                  ))->format("d-m-Y"); ?></td>
                                <td style="background-color: #F2F7FF;">
     <?php
         echo $generator->getBarcode($result["id_barang"], $generator::TYPE_CODE_128);
