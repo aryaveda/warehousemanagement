@@ -325,19 +325,11 @@ if (isset($_GET["ubah"])) {
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="foto" class="form-label"
-                        >Foto Barang</label
-                      >
-                      <input
-                        type="file"
-                        id="foto"
-                        class="form-control"
-                        name="foto"
-                        placeholder="Foto Barang"
-                        accept="image/*"
-                        />
-                    </div>
+                  <div class="form-group">
+    <label for="foto" class="form-label">Foto Barang</label>
+    <input type="file" id="foto" class="form-control" name="foto" placeholder="Foto Barang" accept="image/*" onchange="validateFileSize(this)" />
+</div>
+
                   </div>
                   <div class="col-12">
                     <div class="form-group">
@@ -407,6 +399,14 @@ if (isset($_GET["ubah"])) {
     
 <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
 <script src="assets/static/js/pages/simple-datatables.js"></script>
+<script>
+function validateFileSize(input) {
+    if (input.files[0].size > 5 * 1024 * 1024) { // 5MB in bytes
+        alert("Maximum file size allowed is 5MB");
+        input.value = ''; // Clear the input field
+    }
+}
+</script>
 
 </body>
 
