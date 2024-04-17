@@ -26,7 +26,7 @@
             <h1 class="auth-title">Login</h1>
             <p class="auth-subtitle mb-5">Login untuk mengakses database barang</p>
 
-            <form action="index.html">
+            <form action="index.php">
                 <div class="form-group position-relative has-icon-left mb-4">
                     <input type="text" class="form-control form-control-xl" placeholder="Username">
                     <div class="form-control-icon">
