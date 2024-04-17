@@ -9,7 +9,7 @@ $sql = mysqli_query($conn, $query);
 $no = 0;
 
 $tanggal = "";
-$barcode = "";
+// $barcode = "";
 $id_barang = "";
 $nama_barang = "";
 $jenis_peralatan = "";
@@ -28,7 +28,7 @@ if (isset($_GET["ubah"])) {
     $result = mysqli_fetch_assoc($sqlEdit);
 
     $tanggal = $result["tanggal"];
-    $barcode = $result["barcode"];
+    $barcode = rand(1000,9999);
     $id_barang = $result["id_barang"];
     $nama_barang = $result["nama_barang"];
     $jenis_peralatan = $result["jenis_peralatan"];
@@ -48,7 +48,7 @@ if (isset($_GET["ubah"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataTable - Mazer Admin Dashboard</title>
+    <title>BMKG Warehouse Management</title>
     
     
     
@@ -377,7 +377,7 @@ if (isset($_GET["ubah"])) {
                         class="form-control"
                         name="keterangan"
                         placeholder="Keterangan"
-                        row="3" value="<?php echo $keterangan; ?>"></textarea>
+                        rows="3" value="<?php echo $keterangan; ?>"></textarea>
                     </div>
                   </div>
                 </div>

@@ -4,7 +4,7 @@
 // $query = "select * from masuk";
 // $result = $pdo->query($query);
 include "koneksi.php";
-$query = "SELECT * FROM masuk;";
+$query = "SELECT * FROM keluar;";
 $sql = mysqli_query($conn, $query);
 $no = 0;
 ?>
@@ -15,7 +15,7 @@ $no = 0;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabel Barang Masuk - BMKG Warehouse Management</title>
+    <title>Tabel Barang Keluar - BMKG Warehouse Management</title>
     
     
     
@@ -146,14 +146,14 @@ $no = 0;
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Barang Masuk</h3>
+                <h3>Data Barang Keluar</h3>
             
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Barang Masuk</li>
+                        <li class="breadcrumb-item active" aria-current="page">Barang Keluar</li>
                     </ol>
                 </nav>
             </div>

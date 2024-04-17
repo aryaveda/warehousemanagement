@@ -4,8 +4,12 @@ include "koneksi.php";
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         $tanggal = $_POST["tanggal"];
-        $barcode = $_POST["barcode"];
+        // $barcode = $_POST["barcode"];
+        //new barcode
+        $barcode = $generator->getBarcode($_POST["id_barang"], $generator::TYPE_CODE_128);
         $id_barang = $_POST["id_barang"];
+        
+
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];

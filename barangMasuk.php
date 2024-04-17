@@ -4,9 +4,12 @@
 // $query = "select * from masuk";
 // $result = $pdo->query($query);
 include "koneksi.php";
+include 'barcode128.php';
+require 'vendor/autoload.php';
 $query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
 $no = 0;
+$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +34,8 @@ $no = 0;
 </head>
 
 <body>
-<body>
+
+
     
     <script src="assets/static/js/initTheme.js"></script>
     <script>
@@ -181,7 +185,7 @@ $no = 0;
                             <tr>
                                 <!-- <th>No</th> -->
                                 <th>Tanggal</th>
-                                <th>barcode</th>
+                                <th>Barcode</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jenis Peralatan</th>
@@ -204,10 +208,11 @@ $no = 0;
                                   <td><?php echo (new DateTime(
                                       $result["tanggal"]
                                   ))->format("Y-m-d"); ?></td>
-                                  <td>
-                                    <img alt="barcode" src="barcode.php?codetype=COde39&size40&
-                                    text=TESTING&print=true" />
-                                  </td>
+                               <td style="background-color: #F2F7FF;">
+    <?php
+        echo $generator->getBarcode($result["id_barang"], $generator::TYPE_CODE_128);
+    ?>
+</td>
                                   <td><?php echo $result["id_barang"]; ?></td>
                                   <td><?php echo $result["nama_barang"]; ?></td>
                                   <td><?php echo $result[
