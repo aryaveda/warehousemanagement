@@ -1,21 +1,23 @@
 <?php
 include "koneksi.php";
 
+
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         $tanggal = $_POST["tanggal"];
         // $barcode = $_POST["barcode"];
         //new barcode
-        $barcode = $generator->getBarcode($_POST["id_barang"], $generator::TYPE_CODE_128);
-        $id_barang = $_POST["id_barang"];
-        
 
+        $barcode = $_POST["id_barang"];
+        
+        //id barang new code
+        $id_barang = (new DateTime($_POST["tanggal"]))->format("YmdHis");
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];
         $sn = $_POST["sn"];
         $asal_perolehan = $_POST["asal_perolehan"];
-        $jumlah_barang = $_POST["jumlah_barang"];
+
         $harga = $_POST["harga"];
         $foto = $_FILES["foto"]["name"];
         $keterangan = $_POST["keterangan"];
@@ -41,13 +43,11 @@ if (isset($_POST["aksi"])) {
             "" .
             $asal_perolehan .
             "" .
-            $jumlah_barang .
-            "" .
             $harga .
             "" .
             $keterangan .
             "";
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$barcode', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$jumlah_barang','$harga','$foto','$keterangan')";
+        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$barcode', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$foto','$keterangan')";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
@@ -67,7 +67,7 @@ if (isset($_POST["aksi"])) {
         $merk = $_POST["merk"];
         $sn = $_POST["sn"];
         $asal_perolehan = $_POST["asal_perolehan"];
-        $jumlah_barang = $_POST["jumlah_barang"];
+        
         $harga = $_POST["harga"];
         // $foto = $_FILES['foto']['name'];
         $keterangan = $_POST["keterangan"];
@@ -87,7 +87,7 @@ if (isset($_POST["aksi"])) {
             );
         }
 
-        $query = "UPDATE masuk SET tanggal='$tanggal', barcode='$barcode', id_barang='$id_barang',nama_barang='$nama_barang',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',jumlah_barang='$jumlah_barang',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
+        $query = "UPDATE masuk SET tanggal='$tanggal', barcode='$barcode', id_barang='$id_barang',nama_barang='$nama_barang',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {

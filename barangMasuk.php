@@ -4,7 +4,7 @@
 // $query = "select * from masuk";
 // $result = $pdo->query($query);
 include "koneksi.php";
-include 'barcode128.php';
+
 require 'vendor/autoload.php';
 $query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
@@ -192,7 +192,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                 <th>Merk</th>
                                 <th>SN</th>
                                 <th>Asal Perolehan</th>
-                                <th>Jumlah Barang</th>
+                                <!-- <th>Jumlah Barang</th> -->
                                 <th>Harga</th>
                                 <th>Keterangan</th>
                                 <th>Foto</th>
@@ -223,9 +223,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                   <td><?php echo $result[
                                       "asal_perolehan"
                                   ]; ?></td>
-                                  <td><?php echo $result[
-                                      "jumlah_barang"
-                                  ]; ?></td>
+                                   <!-- hapus jumlah barang -->
                                   <td><?php echo $result["harga"]; ?></td>
                                   <td><?php echo $result["keterangan"]; ?></td>
                                   <td><img src="./uploads/<?php echo $result[

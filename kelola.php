@@ -16,7 +16,7 @@ $jenis_peralatan = "";
 $merk = "";
 $sn = "";
 $asal_perolehan = "";
-$jumlah_barang = "";
+// $jumlah_barang = "";
 $harga = "";
 // $foto = '';
 $keterangan = "";
@@ -35,7 +35,7 @@ if (isset($_GET["ubah"])) {
     $merk = $result["merk"];
     $sn = $result["sn"];
     $asal_perolehan = $result["asal_perolehan"];
-    $jumlah_barang = $result["jumlah_barang"];
+    // $jumlah_barang = $result["jumlah_barang"];
     $harga = $result["harga"];
     // $foto = $result['foto'];
     $keterangan = $result["keterangan"];
@@ -228,21 +228,9 @@ if (isset($_GET["ubah"])) {
                       />
                     </div>
                   </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="id_barang" class="form-label"
-                        >ID Barang</label
-                      >
-                      <input
-                        type="text"
-                        id="id_barang"
-                        class="form-control"
-                        placeholder="12345"
-                        name="id_barang"
-                        value="<?php echo $id_barang; ?>"
-                      />
-                    </div>
-                  </div>
+                  
+                  <!-- hapus ID Barang -->
+
                   <div class="col-md-6 col-12">
                     <div class="form-group">
                       <label for="nama_barang" class="form-label">Nama Barang</label>
@@ -319,22 +307,7 @@ if (isset($_GET["ubah"])) {
                       />
                     </div>
                   </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="jumlah_barang" class="form-label"
-                        >Jumlah Barang</label
-                      >
-                      <input
-                        type="number"
-                        id="jumlah_barang"
-                        class="form-control"
-                        name="jumlah_barang"
-                        placeholder="Jumlah Barang"
-                        value="<?php echo $jumlah_barang; ?>"
-                        
-                      />
-                    </div>
-                  </div>
+                  <!-- hapus jumlah barang -->
                   <div class="col-md-6 col-12">
                     <div class="form-group">
                       <label for="harga" class="form-label"
