@@ -5,13 +5,12 @@ include "koneksi.php";
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         $tanggal = $_POST["tanggal"];
-        // $barcode = $_POST["barcode"];
-        //new barcode
 
-        $barcode = $_POST["id_barang"];
-        
-        //id barang new code
-        $id_barang = (new DateTime($_POST["tanggal"]))->format("YmdHis");
+        //WORK MANTAP
+$barcode = $_POST["id_barang"];
+$date = new DateTime($tanggal);
+$current_time = new DateTime(); // Current date and time
+$id_barang = $date->format("Ymd") . $current_time->format("His");
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];
