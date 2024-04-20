@@ -77,6 +77,8 @@ if (isset($_POST["aksi"])) {
         $asal_perolehan = $_POST["asal_perolehan"];
         
         $harga = $_POST["harga"];
+        
+$status = $_POST["status"];
         // $foto = $_FILES['foto']['name'];
         $keterangan = $_POST["keterangan"];
 
