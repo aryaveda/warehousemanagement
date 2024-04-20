@@ -7,10 +7,10 @@ if (isset($_POST["aksi"])) {
         $tanggal = $_POST["tanggal"];
 
         //WORK MANTAP
-$barcode = $_POST["id_barang"];
-$date = new DateTime($tanggal);
-$current_time = new DateTime(); // Current date and time
-$id_barang = $date->format("Ymd") . $current_time->format("His");
+// $barcode = $_POST["id_barang"];
+        $date = new DateTime($tanggal);
+        $current_time = new DateTime(); // Current date and time
+        $id_barang = $date->format("Ymd") . $current_time->format("His");
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];
@@ -28,8 +28,8 @@ $id_barang = $date->format("Ymd") . $current_time->format("His");
 
         echo $tanggal .
             "" .
-            $barcode .
-            "" .
+            // $barcode .
+            // "" .
             $id_barang .
             "" .
             $nama_barang .
@@ -46,7 +46,7 @@ $id_barang = $date->format("Ymd") . $current_time->format("His");
             "" .
             $keterangan .
             "";
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$barcode', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$foto','$keterangan')";
+        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$foto','$keterangan')";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
@@ -59,8 +59,12 @@ $id_barang = $date->format("Ymd") . $current_time->format("His");
         echo "Edit Data";
         $id = $_POST["id"];
         $tanggal = $_POST["tanggal"];
-        $barcode = $_POST["barcode"];
-        $id_barang = $_POST["id_barang"];
+        // $barcode = $_POST["barcode"];
+
+        $date = new DateTime($tanggal);
+        $current_time = new DateTime(); 
+        $id_barang = $date->format("Ymd") . $current_time->format("His");
+
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];
@@ -86,7 +90,7 @@ $id_barang = $date->format("Ymd") . $current_time->format("His");
             );
         }
 
-        $query = "UPDATE masuk SET tanggal='$tanggal', barcode='$barcode', id_barang='$id_barang',nama_barang='$nama_barang',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
+        $query = "UPDATE masuk SET tanggal='$tanggal',nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {

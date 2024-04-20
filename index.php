@@ -202,6 +202,10 @@ $categories_json = json_encode($categories);
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
+                <li class="submenu-item  ">
+                    <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
+                    
+                </li>
                 
             </ul>
             

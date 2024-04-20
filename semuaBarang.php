@@ -18,7 +18,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabel Barang Masuk - BMKG Warehouse Management</title>
+    <title>Tabel Semua Barang - BMKG Warehouse Management</title>
     
     
     
@@ -118,7 +118,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             
             <ul class="submenu ">
                 
-                <li class="submenu-item active ">
+                <li class="submenu-item  ">
                     <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
                     
                 </li>
@@ -127,7 +127,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
-                <li class="submenu-item  ">
+                <li class="submenu-item active">
                     <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
                     
                 </li>
@@ -163,14 +163,14 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Barang Masuk</h3>
+                <h3>Data Semua Barang</h3>
             
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Barang Masuk</li>
+                        <li class="breadcrumb-item active" aria-current="page">Semua Barang</li>
                     </ol>
                 </nav>
             </div>

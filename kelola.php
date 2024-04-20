@@ -28,7 +28,7 @@ if (isset($_GET["ubah"])) {
     $result = mysqli_fetch_assoc($sqlEdit);
 
     $tanggal = $result["tanggal"];
-    $barcode = rand(1000,9999);
+    // $barcode = rand(1000,9999);
     $id_barang = $result["id_barang"];
     $nama_barang = $result["nama_barang"];
     $jenis_peralatan = $result["jenis_peralatan"];
@@ -125,7 +125,7 @@ if (isset($_GET["ubah"])) {
             <li class="sidebar-title">Menu</li>
             
             <li
-                class="sidebar-item active ">
+                class="sidebar-item  ">
                 <a href="index.html" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
@@ -137,7 +137,7 @@ if (isset($_GET["ubah"])) {
         
             
             <li
-            class="sidebar-item  has-sub">
+            class="sidebar-item active  has-sub">
             <a href="#" class='sidebar-link'>
                 <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                 <span>Tabel Data</span>
@@ -145,7 +145,7 @@ if (isset($_GET["ubah"])) {
             
             <ul class="submenu ">
                 
-                <li class="submenu-item  ">
+                <li class="submenu-item ">
                     <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
                     
                 </li>
@@ -154,12 +154,24 @@ if (isset($_GET["ubah"])) {
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
+                <li class="submenu-item  ">
+                    <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
+                    
+                </li>
                 
             </ul>
             
 
         </li>
-        
+        <li
+                class="sidebar-item  ">
+                <a href="logout.php" class='sidebar-link'>
+                    <i class="bi bi-life-preserver"></i>
+                    <span>Logout</span>
+                </a>
+                
+
+            </li>
         
             
         </ul>
@@ -219,13 +231,13 @@ if (isset($_GET["ubah"])) {
                         >Tanggal Masuk</label
                       >
                       <input
-                        type="date"
-                        id="tanggal"
-                        class="form-control"
-                        placeholder="Tanggal Masuk"
-                        name="tanggal"
-                        value="<?php echo $tanggal; ?>"
-                      />
+    type="date"
+    id="tanggal"
+    class="form-control"
+    placeholder="Tanggal Masuk"
+    name="tanggal"
+    <?php echo isset($tanggal) ? 'value="' . date('Y-m-d', strtotime($tanggal)) . '"' : ''; ?>
+/>
                     </div>
                   </div>
                   
@@ -337,12 +349,13 @@ if (isset($_GET["ubah"])) {
                         >Keterangan</label
                       >
                       <textarea
-                        type="text"
-                        id="keterangan"
-                        class="form-control"
-                        name="keterangan"
-                        placeholder="Keterangan"
-                        rows="3" value="<?php echo $keterangan; ?>"></textarea>
+    id="keterangan"
+    class="form-control"
+    name="keterangan"
+    placeholder="Keterangan"
+    rows="3"
+><?php echo isset($keterangan) ? $keterangan : ''; ?></textarea>
+
                     </div>
                   </div>
                 </div>
