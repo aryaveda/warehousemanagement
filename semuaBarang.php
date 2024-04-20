@@ -182,7 +182,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <section class="section">
         <div class="card">
         <div class="card-header">
-                <a href="kelola.php" class="btn icon icon-left btn-primary"><i data-feather="plus"></i> Tambah Barang</a>
+                <!-- <a href="kelola.php" class="btn icon icon-left btn-primary"><i data-feather="plus"></i> Tambah Barang</a> -->
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
                 <button id="btnExcel" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</button>
                 <button id="btnPDF" class="btn icon icon-left btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
@@ -207,6 +207,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                 <th>Asal Perolehan</th>
                                 <!-- <th>Jumlah Barang</th> -->
                                 <th>Harga (Rp)</th>
+                                <th>Status</th>
                                 <th>Keterangan</th>
                                 <th>Foto</th>
                                 <th>Aksi</th>
@@ -244,6 +245,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                        ".",
                                        "."
                                    ); ?></td>
+                                   <td><?php echo $result["status"]; ?></td>
                                   <td><?php echo $result["keterangan"]; ?></td>
                                   <td><img src="./uploads/<?php echo $result[
                                       "foto"

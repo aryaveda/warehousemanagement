@@ -378,6 +378,17 @@ if (isset($_GET["ubah"])) {
                                 </a>
                   </div>
                 </div>
+                <?php
+        // Check if the 'source' parameter is set in the URL
+        if (isset($_GET["source"])) {
+            // Set the value of the 'status' field based on the 'source' parameter
+            if ($_GET["source"] === "masuk") {
+                echo '<input type="hidden" name="status" value="masuk">';
+            } elseif ($_GET["source"] === "keluar") {
+                echo '<input type="hidden" name="status" value="keluar">';
+            }
+        }
+    ?>
               </form>
             </div>
           </div>

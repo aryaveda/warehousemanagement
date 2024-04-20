@@ -4,6 +4,7 @@ include "koneksi.php";
 
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
+        
         $tanggal = $_POST["tanggal"];
 
         //WORK MANTAP
@@ -18,6 +19,9 @@ if (isset($_POST["aksi"])) {
         $asal_perolehan = $_POST["asal_perolehan"];
 
         $harga = $_POST["harga"];
+
+        $status = $_GET["source"];
+
         $foto = $_FILES["foto"]["name"];
         $keterangan = $_POST["keterangan"];
 
@@ -46,8 +50,8 @@ if (isset($_POST["aksi"])) {
             "" .
             $keterangan .
             "";
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$foto','$keterangan')";
-        $sql = mysqli_query($conn, $query);
+            $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$foto','$keterangan')";
+            $sql = mysqli_query($conn, $query);
 
         if ($sql) {
             // echo $tanggal.''.$barcode.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
@@ -72,6 +76,7 @@ if (isset($_POST["aksi"])) {
         $asal_perolehan = $_POST["asal_perolehan"];
         
         $harga = $_POST["harga"];
+        $status = $_GET["source"];
         // $foto = $_FILES['foto']['name'];
         $keterangan = $_POST["keterangan"];
 
@@ -90,8 +95,9 @@ if (isset($_POST["aksi"])) {
             );
         }
 
-        $query = "UPDATE masuk SET tanggal='$tanggal',nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto' WHERE id='$id';";
+        $query = "UPDATE masuk SET tanggal='$tanggal',nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto', status='$status' WHERE id='$id';";
         $sql = mysqli_query($conn, $query);
+
 
         if ($sql) {
             // echo $tanggal.''.$barcode.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
