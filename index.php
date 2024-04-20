@@ -10,10 +10,10 @@ $query = "SELECT * FROM masuk";
 $result = mysqli_query($conn, $query);
 
 // Loop through the results and populate arrays
-while ($row = mysqli_fetch_assoc($result)) {
-    $categories[] = $row["nama_barang"];
-    $data[] = (int) $row["jumlah_barang"]; // Ensure quantity is treated as integer
-}
+// while ($row = mysqli_fetch_assoc($result)) {
+//     $categories[] = $row["nama_barang"];
+//     $data[] = (int) $row["jumlah_barang"]; // Ensure quantity is treated as integer
+// }
 
 // Convert arrays to JSON format
 $data_json = json_encode($data);
@@ -207,7 +207,15 @@ $categories_json = json_encode($categories);
             
 
         </li>
-        
+        <li
+                class="sidebar-item  ">
+                <a href="logout.php" class='sidebar-link'>
+                    <i class="bi bi-life-preserver"></i>
+                    <span>Logout</span>
+                </a>
+                
+
+            </li>
         
             
         </ul>

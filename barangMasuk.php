@@ -132,6 +132,15 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             
 
         </li>
+        <li
+                class="sidebar-item  ">
+                <a href="logout.php" class='sidebar-link'>
+                    <i class="bi bi-life-preserver"></i>
+                    <span>Logout</span>
+                </a>
+                
+
+            </li>
         
         
             
