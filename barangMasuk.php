@@ -136,15 +136,12 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             
 
         </li>
-        <li
-                class="sidebar-item  ">
-                <a href="logout.php" class='sidebar-link'>
-                    <i class="bi bi-life-preserver"></i>
-                    <span>Logout</span>
-                </a>
-                
-
-            </li>
+        <li class="sidebar-item">
+            <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </li>
         
         
             
@@ -215,57 +212,38 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while (
-                                $result = mysqli_fetch_assoc($sql)
-                            ) { ?>
-                                  <tr>
-                                  
-                                  <td><?php echo (new DateTime(
-                                      $result["tanggal"]
-                                  ))->format("d-m-Y"); ?></td>
-                               <td style="background-color: #F2F7FF;">
-                                    <?php echo $generator->getBarcode(
-                                        $result["id_barang"],
-                                        $generator::TYPE_CODE_128
-                                    ); ?>
-                                </td>
-                                  <td><?php echo $result["id_barang"]; ?></td>
-                                  <td><?php echo $result["nama_barang"]; ?></td>
-                                  <td><?php echo $result[
-                                      "jenis_peralatan"
-                                  ]; ?></td>
-                                  <td><?php echo $result["merk"]; ?></td>
-                                  <td><?php echo $result["sn"]; ?></td>
-                                  <td><?php echo $result[
-                                      "asal_perolehan"
-                                  ]; ?></td>
-                                   <!-- hapus jumlah barang -->
-                                   <td><?php echo number_format(
-                                       $result["harga"],
-                                       0,
-                                       ".",
-                                       "."
-                                   ); ?></td>
-                                  <td><?php echo $result["keterangan"]; ?></td>
-                                  <td><img src="./uploads/<?php echo $result[
-                                      "foto"
-                                  ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
-                                  <td>
-                                      <a href="kelola.php?ubah=<?php echo $result[
-                                          "id"
-                                      ]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i>
-                                      </a>
-                                      <!-- <button type="button" class="btn icon btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#danger">
-                                            <i class="bi bi-trash"></i>
-                                        </button> -->
-                                        <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangMasuk.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+    <?php
+    while ($result = mysqli_fetch_assoc($sql)) {
+        if ($result["status"] === 'masuk') { // Check if the status is 'masuk'
+    ?>
+    <tr>
+        <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
+        <td style="background-color: #F2F7FF;">
+            <?php echo $generator->getBarcode(
+                $result["id_barang"],
+                $generator::TYPE_CODE_128
+            ); ?>
+        </td>
+        <td><?php echo $result["id_barang"]; ?></td>
+        <td><?php echo $result["nama_barang"]; ?></td>
+        <td><?php echo $result["jenis_peralatan"]; ?></td>
+        <td><?php echo $result["merk"]; ?></td>
+        <td><?php echo $result["sn"]; ?></td>
+        <td><?php echo $result["asal_perolehan"]; ?></td>
+        <td><?php echo number_format($result["harga"], 0, ".", "."); ?></td>
+        <td><?php echo $result["keterangan"]; ?></td>
+        <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+        <td>
+            <a href="kelola.php?ubah=<?php echo $result["id"]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
+            <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangMasuk.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+        </td>
+    </tr>
+    <?php
+        }
+    }
+    ?>
+</tbody>
 
-
-                                  </td>
-                                  </tr>
-                                  <?php } ?>
-                            </tbody>
                     </table>
                 </div>
             </div>

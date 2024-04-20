@@ -37,6 +37,8 @@ $categories_json = json_encode($categories);
   <link rel="stylesheet" href="./assets/compiled/css/app.css">
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
   <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+  
+
   <!-- <link rel="stylesheet" href="./assets/compiled/css/gaya.css"> -->
 </head>
 
@@ -211,18 +213,24 @@ $categories_json = json_encode($categories);
             
 
         </li>
-        <li
-                class="sidebar-item  ">
-                <a href="logout.php" class='sidebar-link'>
-                    <i class="bi bi-life-preserver"></i>
+        <!-- <li
+                class="sidebar-item">
+                <a id="background" href="logout.php" class=' btn btn-outline-danger btn-block btn-lg'>
+                <i class="bi bi-box-arrow-left"></i>
                     <span>Logout</span>
                 </a>
                 
 
-            </li>
-        
+            </li> -->
+            <li class="sidebar-item">
+            <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </li>
             
         </ul>
+        
     </div>
 </div>
         </div>
@@ -294,7 +302,8 @@ $categories_json = json_encode($categories);
 <script src="assets/static/js/pages/ui-apexchart.js"></script>
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-
+<script src="assets/extensions/toastify-js/src/toastify.js"></script>
+<script src="assets/static/js/pages/toastify.js"></script>
 
 
 </body>

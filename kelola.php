@@ -85,7 +85,7 @@ if (isset($_GET["ubah"])) {
     <div class="sidebar-header position-relative m-0">
         <div class="justify-content-between align-items-center">
             <div class="logoBMKG">
-                <a href="index.html"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
+                <a href="index.php"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-4">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -126,7 +126,7 @@ if (isset($_GET["ubah"])) {
             
             <li
                 class="sidebar-item  ">
-                <a href="index.html" class='sidebar-link'>
+                <a href="index.php" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
@@ -187,16 +187,27 @@ if (isset($_GET["ubah"])) {
             <div class="page-heading">
   <div class="page-title">
     <div class="row">
-      <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3>Data Barang Masuk</h3>
-      </div>
+    <div class="col-12 col-md-6 order-md-1 order-last">
+    <?php
+    if (isset($_GET['status'])) {
+        $status = $_GET['status'];
+        if ($status === 'masuk') {
+            echo '<h3>Data Barang Masuk</h3>';
+        } elseif ($status === 'keluar') {
+            echo '<h3>Data Barang Keluar</h3>';
+        }
+    } else {
+        echo '<h3>Data Barang Masuk</h3>';
+    }
+    ?>
+</div>
       <div class="col-12 col-md-6 order-md-2 order-first">
         <nav
           aria-label="breadcrumb"
           class="breadcrumb-header float-start float-lg-end"
         >
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">
               Tabel Data
             </li>
@@ -213,11 +224,26 @@ if (isset($_GET["ubah"])) {
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-          <?php if (isset($_GET["ubah"])) { ?>
-              <h4 class="card-title">Edit Data Barang</h4>
-                                <?php } else { ?>
-                                    <h4 class="card-title">Tambahkan Barang Masuk</h4>
-                                <?php } ?>
+          <?php
+if (isset($_GET["ubah"])) {
+    // If editing an existing entry
+    echo '<h4 class="card-title">Edit Data Barang</h4>';
+} else {
+    // If adding a new entry
+    if (isset($_GET['status'])) {
+        // Check if status is provided in the URL
+        $status = $_GET['status'];
+        if ($status === 'masuk') {
+            echo '<h4 class="card-title">Tambahkan Barang Masuk</h4>';
+        } elseif ($status === 'keluar') {
+            echo '<h4 class="card-title">Tambahkan Barang Keluar</h4>';
+        }
+    } else {
+        // Default title if status is not provided in the URL
+        echo '<h4 class="card-title">Tambahkan Barang</h4>';
+    }
+}
+?>
           </div>
           <div class="card-content">
             <div class="card-body">
