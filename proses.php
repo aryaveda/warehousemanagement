@@ -1,14 +1,13 @@
 <?php
 include "koneksi.php";
 
-
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         
         $tanggal = $_POST["tanggal"];
 
         //WORK MANTAP
-// $barcode = $_POST["id_barang"];
+        // $barcode = $_POST["id_barang"];
         $date = new DateTime($tanggal);
         $current_time = new DateTime(); // Current date and time
         $id_barang = $date->format("Ymd") . $current_time->format("His");
@@ -19,8 +18,8 @@ if (isset($_POST["aksi"])) {
         $asal_perolehan = $_POST["asal_perolehan"];
 
         $harga = $_POST["harga"];
-
-        $status = $_GET["source"];
+        // new status
+        $status = $_POST["status"];
 
         $foto = $_FILES["foto"]["name"];
         $keterangan = $_POST["keterangan"];
@@ -47,6 +46,8 @@ if (isset($_POST["aksi"])) {
             $asal_perolehan .
             "" .
             $harga .
+            "" .
+            $status .
             "" .
             $keterangan .
             "";
@@ -76,7 +77,6 @@ if (isset($_POST["aksi"])) {
         $asal_perolehan = $_POST["asal_perolehan"];
         
         $harga = $_POST["harga"];
-        $status = $_GET["source"];
         // $foto = $_FILES['foto']['name'];
         $keterangan = $_POST["keterangan"];
 
@@ -126,3 +126,4 @@ if (isset($_GET["hapus"])) {
         echo $query;
     }
 }
+?>

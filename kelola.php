@@ -223,6 +223,7 @@ if (isset($_GET["ubah"])) {
             <div class="card-body">
               <form method="POST" action="proses.php" class="form" enctype="multipart/form-data">
                 <input type="hidden" value="<?php echo $id; ?>" name="id">
+                <input type="hidden" name="status" value="<?php echo isset($_GET['status']) ? $_GET['status'] : ''; ?>">
                 <div class="row">
                   <div class="col-md-6 col-12">
                     <div class="">
@@ -378,17 +379,7 @@ if (isset($_GET["ubah"])) {
                                 </a>
                   </div>
                 </div>
-                <?php
-        // Check if the 'source' parameter is set in the URL
-        if (isset($_GET["source"])) {
-            // Set the value of the 'status' field based on the 'source' parameter
-            if ($_GET["source"] === "masuk") {
-                echo '<input type="hidden" name="status" value="masuk">';
-            } elseif ($_GET["source"] === "keluar") {
-                echo '<input type="hidden" name="status" value="keluar">';
-            }
-        }
-    ?>
+                
               </form>
             </div>
           </div>
