@@ -1,12 +1,15 @@
 <?php
 // require_once("includes/dbh.inc.php");
 // include("includes/delete.inc.php");
-// $query = "select * from masuk";
+// $query = "select * from keluar";
 // $result = $pdo->query($query);
 include "koneksi.php";
-$query = "SELECT * FROM keluar;";
+
+require "vendor/autoload.php";
+$query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
 $no = 0;
+$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +34,8 @@ $no = 0;
 </head>
 
 <body>
-<body>
+
+
     
     <script src="assets/static/js/initTheme.js"></script>
     <script>
@@ -123,11 +127,24 @@ $no = 0;
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
+                <li class="submenu-item  ">
+                    <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
+                    
+                </li>
                 
             </ul>
             
 
         </li>
+        <li
+                class="sidebar-item  ">
+                <a href="logout.php" class='sidebar-link'>
+                    <i class="bi bi-life-preserver"></i>
+                    <span>Logout</span>
+                </a>
+                
+
+            </li>
         
         
             
@@ -165,7 +182,9 @@ $no = 0;
     <section class="section">
         <div class="card">
         <div class="card-header">
-                <a href="kelola.php" class="btn icon icon-left btn-primary"><i data-feather="plus"></i> Tambah Barang</a>
+        <a href="kelola.php?status=keluar" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang</a>
+
+
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
                 <button id="btnExcel" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</button>
                 <button id="btnPDF" class="btn icon icon-left btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
@@ -181,15 +200,15 @@ $no = 0;
                             <tr>
                                 <!-- <th>No</th> -->
                                 <th>Tanggal</th>
-                                <th>barcode</th>
+                                <th>Barcode</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jenis Peralatan</th>
                                 <th>Merk</th>
                                 <th>SN</th>
                                 <th>Asal Perolehan</th>
-                                <th>Jumlah Barang</th>
-                                <th>Harga</th>
+                                <!-- <th>Jumlah Barang</th> -->
+                                <th>Harga (Rp)</th>
                                 <th>Keterangan</th>
                                 <th>Foto</th>
                                 <th>Aksi</th>
@@ -203,11 +222,13 @@ $no = 0;
                                   
                                   <td><?php echo (new DateTime(
                                       $result["tanggal"]
-                                  ))->format("Y-m-d"); ?></td>
-                                  <td>
-                                    <img alt="barcode" src="barcode.php?codetype=COde39&size40&
-                                    text=TESTING&print=true" />
-                                  </td>
+                                  ))->format("d-m-Y"); ?></td>
+                               <td style="background-color: #F2F7FF;">
+                                    <?php echo $generator->getBarcode(
+                                        $result["id_barang"],
+                                        $generator::TYPE_CODE_128
+                                    ); ?>
+                                </td>
                                   <td><?php echo $result["id_barang"]; ?></td>
                                   <td><?php echo $result["nama_barang"]; ?></td>
                                   <td><?php echo $result[
@@ -218,12 +239,15 @@ $no = 0;
                                   <td><?php echo $result[
                                       "asal_perolehan"
                                   ]; ?></td>
-                                  <td><?php echo $result[
-                                      "jumlah_barang"
-                                  ]; ?></td>
-                                  <td><?php echo $result["harga"]; ?></td>
+                                   <!-- hapus jumlah barang -->
+                                   <td><?php echo number_format(
+                                       $result["harga"],
+                                       0,
+                                       ".",
+                                       "."
+                                   ); ?></td>
                                   <td><?php echo $result["keterangan"]; ?></td>
-                                  <td><img src="../uploads/<?php echo $result[
+                                  <td><img src="./uploads/<?php echo $result[
                                       "foto"
                                   ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
                                   <td>
@@ -235,9 +259,8 @@ $no = 0;
                                             data-bs-target="#danger">
                                             <i class="bi bi-trash"></i>
                                         </button> -->
-                                        <a href="#" onclick="confirmDelete(<?php echo $result[
-                                            "id"
-                                        ]; ?>)" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                        <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangKeluar.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+
 
                                   </td>
                                   </tr>
@@ -317,12 +340,13 @@ $no = 0;
 <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
 <script>
-    function confirmDelete(id) {
+    function confirmDelete(id, origin) {
         $('#danger').modal('show');
         // Set the href attribute of the "Ya" button to the deletion URL
-        $('.btn-danger-confirm').attr('href', 'proses.php?hapus=' + id);
+        $('.btn-danger-confirm').attr('href', 'proses.php?hapus=' + id + '&origin=' + origin);
     }
 </script>
+
 <script>
     var table;
     $(document).ready(function(){

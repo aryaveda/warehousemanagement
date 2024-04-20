@@ -182,7 +182,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <section class="section">
         <div class="card">
         <div class="card-header">
-        <a href="kelola.php?status=masuk" class="btn icon icon-left btn-primary"><i data-feather="plus"></i>Tambah Barang</a>
+        <a href="kelola.php?status=masuk" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang</a>
 
 
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
@@ -259,9 +259,8 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                                             data-bs-target="#danger">
                                             <i class="bi bi-trash"></i>
                                         </button> -->
-                                        <a href="#" onclick="confirmDelete(<?php echo $result[
-                                            "id"
-                                        ]; ?>)" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+                                        <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangMasuk.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+
 
                                   </td>
                                   </tr>
@@ -341,12 +340,13 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
 <script>
-    function confirmDelete(id) {
+    function confirmDelete(id, origin) {
         $('#danger').modal('show');
         // Set the href attribute of the "Ya" button to the deletion URL
-        $('.btn-danger-confirm').attr('href', 'proses.php?hapus=' + id);
+        $('.btn-danger-confirm').attr('href', 'proses.php?hapus=' + id + '&origin=' + origin);
     }
 </script>
+
 <script>
     var table;
     $(document).ready(function(){
