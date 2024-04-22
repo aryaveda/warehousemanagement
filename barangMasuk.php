@@ -1,15 +1,9 @@
 <?php
-// require_once("includes/dbh.inc.php");
-// include("includes/delete.inc.php");
-// $query = "select * from masuk";
-// $result = $pdo->query($query);
 include "koneksi.php";
-
 require "vendor/autoload.php";
 $query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
 $no = 0;
-$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 ?>
 
 <!DOCTYPE html>
@@ -136,6 +130,10 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             
 
         </li>
+
+       
+           
+            
         <li class="sidebar-item">
             <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
                 <i class="bi bi-box-arrow-left"></i>
@@ -197,7 +195,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                             <tr>
                                 <!-- <th>No</th> -->
                                 <th>Tanggal</th>
-                                <th>Barcode</th>
+                                <th>QR Code</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jenis Peralatan</th>
@@ -219,11 +217,18 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <tr>
         <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
         <td style="background-color: #F2F7FF;">
-            <?php echo $generator->getBarcode(
-                $result["id_barang"],
-                $generator::TYPE_CODE_128
-            ); ?>
-        </td>
+    <?php 
+    $qrcode = "infoBarang.php?id_barang=" . $result["id_barang"];
+
+    require_once("phpqrcode/qrlib.php");
+    $qrsaved = "qr temp/";
+    QRCode::png("$qrcode", $qrsaved . "qrcode" . $result['id_barang'] . ".png", "M", 4, 4);
+    ?>
+    <a href="infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
+        <img src="<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png" alt="">
+    </a>
+</td>
+
         <td><?php echo $result["id_barang"]; ?></td>
         <td><?php echo $result["nama_barang"]; ?></td>
         <td><?php echo $result["jenis_peralatan"]; ?></td>

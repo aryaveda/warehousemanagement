@@ -1,16 +1,51 @@
+<!-- PEEERRRHATTTIIIIANNNNNN
+KHUUUUSUUUSS FILLLEEE IINNNIIII
+REEESUULLLTT DIIIGANTTTII KEEEE ROOOOWWWW -->
+
+
+
+
+
+
+
 <?php
-// require_once("includes/dbh.inc.php");
-// include("includes/delete.inc.php");
-// $query = "select * from masuk";
-// $result = $pdo->query($query);
+// Include database connection script
 include "koneksi.php";
 
+// Include Barcode Generator library
 require "vendor/autoload.php";
-$query = "SELECT * FROM masuk;";
-$sql = mysqli_query($conn, $query);
-$no = 0;
-$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+
+// Initialize variable to store query
+$query = "";
+
+// Check if search button is clicked and date filter is set
+if (
+    isset($_POST["search"]) &&
+    isset($_POST["date1"]) &&
+    isset($_POST["date2"])
+) {
+    // Retrieve date filter values
+    $date1 = date("Y-m-d", strtotime($_POST["date1"]));
+    $date2 = date("Y-m-d", strtotime($_POST["date2"]));
+
+    // Retrieve status filter value
+    $status = isset($_POST["status"]) ? $_POST["status"] : "";
+
+    // Query to retrieve data based on date and status filter
+    if (!empty($status)) {
+        $query = "SELECT * FROM masuk WHERE DATE(tanggal) BETWEEN '$date1' AND '$date2' AND status = '$status'";
+    } else {
+        $query = "SELECT * FROM masuk WHERE DATE(tanggal) BETWEEN '$date1' AND '$date2'";
+    }
+} else {
+    // Query to retrieve all data when no date filter is applied
+    $query = "SELECT * FROM masuk";
+}
+
+// Execute the query
+($result = mysqli_query($conn, $query)) or die(mysqli_error());
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -127,7 +162,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
-                <li class="submenu-item active">
+                <li class="submenu-item active ">
                     <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
                     
                 </li>
@@ -136,6 +171,10 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             
 
         </li>
+
+       
+           
+            
         <li class="sidebar-item">
             <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
                 <i class="bi bi-box-arrow-left"></i>
@@ -178,102 +217,154 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <!-- Basic Tables start -->
     <section class="section">
         <div class="card">
+            <div class="row">
+                
+                
+            </div>
         <div class="card-header">
                 <!-- <a href="kelola.php" class="btn icon icon-left btn-primary"><i data-feather="plus"></i> Tambah Barang</a> -->
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
                 <button id="btnExcel" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</button>
                 <button id="btnPDF" class="btn icon icon-left btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
                 </div>
+
+                
+                <!-- FILTER DISINI WOOII-->
+                <div class="container">
+                    <div class="row">
+                    <form class="form" method="POST" action="">
+                    <div class="col-6 col-md-4">
+                        <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" class="form-control" placeholder="Start"  name="date1" value="<?php echo isset(
+                            $_POST["date1"]
+                        )
+                            ? $_POST["date1"]
+                            : ""; ?>" />
+                        </div>
+                    </div>
+    
+                    <div class="col-6 col-md-4">
+                        <div class="form-group">
+                        <label>To</label>
+            <input type="date" class="form-control" placeholder="End"  name="date2" value="<?php echo isset(
+                $_POST["date2"]
+            )
+                ? $_POST["date2"]
+                : ""; ?>"/>
+                        </div>
+                    </div>
+          
+            <div class="col-sm">
+                <label>Status Barang</label>
+    
+                <select name="status" class="form-select">
+                    <option value="">Status</option>
+                    <option value="masuk" <?php isset($_GET["status"]) == true
+                        ? ($_GET["status"] == "masuk"
+                            ? "selected"
+                            : "")
+                        : ""; ?> >Barang Masuk</option>
+                    <option value="keluar" <?php isset($_GET["status"]) == true
+                        ? ($_GET["status"] == "keluar"
+                            ? "selected"
+                            : "")
+                        : ""; ?> >Barang Keluar</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" name="search"><span class="bi bi-search"></span></button> 
+            <a href="index.php" type="button" class="btn btn-success"><span class="bi bi-arrow-clockwise"></span></a>
+        </form>
+    
+        
+    </div>
+
+                </div>
+                
+
             </div>
             <div class="card-header">
                 
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table" id="table1">
-                        <thead>
-                            <tr>
-                                <!-- <th>No</th> -->
-                                <th>Tanggal</th>
-                                <th>Barcode</th>
-                                <th>ID Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Jenis Peralatan</th>
-                                <th>Merk</th>
-                                <th>SN</th>
-                                <th>Asal Perolehan</th>
-                                <!-- <th>Jumlah Barang</th> -->
-                                <th>Harga (Rp)</th>
-                                <th>Status</th>
-                                <th>Keterangan</th>
-                                <th>Foto</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while (
-                                $result = mysqli_fetch_assoc($sql)
-                            ) { ?>
-                                  <tr>
-                                  
-                                  <td><?php echo (new DateTime(
-                                      $result["tanggal"]
-                                  ))->format("d-m-Y"); ?></td>
-                               <td style="background-color: #F2F7FF;">
-                                    <?php echo $generator->getBarcode(
-                                        $result["id_barang"],
-                                        $generator::TYPE_CODE_128
-                                    ); ?>
-                                </td>
-                                  <td><?php echo $result["id_barang"]; ?></td>
-                                  <td><?php echo $result["nama_barang"]; ?></td>
-                                  <td><?php echo $result[
-                                      "jenis_peralatan"
-                                  ]; ?></td>
-                                  <td><?php echo $result["merk"]; ?></td>
-                                  <td><?php echo $result["sn"]; ?></td>
-                                  <td><?php echo $result[
-                                      "asal_perolehan"
-                                  ]; ?></td>
-                                   <!-- hapus jumlah barang -->
-                                   <td><?php echo number_format(
-                                       $result["harga"],
-                                       0,
-                                       ".",
-                                       "."
-                                   ); ?></td>
-                                   <td>
-    <?php 
-        if($result["status"] == "masuk") {
+                <table class="table" id="table1">
+    <thead>
+        <tr>
+            <th>Tanggal</th>
+            <th>QR Code</th>
+            <th>ID Barang</th>
+            <th>Nama Barang</th>
+            <th>Jenis Peralatan</th>
+            <th>Merk</th>
+            <th>SN</th>
+            <th>Asal Perolehan</th>
+            <th>Harga (Rp)</th>
+            <th>Status</th>
+            <th>Keterangan</th>
+            <th>Foto</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php // Loop through query results and display data in table rows
+    while ($row = mysqli_fetch_assoc($result)) { ?>
+<tr>
+    <td><?php echo (new DateTime($row["tanggal"]))->format("d-m-Y"); ?></td>
+    <td style="background-color: #F2F7FF;">
+    <?php
+    $qrcode = "infoBarang.php?id_barang=" . $row["id_barang"];
+
+    require_once "phpqrcode/qrlib.php";
+    $qrsaved = "qr temp/";
+    QRCode::png(
+        "$qrcode",
+        $qrsaved . "qrcode" . $row["id_barang"] . ".png",
+        "M",
+        4,
+        4
+    );
+    ?>
+    <a href="infoBarang.php?id_barang=<?php echo $row["id_barang"]; ?>">
+        <img src="<?php echo $qrsaved; ?>qrcode<?php echo $row[
+    "id_barang"
+]; ?>.png" alt="">
+    </a>
+</td>
+    <td><?php echo $row["id_barang"]; ?></td>
+    <td><?php echo $row["nama_barang"]; ?></td>
+    <td><?php echo $row["jenis_peralatan"]; ?></td>
+    <td><?php echo $row["merk"]; ?></td>
+    <td><?php echo $row["sn"]; ?></td>
+    <td><?php echo $row["asal_perolehan"]; ?></td>
+    <td><?php echo number_format($row["harga"], 0, ".", "."); ?></td>
+    <td>
+        <?php if ($row["status"] == "masuk") {
             echo '<span class="badge bg-success">Masuk</span>';
-        } elseif ($result["status"] == "keluar") {
+        } elseif ($row["status"] == "keluar") {
             echo '<span class="badge bg-danger">Keluar</span>';
         } else {
-            echo $result["status"]; // Display status as it is if neither "masuk" nor "keluar"
-        }
-    ?>
-</td>
+            echo $row["status"]; // Display status as it is if neither "masuk" nor "keluar"
+        } ?>
+    </td>
+    <td><?php echo $row["keterangan"]; ?></td>
+    <td><img src="./uploads/<?php echo $row[
+        "foto"
+    ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+    <td>
+        <a href="kelola.php?ubah=<?php echo $row[
+            "id"
+        ]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
+        <a href="#" onclick="confirmDelete(<?php echo $row[
+            "id"
+        ]; ?>, 'semuaBarang.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+    </td>
+</tr>
+<?php } ?>
 
-                                  <td><?php echo $result["keterangan"]; ?></td>
-                                  <td><img src="./uploads/<?php echo $result[
-                                      "foto"
-                                  ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
-                                  <td>
-                                      <a href="kelola.php?ubah=<?php echo $result[
-                                          "id"
-                                      ]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i>
-                                      </a>
-                                      <!-- <button type="button" class="btn icon btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#danger">
-                                            <i class="bi bi-trash"></i>
-                                        </button> -->
-                                        <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'semuaBarang.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+    </tbody>
+</table>
 
-                                  </td>
-                                  </tr>
-                                  <?php } ?>
-                            </tbody>
-                    </table>
                 </div>
             </div>
         </div>

@@ -54,12 +54,15 @@ if (isset($_POST["aksi"])) {
             $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$foto','$keterangan')";
             $sql = mysqli_query($conn, $query);
 
-        if ($sql) {
-            // echo $tanggal.''.$barcode.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
-            header("location: barangMasuk.php");
-        } else {
-            echo $query;
-        }
+            if ($sql) {
+                if ($status == "masuk") {
+                    header("location: barangMasuk.php");
+                } elseif ($status == "keluar") {
+                    header("location: barangKeluar.php");
+                }
+            } else {
+                echo $query;
+            }
     } elseif ($_POST["aksi"] == "edit") {
         echo "Edit Data";
         $id = $_POST["id"];
@@ -102,8 +105,11 @@ $status = $_POST["status"];
 
 
         if ($sql) {
-            // echo $tanggal.''.$barcode.''.$id_barang.''.$nama_barang.''.$jenis_peralatan.''.$merk.''.$sn.''.$asal_perolehan.''.$jumlah_barang.''.$harga.''.$keterangan.'';
-            header("location: barangMasuk.php");
+            if ($status == "masuk") {
+                header("location: barangMasuk.php");
+            } elseif ($status == "keluar") {
+                header("location: barangKeluar.php");
+            }
         } else {
             echo $query;
         }

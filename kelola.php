@@ -163,15 +163,15 @@ if (isset($_GET["ubah"])) {
             
 
         </li>
-        <li
-                class="sidebar-item  ">
-                <a href="logout.php" class='sidebar-link'>
-                    <i class="bi bi-life-preserver"></i>
-                    <span>Logout</span>
-                </a>
-                
-
-            </li>
+       
+            
+            
+            <li class="sidebar-item">
+            <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
+            </a>
+        </li>
         
             
         </ul>

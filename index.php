@@ -5,9 +5,19 @@ include "koneksi.php";
 $data = [];
 $categories = [];
 
+
 // Fetch data from the database
-$query = "SELECT * FROM masuk";
-$result = mysqli_query($conn, $query);
+$query_masuk = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'keluar'";
+$result_masuk = mysqli_query($conn, $query_masuk);
+$row_masuk = mysqli_fetch_assoc($result_masuk);
+$barang_masuk = $row_masuk['total'];
+
+mysqli_close($conn);
+$data_pie = [$barang_masuk, $barang_keluar];
+$labels_pie = ['Barang Masuk', 'Barang Keluar'];
+
+$data_pie_json = json_encode($data_pie);
+$labels_pie_json = json_encode($labels_pie);
 
 // Loop through the results and populate arrays
 // while ($row = mysqli_fetch_assoc($result)) {
@@ -100,9 +110,11 @@ $categories_json = json_encode($categories);
     };
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
-
         var optionsPie = {
-          series: [46, 0],
+        series: [{
+        name: 'Jumlah Barang',
+        data: <?php echo $data_pie_json; ?>
+        }],
           chart: {
           width: 380,
           type: 'pie',
@@ -222,6 +234,9 @@ $categories_json = json_encode($categories);
                 
 
             </li> -->
+            <!-- <li class="sidebar-title">Informasi</li> -->
+            
+            
             <li class="sidebar-item">
             <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
                 <i class="bi bi-box-arrow-left"></i>
