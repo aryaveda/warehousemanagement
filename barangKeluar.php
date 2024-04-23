@@ -178,7 +178,9 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <section class="section">
         <div class="card">
         <div class="card-header">
-        <a href="kelola.php?status=keluar" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang</a>
+        <!-- <a href="kelola.php?status=keluar" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang</a> -->
+        <a href="pilihKeluar.php" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang Keluar</a>
+
 
 
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
@@ -195,16 +197,18 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                         <thead>
                             <tr>
                                 <!-- <th>No</th> -->
-                                <th>Tanggal</th>
+                                <th>Tanggal Keluar</th>
                                 <th>QR Code</th>
                                 <th>ID Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jenis Peralatan</th>
                                 <th>Merk</th>
                                 <th>SN</th>
-                                <th>Asal Perolehan</th>
+                                <!-- <th>Asal Perolehan</th> -->
                                 <!-- <th>Jumlah Barang</th> -->
-                                <th>Harga (Rp)</th>
+                                <th>Lokasi</th>
+                                <th>Teknisi Penanggungjawab</th>
+
                                 <th>Keterangan</th>
                                 <th>Foto</th>
                                 <th>Aksi</th>
@@ -235,8 +239,9 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <td><?php echo $result["jenis_peralatan"]; ?></td>
         <td><?php echo $result["merk"]; ?></td>
         <td><?php echo $result["sn"]; ?></td>
-        <td><?php echo $result["asal_perolehan"]; ?></td>
-        <td><?php echo number_format($result["harga"], 0, ".", "."); ?></td>
+        <td><?php echo $result["lokasi"]; ?></td>
+        <td><?php echo $result["teknisi"]; ?></td>
+        
         <td><?php echo $result["keterangan"]; ?></td>
         <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
         <td>

@@ -250,6 +250,9 @@ if (isset($_GET["ubah"])) {
               <form method="POST" action="proses.php" class="form" enctype="multipart/form-data">
                 <input type="hidden" value="<?php echo $id; ?>" name="id">
                 <input type="hidden" name="status" value="<?php echo isset($_GET['status']) ? $_GET['status'] : ''; ?>">
+                <input type="hidden" name="lokasi" value="">
+                 <input type="hidden" name="teknisi" value="">
+
                 <div class="row">
                   <div class="col-md-6 col-12">
                     <div class="">
