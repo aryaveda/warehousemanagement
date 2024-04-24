@@ -1,4 +1,4 @@
-    <?php
+<?php
     include "koneksi.php";
     include "auth.php";
 
@@ -246,10 +246,9 @@
             <td><?php echo $result["keterangan"]; ?></td>
             <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
             <td>
-            <button class="btn icon btn-secondary me-1 aksi-buttons" data-toggle="modal" data-target="#exampleModal" onclick="printQRCode('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
-    <i class="bi bi-qr-code-scan"></i>
-</button>
-
+            
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPrintQR">
+                <i class="bi bi-qr-code-scan"></i></button>
             <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=masuk" type="button" class="btn icon btn-primary me-1 aksi-buttons">
                 <i class="bi bi-pencil"></i>
             </a>
@@ -270,26 +269,61 @@
                 </div>
             </div>
 
-            <!-- MODAL PRINT -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+ <!-- Modal untuk Input Jumlah QR Code -->
+<div class="modal fade" id="modalPrintQR" tabindex="-1" aria-labelledby="modalPrintQRLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            ...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPrintQRLabel">Cetak QR Code</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formPrintQR">
+                    <div class="form-group">
+                        <label for="jumlahQR">Jumlah QR Code yang akan dicetak:</label>
+                        <input type="number" class="form-control" id="jumlahQR" name="jumlahQR" min="1" value="1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button class="btn icon btn-secondary me-1 aksi-buttons" onclick="printQRCode()">
+                    <i class="bi bi-qr-code-scan"></i> Cetak
+                </button>
+            </div>
         </div>
     </div>
-    </div>
+</div>
+
+<script>
+
+        var imageSrc = "<?php echo $qrsaved . 'qrcode' . $result['id_barang'] . '.png' . $result['nama_barang']; ?>";
+            printQRCode(imageSrc);
+
+</script>
+
+<script>
+
+        function printQRCode(imageSrc) {
+        // Membuka jendela baru
+        var printWindow = window.open('', '_blank', 'height=600,width=800');
+        
+        // Menulis konten HTML ke jendela baru
+        printWindow.document.write('<html><head><title>Cetak QR Code</title></head><body>');
+        printWindow.document.write('<img src="' + imageSrc + '" style="display: block; margin: auto;">'); // Menampilkan gambar QR code
+        printWindow.document.write('</body></html>');
+        
+        // Menunggu konten jendela untuk dimuat sebelum mencetak
+        printWindow.document.close();
+        printWindow.onload = function() {
+            printWindow.print(); // Memulai pencetakan
+            printWindow.close(); // Menutup jendela setelah pencetakan
+        };
+        }
+</script>
+
 
 
             <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
@@ -425,26 +459,5 @@
             table.button('.buttons-pdf').trigger();
         });
 
-            function printQRCode(imageSrc) {
-            
-            var printWindow = window.open('', '_blank');
-            printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
-            location.reload();
-
-            // Define the number of QR codes per row
-            var qrCodesPerRow = 24;
-            
-            for (var i = 0; i < qrCodesPerRow; i++) {
-                printWindow.document.write('<img src="' + imageSrc + '">');
-            }
-
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-            printWindow.close();
-            // Reload the page after printing QR code
-            location.reload();
-            }
-            </script>
         </body>
     </html>

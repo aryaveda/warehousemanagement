@@ -1,35 +1,58 @@
 <?php
 include "koneksi.php";
 
+
 // Initialize arrays to store data
 $data = [];
 $categories = [];
 
-$barang_masuk = [];
-$barang_keluar = [];
+$jumlahMasuk = 0;
+$jumlahKeluar = 0;
 
-// Fetch data from the database
-$query_masuk = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'keluar'";
-$result_masuk = mysqli_query($conn, $query_masuk);
-$row_masuk = mysqli_fetch_assoc($result_masuk);
-$barang_masuk = $row_masuk['total'];
+
+
+// Query untuk menghitung jumlah barang masuk
+$queryMasuk = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'masuk'";
+$resultMasuk = mysqli_query($conn, $queryMasuk);
+if ($rowMasuk = mysqli_fetch_assoc($resultMasuk)) {
+    $jumlahMasuk = $rowMasuk['total'];
+}
+
+// Query untuk menghitung jumlah barang keluar
+$queryKeluar = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'keluar'";
+$resultKeluar = mysqli_query($conn, $queryKeluar);
+if ($rowKeluar = mysqli_fetch_assoc($resultKeluar)) {
+    $jumlahKeluar = $rowKeluar['total'];
+}
 
 mysqli_close($conn);
-$data_pie = [$barang_masuk, $barang_keluar];
+
+
+$total = $jumlahMasuk + $jumlahKeluar;
+$persentaseMasuk = ($jumlahMasuk / $total) * 100;
+$persentaseKeluar = ($jumlahKeluar / $total) * 100;
+
+// Bulatkan persentase jika diperlukan
+$persentaseMasuk = round($persentaseMasuk, 2);
+$persentaseKeluar = round($persentaseKeluar, 2);
+
+// Pastikan total persentase adalah 100%
+// Ini bisa dilakukan dengan menyesuaikan salah satu persentase berdasarkan pembulatan
+$totalPersentase = $persentaseMasuk + $persentaseKeluar;
+if ($totalPersentase > 100) {
+    $persentaseKeluar -= ($totalPersentase - 100);
+} elseif ($totalPersentase < 100) {
+    $persentaseKeluar += (100 - $totalPersentase);
+}
+$dataPie = [$persentaseMasuk, $persentaseKeluar];
 $labels_pie = ['Barang Masuk', 'Barang Keluar'];
 
-$data_pie_json = json_encode($data_pie);
+$data_pie_json = json_encode($dataPie);
 $labels_pie_json = json_encode($labels_pie);
 
-// Loop through the results and populate arrays
-// while ($row = mysqli_fetch_assoc($result)) {
-//     $categories[] = $row["nama_barang"];
-//     $data[] = (int) $row["jumlah_barang"]; // Ensure quantity is treated as integer
-// }
-
-// Convert arrays to JSON format
 $data_json = json_encode($data);
 $categories_json = json_encode($categories);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,19 +62,13 @@ $categories_json = json_encode($categories);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Warehouse Management BMKG</title>
     
-    
-    
     <link rel="shortcut icon" href="./assets/compiled/png/logo.svg" type="image/x-icon">
     <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC" type="image/png">
     
-
-
   <link rel="stylesheet" href="./assets/compiled/css/app.css">
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
   <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
   
-
-  <!-- <link rel="stylesheet" href="./assets/compiled/css/gaya.css"> -->
 </head>
 
 <body>
@@ -113,17 +130,14 @@ $categories_json = json_encode($categories);
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
         var optionsPie = {
-        series: [{
-        name: 'Jumlah Barang',
-        data: <?php echo $data_pie_json; ?>
-        }],
-          chart: {
+        series: <?php echo json_encode($dataPie); ?>,
+        chart: {
           width: 380,
           type: 'pie',
         },
-        labels: ['Barang Masuk', 'Barang Keluar'],
+        labels: <?php echo $labels_pie_json; ?>,
         responsive: [{
-          breakpoint: 480,
+          breakpoint: 200,
           options: {
             chart: {
               width: 200
@@ -141,6 +155,7 @@ $categories_json = json_encode($categories);
 
         };
     </script>
+
     <div id="app">
         
         <div id="sidebar">
@@ -209,6 +224,7 @@ $categories_json = json_encode($categories);
             
             <ul class="submenu ">
                 
+                
                 <li class="submenu-item  ">
                     <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
                     
@@ -218,6 +234,7 @@ $categories_json = json_encode($categories);
                     <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
                     
                 </li>
+                
                 <li class="submenu-item  ">
                     <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
                     
@@ -227,19 +244,7 @@ $categories_json = json_encode($categories);
             
 
         </li>
-        <!-- <li
-                class="sidebar-item">
-                <a id="background" href="logout.php" class=' btn btn-outline-danger btn-block btn-lg'>
-                <i class="bi bi-box-arrow-left"></i>
-                    <span>Logout</span>
-                </a>
-                
-
-            </li> -->
-            <!-- <li class="sidebar-title">Informasi</li> -->
-            
-            
-            <li class="sidebar-item">
+        <li class="sidebar-item">
             <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
                 <i class="bi bi-box-arrow-left"></i>
                 <span>Logout</span>
@@ -311,7 +316,7 @@ $categories_json = json_encode($categories);
 
     
 <!-- Need: Apexcharts -->
-<!-- <script src="assets/extensions/apexcharts/apexcharts.min.js"></script> -->
+<script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
 <script src="assets/static/js/pages/dashboard.js"></script>
 <script src="assets/extensions/dayjs/dayjs.min.js"></script>
 <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
