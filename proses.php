@@ -1,12 +1,13 @@
 <?php
 include "koneksi.php";
+include "auth.php";
+
 
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         $tanggal = $_POST["tanggal"];
-        $date = new DateTime($tanggal);
-        $current_time = new DateTime(); // Current date and time
-        $id_barang = $date->format("Ymd") . $current_time->format("His");
+        $tanggal = $_POST["tanggal_keluar"];
+        $id_barang = $_POST["id_barang"];
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];
@@ -24,7 +25,7 @@ if (isset($_POST["aksi"])) {
 
         move_uploaded_file($tmpFile, $dir . $foto);
 
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$lokasi','$teknisi','$foto','$keterangan')"; // Modified query with lokasi and teknisi
+        $query = "INSERT INTO masuk VALUES(null, '$tanggal','$tanggal_keluar', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$lokasi','$teknisi','$foto','$keterangan')"; // Modified query with lokasi and teknisi
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
@@ -40,6 +41,8 @@ if (isset($_POST["aksi"])) {
         // For edit action, don't change status, lokasi, and teknisi
         $id = $_POST["id"];
         $tanggal = $_POST["tanggal"];
+        $tanggal_keluar = $_POST["tanggal_keluar"];
+
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
         $merk = $_POST["merk"];
@@ -68,7 +71,7 @@ if (isset($_POST["aksi"])) {
             );
         }
     
-        $query = "UPDATE masuk SET tanggal='$tanggal',nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto', status='$status', lokasi='$lokasi', teknisi='$teknisi' WHERE id='$id';";
+        $query = "UPDATE masuk SET tanggal='$tanggal',tanggal_keluar='$tanggal_keluar', nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto', status='$status', lokasi='$lokasi', teknisi='$teknisi' WHERE id='$id';";
         $sql = mysqli_query($conn, $query);
     
         if ($sql) {
@@ -83,13 +86,13 @@ if (isset($_POST["aksi"])) {
     } elseif ($_POST["aksi"] == "keluar") {
         // For keluar action, only change tanggal, lokasi, teknisi, and keterangan
         $id = $_POST["id"];
-        $tanggal = $_POST["tanggal"];
+        $tanggal_keluar = $_POST["tanggal_keluar"];
         $lokasi = $_POST["lokasi"];
         $teknisi = $_POST["teknisi"];
         $keterangan = $_POST["keterangan"];
         $status = "keluar"; // Set status to "keluar"
     
-        $query = "UPDATE masuk SET tanggal='$tanggal', lokasi='$lokasi', teknisi='$teknisi', keterangan='$keterangan', status='$status' WHERE id ='$id';";
+        $query = "UPDATE masuk SET tanggal_keluar='$tanggal_keluar', lokasi='$lokasi', teknisi='$teknisi', keterangan='$keterangan', status='$status' WHERE id ='$id';";
         $sql = mysqli_query($conn, $query);
     
         if ($sql) {

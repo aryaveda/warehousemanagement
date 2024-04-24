@@ -10,6 +10,8 @@ REEESUULLLTT DIIIGANTTTII KEEEE ROOOOWWWW -->
 
 <?php
 // Include database connection script
+include "auth.php";
+
 include "koneksi.php";
 
 // Include Barcode Generator library
@@ -291,7 +293,8 @@ if (
                 <table class="table" id="table1">
     <thead>
         <tr>
-            <th>Tanggal</th>
+            <th>Tanggal Masuk</th>
+            <th>Tanggal Keluar</th>
             <th>QR Code</th>
             <th>ID Barang</th>
             <th>Nama Barang</th>
@@ -308,9 +311,14 @@ if (
     </thead>
     <tbody>
     <?php // Loop through query results and display data in table rows
-    while ($row = mysqli_fetch_assoc($result)) { ?>
+
+while ($row = mysqli_fetch_assoc($result)) { ?>
 <tr>
     <td><?php echo (new DateTime($row["tanggal"]))->format("d-m-Y"); ?></td>
+    <td><?php echo !empty($row["tanggal_keluar"])
+        ? (new DateTime($row["tanggal_keluar"]))->format("d-m-Y")
+        : "-"; ?></td>
+
     <td style="background-color: #F2F7FF;">
     <?php
     $qrcode = "infoBarang.php?id_barang=" . $row["id_barang"];
@@ -409,8 +417,7 @@ if (
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>
@@ -462,6 +469,9 @@ if (
                     class: 'buttons-excel',
                     init: function(api, node, config){
                         $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 3,4,5,6,7,8,9,11]
                     }
                 },
                 {
@@ -469,6 +479,9 @@ if (
                     class: 'buttons-print',
                     init: function(api, node, config){
                         $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 3,4,5,6,7,8,9,11]
                     }
                 },
                 {
@@ -476,6 +489,9 @@ if (
                     class: 'buttons-pdf',
                     init: function(api, node, config){
                         $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 1, 3,4,5,6,7,8,9,11]
                     }
                 }
             ]

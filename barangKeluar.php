@@ -1,22 +1,19 @@
 <?php
 include "koneksi.php";
+include "auth.php";
+
 require "vendor/autoload.php";
 $query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
 $no = 0;
 $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabel Barang Keluar - BMKG Warehouse Management</title>
-    
-    
-    
     <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC" type="image/png">
     
@@ -28,6 +25,12 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head>
 
+<style>
+    .showHideColumn{
+        cursor: pointer;
+        color: blue;
+    }
+</style>
 <body>
 
 
@@ -180,9 +183,6 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <div class="card-header">
         <!-- <a href="kelola.php?status=keluar" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang</a> -->
         <a href="pilihKeluar.php" class="btn icon icon-left btn-warning"><i data-feather="plus"></i>Tambah Barang Keluar</a>
-
-
-
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
                 <button id="btnExcel" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</button>
                 <button id="btnPDF" class="btn icon icon-left btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
@@ -194,33 +194,31 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table" id="table1">
-                        <thead>
-                            <tr>
-                                <!-- <th>No</th> -->
-                                <th>Tanggal Keluar</th>
-                                <th>QR Code</th>
-                                <th>ID Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Jenis Peralatan</th>
-                                <th>Merk</th>
-                                <th>SN</th>
-                                <!-- <th>Asal Perolehan</th> -->
-                                <!-- <th>Jumlah Barang</th> -->
-                                <th>Lokasi</th>
-                                <th>Teknisi Penanggungjawab</th>
+                    <thead>
+    <tr>
+        <th>Tanggal Keluar</th>
+        <th>QR Code</th>
+        <th>ID Barang</th>
+        <th>Nama Barang</th>
+        <th>Jenis Peralatan</th>
+        <th>Merk</th>
+        <th>SN</th>
+        <th>Lokasi</th>
+        <th>Teknisi PJ</th>
+        <th>Keterangan</th>
+        <th>Foto</th>
+        <th>Aksi</th> <!-- Add class to Aksi column -->
+    </tr>
+</thead>
 
-                                <th>Keterangan</th>
-                                <th>Foto</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
                         <tbody>
     <?php
     while ($result = mysqli_fetch_assoc($sql)) {
         if ($result["status"] === 'keluar') { // Check if the status is 'keluar'
     ?>
     <tr>
-        <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
+    <td><?php echo !empty($row["tanggal_keluar"]) ? (new DateTime($row["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
+
         <td style="background-color: #F2F7FF;">
     <?php 
     $qrcode = "infoBarang.php?id_barang=" . $result["id_barang"];
@@ -245,7 +243,8 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <td><?php echo $result["keterangan"]; ?></td>
         <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
         <td>
-            <a href="kelola.php?ubah=<?php echo $result["id"]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
+        <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=keluar" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
+
             <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangKeluar.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
         </td>
     </tr>
@@ -300,8 +299,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>
@@ -328,13 +326,15 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.colVis.min.js"></script>
+
 <script>
     function confirmDelete(id, origin) {
         $('#danger').modal('show');
-        // Set the href attribute of the "Ya" button to the deletion URL
         $('.btn-danger-confirm').attr('href', 'proses.php?hapus=' + id + '&origin=' + origin);
     }
 </script>
+
 
 <script>
     var table;
@@ -354,6 +354,9 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     class: 'buttons-excel',
                     init: function(api, node, config){
                         $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 2, 3,4,5,6,7,8,9,10]
                     }
                 },
                 {
@@ -361,6 +364,9 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     class: 'buttons-print',
                     init: function(api, node, config){
                         $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 2, 3,4,5,6,7,8,9,10]
                     }
                 },
                 {
@@ -368,8 +374,11 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     class: 'buttons-pdf',
                     init: function(api, node, config){
                         $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 2, 3,4,5,6,7,8,9,10]
                     }
-                }
+                }, 'colvis'
             ]
         });
     });
@@ -383,7 +392,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     $('#btnPDF').on('click', function() {
         table.button('.buttons-pdf').trigger();
     });
-</script>
+</script> 
 </body>
 
 </html>

@@ -1,5 +1,12 @@
 <?php
+// include "auth.php";
 include "koneksi.php";
+session_start();
+$userLoggedIn = isset($_SESSION['session_username']);
+$rememberMe = isset($_COOKIE['cookie_username']) && isset($_COOKIE['cookie_password']);
+
+// If user is not logged in and not remembered, disable sidebar menu
+$sidebarDisabled = !($userLoggedIn || $rememberMe);
 require "vendor/autoload.php";
 // $query = "SELECT * FROM masuk;";
 // $sql = mysqli_query($conn, $query);
@@ -69,59 +76,51 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <div class="sidebar-menu">
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
-            
-            <li
-                class="sidebar-item ">
-                <a href="index.php" class='sidebar-link'>
-                    <i class="bi bi-grid-fill"></i>
-                    <span>Dashboard</span>
-                </a>
-                
 
-            </li>
-            
-        
-            
-            <li
-            class="sidebar-item has-sub">
-            <a href="#" class='sidebar-link'>
-                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                <span>Tabel Data</span>
-            </a>
-            
-            <ul class="submenu ">
-                
-                <li class="submenu-item  ">
-                    <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
-                    
+            <?php if ($userLoggedIn || $rememberMe) { ?>
+                <li class="sidebar-item">
+                    <a href="index.php" class="sidebar-link">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </li>
-                
-                <li class="submenu-item  ">
-                    <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
-                    
-                </li>
-                <li class="submenu-item ">
-                    <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
-                    
-                </li>
-                
-            </ul>
-            
+            <?php } ?>
 
-        </li>
-
-        <!-- <li class="sidebar-title active">Informasi</li> -->
-            
-        
-        <li class="sidebar-item">
-            <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
-                <i class="bi bi-box-arrow-left"></i>
-                <span>Logout</span>
-            </a>
-        </li>
-        
-        
-            
+            <!-- Tabel Data -->
+            <?php if ($userLoggedIn || $rememberMe) { ?>
+                <li class="sidebar-item has-sub">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                        <span>Tabel Data</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
+                        </li>
+                    </ul>
+                </li>
+            <?php } ?>
+            <?php if ($userLoggedIn || $rememberMe) { ?>
+                <li class="sidebar-item">
+                    <a href="logout.php" class="btn btn-outline-danger btn-block">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            <?php } else { ?>
+                <li class="sidebar-item">
+                    <a href="login.php" class="btn btn-outline-info btn-block">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Login untuk melanjutkan</span>
+                    </a>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </div>
@@ -205,6 +204,10 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <input type="date" name="tanggal" id="tanggal" class="form-control" placeholder="-" value="<?php echo $result["tanggal"]; ?>" readonly>
     </div>
     <div class="form-group">
+        <label for="tanggal" class="form-label">Tanggal Keluar</label>
+        <input type="date" name="tanggal_keluar" id="tanggal_keluar" class="form-control" placeholder="-" value="<?php echo $result["tanggal_keluar"]; ?>" readonly>
+    </div>
+    <div class="form-group">
         <label for="email" class="form-label">ID Barang</label>
         <input type="text" name="id_barang" id="id_barang" class="form-control" placeholder="-" value="<?php echo $result["id_barang"]; ?>" readonly>
     </div>
@@ -231,6 +234,14 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <div class="form-group">
         <label for="harga" class="form-label">Harga</label>
         <input type="text" name="harga" id="harga" class="form-control" placeholder="-" value="<?php echo $result["harga"]; ?>" readonly>
+    </div>
+    <div class="form-group">
+        <label for="harga" class="form-label">Lokasi</label>
+        <input type="text" name="harga" id="harga" class="form-control" placeholder="-" value="<?php echo $result["lokasi"]; ?>" readonly>
+    </div>
+    <div class="form-group">
+        <label for="harga" class="form-label">Teknisi Penanggungjawab</label>
+        <input type="text" name="harga" id="harga" class="form-control" placeholder="-" value="<?php echo $result["teknisi"]; ?>" readonly>
     </div>
     <div class="form-group">
         <label for="keterangan" class="form-label">Keterangan</label>

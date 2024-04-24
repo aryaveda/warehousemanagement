@@ -1,6 +1,8 @@
 <?php
 include "koneksi.php";
 require "vendor/autoload.php";
+include "auth.php";
+
 // $query = "SELECT * FROM masuk;";
 // $sql = mysqli_query($conn, $query);
 $no = 0;
@@ -201,7 +203,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                         <input type="hidden" value="<?php echo $result["id"]; ?>" name="id">
     <div class="form-group">
         <label for="tanggal" class="form-label">Tanggal Keluar</label>
-        <input type="date" name="tanggal" id="tanggal" class="form-control" placeholder="Tanggal Keluar">
+        <input type="date" name="tanggal_keluar" id="tanggal_keluar" class="form-control" placeholder="Tanggal Keluar">
     </div>
     <div class="form-group">
         <label for="lokasi" class="form-label">Lokasi Tujuan</label>

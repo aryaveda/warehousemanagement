@@ -5,6 +5,8 @@ include "koneksi.php";
 $data = [];
 $categories = [];
 
+$barang_masuk = [];
+$barang_keluar = [];
 
 // Fetch data from the database
 $query_masuk = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'keluar'";
@@ -294,8 +296,7 @@ $categories_json = json_encode($categories);
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>

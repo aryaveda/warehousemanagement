@@ -3,3 +3,9 @@
     height: auto; /* Maintain aspect ratio */
     /* You can also use height: 200px; if you want fixed height */
 }
+
+@media print {
+    .no-export {
+        display: none !important;
+    }
+}

@@ -1,9 +1,7 @@
 <?php
-// require_once("includes/dbh.inc.php");
-// include("includes/delete.inc.php");
-// $query = "select * from masuk";
-// $result = $pdo->query($query);
 include "koneksi.php";
+include "auth.php";
+
 $query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
 $no = 0;
@@ -28,6 +26,8 @@ if (isset($_GET["ubah"])) {
     $result = mysqli_fetch_assoc($sqlEdit);
 
     $tanggal = $result["tanggal"];
+    $tanggal = $result["tanggal_keluar"];
+
     // $barcode = rand(1000,9999);
     $id_barang = $result["id_barang"];
     $nama_barang = $result["nama_barang"];
@@ -37,6 +37,8 @@ if (isset($_GET["ubah"])) {
     $asal_perolehan = $result["asal_perolehan"];
     // $jumlah_barang = $result["jumlah_barang"];
     $harga = $result["harga"];
+    $lokasi = $result["lokasi"];
+    $teknisi = $result["teknisi"];
     // $foto = $result['foto'];
     $keterangan = $result["keterangan"];
 }
@@ -197,7 +199,7 @@ if (isset($_GET["ubah"])) {
             echo '<h3>Data Barang Keluar</h3>';
         }
     } else {
-        echo '<h3>Data Barang Masuk</h3>';
+        echo '<h3>Data Barang</h3>';
     }
     ?>
 </div>
@@ -252,24 +254,19 @@ if (isset($_GET["ubah"])) {
                 <input type="hidden" name="status" value="<?php echo isset($_GET['status']) ? $_GET['status'] : ''; ?>">
                 <input type="hidden" name="lokasi" value="">
                  <input type="hidden" name="teknisi" value="">
-
+                 <input type="hidden" name="id_barang" id="id_barang">
                 <div class="row">
-                  <div class="col-md-6 col-12">
-                    <div class="">
-                    
-                      <label for="tanggal" class="form-label"
-                        >Tanggal Masuk</label
-                      >
-                      <input
-    type="date"
-    id="tanggal"
-    class="form-control"
-    placeholder="Tanggal Masuk"
-    name="tanggal"
-    <?php echo isset($tanggal) ? 'value="' . date('Y-m-d', strtotime($tanggal)) . '"' : ''; ?>
-/>
-                    </div>
-                  </div>
+                <div class="col-md-6 col-12">
+        <div class="">
+            <?php if (isset($_GET["status"]) && $_GET["status"] === 'keluar') { ?>
+                <label for="tanggal_keluar" class="form-label">Tanggal Keluar</label>
+                <input type="date" id="tanggal_keluar" class="form-control" name="tanggal_keluar">
+            <?php } else { ?>
+                <label for="tanggal" class="form-label">Tanggal Masuk</label>
+                <input type="date" id="tanggal" class="form-control" name="tanggal">
+            <?php } ?>
+        </div>
+    </div>
                   
                   <!-- hapus ID Barang -->
 
@@ -366,6 +363,20 @@ if (isset($_GET["ubah"])) {
                       />
                     </div>
                   </div>
+                  <?php if (isset($_GET["status"]) && $_GET["status"] === 'keluar') { ?>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="lokasi" class="form-label">Lokasi</label>
+                <input type="text" id="lokasi" class="form-control" name="lokasi" placeholder="Lokasi">
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <label for="teknisi" class="form-label">Teknisi</label>
+                <input type="text" id="teknisi" class="form-control" name="teknisi" placeholder="Teknisi">
+            </div>
+        </div>
+    <?php } ?>
                   <div class="col-md-6 col-12">
                   <div class="form-group">
     <label for="foto" class="form-label">Foto Barang</label>
@@ -439,7 +450,19 @@ if (isset($_GET["ubah"])) {
     
     <script src="assets/compiled/js/app.js"></script>
     
-
+    <script>
+    document.getElementById('tambah').addEventListener('click', function() {
+        var currentDate = new Date();
+        var formattedDate = currentDate.getFullYear() +
+            ('0' + (currentDate.getMonth() + 1)).slice(-2) +
+            ('0' + currentDate.getDate()).slice(-2) +
+            ('0' + currentDate.getHours()).slice(-2) +
+            ('0' + currentDate.getMinutes()).slice(-2) +
+            ('0' + currentDate.getSeconds()).slice(-2);
+        document.getElementById('id_barang').value = formattedDate; // Set id_barang value
+        document.getElementById('barangForm').submit(); // Submit the form
+    });
+</script>
     
 <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
 <script src="assets/static/js/pages/simple-datatables.js"></script>
