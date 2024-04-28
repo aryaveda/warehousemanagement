@@ -30,7 +30,7 @@
     </head>
     <style>
         .aksi-buttons {
-            margin-right: 5px; /* Adjust the spacing as needed */
+            margin-right: 5px; 
         }
     </style>
 
@@ -44,9 +44,9 @@
                 document.getElementById('toggle-dark').addEventListener('click', function() {
                     var logo = document.querySelector('.logoBMKG img');
                     if (this.checked) {
-                        logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+                        logo.src = './assets/compiled/png/logo.png'; 
                     } else {
-                        logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+                        logo.src = './assets/compiled/png/logoblack.png'; 
                     }
                 });
             };
@@ -219,12 +219,24 @@
                             <tbody>
         <?php
         while ($result = mysqli_fetch_assoc($sql)) {
-            if ($result["status"] === 'masuk') { // Check if the status is 'masuk'
+            if ($result["status"] === 'masuk') { 
         ?>
-        <tr>
-            <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
-            <td style="background-color: #F2F7FF;">
-        <?php 
+    <tr>
+        <td>
+            <?php 
+            // Check if the date value is not empty and valid
+            if (!empty($result["tanggal"]) && strtotime($result["tanggal"]) !== false) {
+                // Format the date using DateTime object
+                echo (new DateTime($result["tanggal"]))->format("d-m-Y");
+            } else {
+                // If date value is empty or invalid, display a dash ("-")
+                echo "-";
+            }
+            ?>
+        </td>
+        <td style="background-color: #F2F7FF;">
+            <?php 
+
         $qrcode = "infoBarang.php?id_barang=" . $result["id_barang"];
 
         require_once("phpqrcode/qrlib.php");
@@ -247,8 +259,8 @@
             <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
             <td>
             
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPrintQR">
-                <i class="bi bi-qr-code-scan"></i></button>
+            <button class="btn icon btn-secondary me-1 aksi button" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
+            <i class="bi bi-qr-code-scan"></i></a></button>
             <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=masuk" type="button" class="btn icon btn-primary me-1 aksi-buttons">
                 <i class="bi bi-pencil"></i>
             </a>
@@ -269,7 +281,6 @@
                 </div>
             </div>
 
- <!-- Modal untuk Input Jumlah QR Code -->
 <div class="modal fade" id="modalPrintQR" tabindex="-1" aria-labelledby="modalPrintQRLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -289,41 +300,42 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button class="btn icon btn-secondary me-1 aksi-buttons" onclick="printQRCode()">
-                    <i class="bi bi-qr-code-scan"></i> Cetak
+                <button class="btn icon btn-primary me-1 aksi-buttons" onclick="printQRCode()">
+                    <i class="bi bi-qr-code-scan"></i> Cetak 
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-
-        var imageSrc = "<?php echo $qrsaved . 'qrcode' . $result['id_barang'] . '.png' . $result['nama_barang']; ?>";
-            printQRCode(imageSrc);
-
-</script>
 
 <script>
+    var qrCodeData = {};
 
-        function printQRCode(imageSrc) {
-        // Membuka jendela baru
-        var printWindow = window.open('', '_blank', 'height=600,width=800');
-        
-        // Menulis konten HTML ke jendela baru
-        printWindow.document.write('<html><head><title>Cetak QR Code</title></head><body>');
-        printWindow.document.write('<img src="' + imageSrc + '" style="display: block; margin: auto;">'); // Menampilkan gambar QR code
-        printWindow.document.write('</body></html>');
-        
-        // Menunggu konten jendela untuk dimuat sebelum mencetak
-        printWindow.document.close();
-        printWindow.onload = function() {
-            printWindow.print(); // Memulai pencetakan
-            printWindow.close(); // Menutup jendela setelah pencetakan
-        };
+    function setQRCodeData(imageSrc, productName) {
+            qrCodeData.imageSrc = imageSrc;
+            qrCodeData.productName = productName;
         }
-</script>
 
+        function printQRCode() {
+        var jumlahQR = document.getElementById('jumlahQR').value; 
+        var imageSrc = qrCodeData.imageSrc;
+        var productName = qrCodeData.productName;
+        
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
+
+        for (var i = 0; i < jumlahQR; i++) {
+            printWindow.document.write('<img src="' + imageSrc + '">');
+        }
+        
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+        location.reload();
+    }
+</script>
 
 
             <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
@@ -357,7 +369,7 @@
                                                 </div>
                                             </div>
         </section>
-        <!-- Basic Tables end -->
+
 
     </div>
 
@@ -397,7 +409,7 @@
     <script>
         function confirmDelete(id, origin) {
             $('#danger').modal('show');
-            // Set the href attribute of the "Ya" button to the deletion URL
+
             $('.btn-danger-confirm').attr('href', 'proses.php?hapus=' + id + '&origin=' + origin);
         }
     </script>

@@ -207,17 +207,17 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <th>Teknisi PJ</th>
         <th>Keterangan</th>
         <th>Foto</th>
-        <th>Aksi</th> <!-- Add class to Aksi column -->
+        <th>Aksi</th> 
     </tr>
 </thead>
 
                         <tbody>
     <?php
     while ($result = mysqli_fetch_assoc($sql)) {
-        if ($result["status"] === 'keluar') { // Check if the status is 'keluar'
+        if ($result["status"] === 'keluar') { 
     ?>
     <tr>
-    <td><?php echo !empty($row["tanggal_keluar"]) ? (new DateTime($row["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
+    <td><?php echo !empty($result["tanggal_keluar"]) ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
 
         <td style="background-color: #F2F7FF;">
     <?php 
@@ -243,6 +243,8 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <td><?php echo $result["keterangan"]; ?></td>
         <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
         <td>
+        <button class="btn icon btn-secondary" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
+            <i class="bi bi-qr-code-scan"></i></button>
         <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=keluar" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
 
             <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangKeluar.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
@@ -258,6 +260,62 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modalPrintQR" tabindex="-1" aria-labelledby="modalPrintQRLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPrintQRLabel">Cetak QR Code</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formPrintQR">
+                    <div class="form-group">
+                        <label for="jumlahQR">Jumlah QR Code yang akan dicetak:</label>
+                        <input type="number" class="form-control" id="jumlahQR" name="jumlahQR" min="1" value="1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button class="btn icon btn-primary me-1 aksi-buttons" onclick="printQRCode()">
+                    <i class="bi bi-qr-code-scan"></i> Cetak
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var qrCodeData = {};
+
+    function setQRCodeData(imageSrc, productName) {
+            qrCodeData.imageSrc = imageSrc;
+            qrCodeData.productName = productName;
+        }
+
+        function printQRCode() {
+        var jumlahQR = document.getElementById('jumlahQR').value; 
+        var imageSrc = qrCodeData.imageSrc;
+        var productName = qrCodeData.productName;
+        
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
+
+        for (var i = 0; i < jumlahQR; i++) {
+            printWindow.document.write('<img src="' + imageSrc + '">');
+        }
+        
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+        location.reload();
+    }
+</script>
         <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
                                             aria-labelledby="myModalLabel120" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"

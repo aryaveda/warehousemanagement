@@ -1,5 +1,11 @@
 <?php
 include "koneksi.php";
+include "auth.php";
+
+require "vendor/autoload.php";
+$query = "SELECT * FROM masuk;";
+$sql = mysqli_query($conn, $query);
+$no = 0;
 
 
 // Initialize arrays to store data
@@ -34,7 +40,7 @@ $persentaseKeluar = ($jumlahKeluar / $total) * 100;
 
 // Bulatkan persentase jika diperlukan
 $persentaseMasuk = round($persentaseMasuk, 2);
-$persentaseKeluar = round($persentaseKeluar, 2);
+$persentaseKeluar  = round($persentaseKeluar, 2);
 
 // Pastikan total persentase adalah 100%
 // Ini bisa dilakukan dengan menyesuaikan salah satu persentase berdasarkan pembulatan
@@ -266,34 +272,113 @@ $categories_json = json_encode($categories);
 <div class="page-heading">
     <h3>Warehouse Management BMKG</h3>
 </div> 
-<div class="page-content"> 
-    <section class="row">
-            
-                <div class="row">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h4>Data Semua Barang</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="chart"></div>
-                    </div>
+
+
+
+<div class="row">
+    <!-- Left Column: Pie Chart -->
+    <div class="row">
+    <!-- Left Column: Pie Chart (8 columns) -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Barang Keluar Masuk</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <div id="chartPie"></div>
                 </div>
-                </div>
-            
-                <div class="row">
-    <div class="card">
-        <div class="card-header text-center">
-            <h4>Data Barang Keluar Masuk</h4>
+            </div>
         </div>
-        <div class="card-body">
-            <div class="d-flex justify-content-center"> <!-- Center the chartPie horizontally -->
-                <div id="chartPie"></div>
+    </div>
+
+    <!-- Right Column: Incoming and Outgoing Item Counts (4 columns) -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Jumlah Barang Masuk dan Keluar</h4>
+            </div>
+            <div class="card-body">
+                <!-- Display incoming item count -->
+                <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
+                <!-- Display outgoing item count -->
+                <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
             </div>
         </div>
     </div>
 </div>
-    </section>
+
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <h5>Barang Masuk/Keluar Terakhir</h5>
+            <p>3 Barang Terakhir</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <!-- Tambahkan kolom sesuai dengan data yang ingin ditampilkan -->
+                            <th>Tanggal Masuk</th>
+                            <th>Tanggal Keluar</th>
+                            <th>Nama Barang</th>
+                            <th>Jenis Peralatan</th>
+                            <th>Merk</th>
+                            <th>SN</th>
+                            <th>Asal Perolehan</th>
+                            <th>Keterangan</th>
+                            <th>Status</th>
+                            <th>Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $row_count = 0; // Initialize row counter
+                        while ($result = mysqli_fetch_assoc($sql)) {
+                            if ($row_count < 3) { // Limit rows to 3
+                                $row_count++;
+                        ?>
+                            <tr>
+                                <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
+                                <td><?php echo !empty($result["tanggal_keluar"])
+                                    ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y")
+                                    : "-"; ?></td>
+                                </td>
+                                <td><?php echo $result["nama_barang"]; ?></td>
+                                <td><?php echo $result["jenis_peralatan"]; ?></td>
+                                <td><?php echo $result["merk"]; ?></td>
+                                <td><?php echo $result["sn"]; ?></td>
+                                <td><?php echo $result["asal_perolehan"]; ?></td>
+                                <td><?php echo $result["keterangan"]; ?></td>
+                                <td>
+                                    <?php 
+                                    if (!empty($result["status"])) { 
+                                        if ($result["status"] == "masuk") {
+                                            echo '<span class="badge bg-success">Masuk</span>';
+                                        } elseif ($result["status"] == "keluar") {
+                                            echo '<span class="badge bg-danger">Keluar</span>';
+                                        } else {
+                                            echo $result["status"]; 
+                                        } 
+                                    } 
+                                    ?>
+                                </td> 
+                                <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+                            </tr>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
 
             <footer>
     <div class="footer clearfix mb-0 text-muted">

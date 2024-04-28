@@ -4,47 +4,38 @@ REEESUULLLTT DIIIGANTTTII KEEEE ROOOOWWWW -->
 
 
 
-
-
-
-
 <?php
-// Include database connection script
+
 include "auth.php";
-
 include "koneksi.php";
-
-// Include Barcode Generator library
 require "vendor/autoload.php";
 
-// Initialize variable to store query
+
+
 $query = "";
 
-// Check if search button is clicked and date filter is set
 if (
     isset($_POST["search"]) &&
     isset($_POST["date1"]) &&
     isset($_POST["date2"])
 ) {
-    // Retrieve date filter values
+
     $date1 = date("Y-m-d", strtotime($_POST["date1"]));
     $date2 = date("Y-m-d", strtotime($_POST["date2"]));
 
-    // Retrieve status filter value
     $status = isset($_POST["status"]) ? $_POST["status"] : "";
 
-    // Query to retrieve data based on date and status filter
     if (!empty($status)) {
         $query = "SELECT * FROM masuk WHERE DATE(tanggal) BETWEEN '$date1' AND '$date2' AND status = '$status'";
     } else {
         $query = "SELECT * FROM masuk WHERE DATE(tanggal) BETWEEN '$date1' AND '$date2'";
     }
 } else {
-    // Query to retrieve all data when no date filter is applied
+
     $query = "SELECT * FROM masuk";
 }
 
-// Execute the query
+
 ($result = mysqli_query($conn, $query)) or die(mysqli_error());
 ?>
 
@@ -224,7 +215,7 @@ if (
                 
             </div>
         <div class="card-header">
-                <!-- <a href="kelola.php" class="btn icon icon-left btn-primary"><i data-feather="plus"></i> Tambah Barang</a> -->
+
                 <button id="btnPrintDetail" class="btn icon icon-left btn-primary"><i data-feather="printer"></i> Print</button>
                 <button id="btnExcel" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</button>
                 <button id="btnPDF" class="btn icon icon-left btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
@@ -310,7 +301,7 @@ if (
         </tr>
     </thead>
     <tbody>
-    <?php // Loop through query results and display data in table rows
+    <?php 
 
 while ($row = mysqli_fetch_assoc($result)) { ?>
 <tr>
@@ -352,7 +343,7 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
         } elseif ($row["status"] == "keluar") {
             echo '<span class="badge bg-danger">Keluar</span>';
         } else {
-            echo $row["status"]; // Display status as it is if neither "masuk" nor "keluar"
+            echo $row["status"]; 
         } ?>
     </td>
     <td><?php echo $row["keterangan"]; ?></td>
@@ -360,12 +351,15 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
         "foto"
     ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
     <td>
+        
         <a href="kelola.php?ubah=<?php echo $row[
             "id"
         ]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
-        <a href="#" onclick="confirmDelete(<?php echo $row[
+        <a href="#" onclick="confirmDelete(<?php echo $row [
             "id"
         ]; ?>, 'semuaBarang.php')" class="btn icon btn-danger"><i class="bi bi-trash"></i></a>
+
+
     </td>
 </tr>
 <?php } ?>
@@ -376,6 +370,7 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
                 </div>
             </div>
         </div>
+  
         <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
                                             aria-labelledby="myModalLabel120" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
