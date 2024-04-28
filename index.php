@@ -31,7 +31,7 @@ if ($rowKeluar = mysqli_fetch_assoc($resultKeluar)) {
     $jumlahKeluar = $rowKeluar['total'];
 }
 
-mysqli_close($conn);
+// mysqli_close($conn);
 
 
 $total = $jumlahMasuk + $jumlahKeluar;
@@ -343,44 +343,50 @@ $categories_json = json_encode($categories);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $row_count = 0; // Initialize row counter
-                        while ($result = mysqli_fetch_assoc($sql)) {
-                            if ($row_count < 3) { // Limit rows to 3
-                                $row_count++;
-                        ?>
-                            <tr>
-                                <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
-                                <td><?php echo !empty($result["tanggal_keluar"])
-                                    ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y")
-                                    : "-"; ?></td>
-                                </td>
-                                <td><?php echo $result["nama_barang"]; ?></td>
-                                <td><?php echo $result["jenis_peralatan"]; ?></td>
-                                <td><?php echo $result["merk"]; ?></td>
-                                <td><?php echo $result["sn"]; ?></td>
-                                <td><?php echo $result["asal_perolehan"]; ?></td>
-                                <td><?php echo $result["keterangan"]; ?></td>
-                                <td>
-                                    <?php 
-                                    if (!empty($result["status"])) { 
-                                        if ($result["status"] == "masuk") {
-                                            echo '<span class="badge bg-success">Masuk</span>';
-                                        } elseif ($result["status"] == "keluar") {
-                                            echo '<span class="badge bg-danger">Keluar</span>';
-                                        } else {
-                                            echo $result["status"]; 
-                                        } 
-                                    } 
-                                    ?>
-                                </td> 
-                                <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
-                            </tr>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </tbody>
+    <?php
+    // Adjust your SQL query to order by tanggal and tanggal_keluar
+    $query = "SELECT * FROM masuk ORDER BY tanggal DESC, tanggal_keluar DESC LIMIT 3";
+$sql = mysqli_query($conn, $query);
+
+// Close the connection after executing the query
+mysqli_close($conn);
+
+$row_count = 0; // Initialize row counter
+    while ($result = mysqli_fetch_assoc($sql)) {
+        $row_count++;
+    ?>
+        <tr>
+            <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
+            <td><?php echo !empty($result["tanggal_keluar"]) ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
+            <td><?php echo $result["nama_barang"]; ?></td>
+            <td><?php echo $result["jenis_peralatan"]; ?></td>
+            <td><?php echo $result["merk"]; ?></td>
+            <td><?php echo $result["sn"]; ?></td>
+            <td><?php echo $result["asal_perolehan"]; ?></td>
+            <td><?php echo $result["keterangan"]; ?></td>
+            <td>
+                <?php 
+                if (!empty($result["status"])) { 
+                    if ($result["status"] == "masuk") {
+                        echo '<span class="badge bg-success">Masuk</span>';
+                    } elseif ($result["status"] == "keluar") {
+                        echo '<span class="badge bg-danger">Keluar</span>';
+                    } else {
+                        echo $result["status"]; 
+                    } 
+                } 
+                ?>
+            </td> 
+            <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+        </tr>
+    <?php
+        if ($row_count >= 3) { // Break the loop if 3 rows are reached
+            break;
+        }
+    }
+    ?>
+</tbody>
+
                 </table>
             </div>
         </div>
