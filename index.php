@@ -294,6 +294,7 @@ $categories_json = json_encode($categories);
 
     <!-- Right Column: Incoming and Outgoing Item Counts (4 columns) -->
     <div class="col-md-4">
+        
         <div class="card">
             <div class="card-header">
                 <h4>Jumlah Barang Masuk dan Keluar</h4>
@@ -303,9 +304,16 @@ $categories_json = json_encode($categories);
                 <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
                 <!-- Display outgoing item count -->
                 <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                
             </div>
         </div>
-    </div>
+        
+    
 </div>
 
 

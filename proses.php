@@ -6,7 +6,7 @@ include "auth.php";
 if (isset($_POST["aksi"])) {
     if ($_POST["aksi"] == "add") {
         $tanggal = $_POST["tanggal"];
-        $tanggal = $_POST["tanggal_keluar"];
+        $tanggal_keluar = $_POST["tanggal_keluar"];
         $id_barang = $_POST["id_barang"];
         $nama_barang = $_POST["nama_barang"];
         $jenis_peralatan = $_POST["jenis_peralatan"];
