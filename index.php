@@ -3,10 +3,9 @@ include "koneksi.php";
 include "auth.php";
 
 require "vendor/autoload.php";
-$query = "SELECT * FROM masuk;";
+$query = "SELECT * FROM masuk ORDER BY id_barang ASC LIMIT 3";
 $sql = mysqli_query($conn, $query);
 $no = 0;
-
 
 // Initialize arrays to store data
 $data = [];
@@ -58,6 +57,20 @@ $labels_pie_json = json_encode($labels_pie);
 
 $data_json = json_encode($data);
 $categories_json = json_encode($categories);
+
+$row_count = 0; // Initialize row counter
+while ($result = mysqli_fetch_assoc($sql)) {
+    $row_count++;
+    ?>
+        <tr>
+            <!-- Display other table data as before -->
+        </tr>
+    <?php
+    if ($row_count >= 3) { // Break the loop if 3 rows are reached
+        break;
+    }
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -292,38 +305,30 @@ $categories_json = json_encode($categories);
         </div>
     </div>
 
-    <!-- Right Column: Incoming and Outgoing Item Counts (4 columns) -->
-    <div class="col-md-4">
-        
-        <div class="card">
-            <div class="card-header">
-                <h4>Jumlah Barang Masuk dan Keluar</h4>
-            </div>
-            <div class="card-body">
-                <!-- Display incoming item count -->
-                <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
-                <!-- Display outgoing item count -->
-                <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                
-            </div>
+    <div class="col-md-4 mx-auto"> <!-- Added mx-auto class for centering the card -->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="text-center">Jumlah Barang Masuk dan Keluar</h4> <!-- Centered the header text -->
         </div>
-        
-    
+        <div class="card-body text-center"> <!-- Centered the content -->
+            <!-- Display incoming item count -->
+            <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
+            <!-- Display outgoing item count -->
+            <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
+        </div>
+    </div>
 </div>
+
 
 
 
 <div class="row">
     <div class="card">
         <div class="card-header">
-            <h5>Barang Masuk/Keluar Terakhir</h5>
-            <p>3 Barang Terakhir</p>
+            <h5 class="mb-0">Barang Masuk/Keluar Terakhir</h5> <!-- Added mb-0 to remove bottom margin from h5 -->
+            <p class="mt-3">3 Barang Terakhir</p> <!-- Added mt-3 for top margin -->
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table">

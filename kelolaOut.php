@@ -221,7 +221,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <div class="col-12 d-flex justify-content-end">
             <button type="submit" name="aksi" value="keluar" class="btn icon icon-left btn-primary me-1 mb-1" id="tambah">
                 <i data-feather="save"></i>
-                Tambahkan
+                Keluarkan
             </button>
             <a href="barangKeluar.php" type="button" class="btn icon icon-left btn-danger me-1 mb-1" id="batal">
                 <i class="bi bi-reply"></i>

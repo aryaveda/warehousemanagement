@@ -6,7 +6,7 @@
     $query = "SELECT * FROM masuk;";
     $sql = mysqli_query($conn, $query);
     $no = 0;
-    ?>
+?>
 
     <!DOCTYPE html>
     <html lang="en">
