@@ -196,9 +196,10 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     <table class="table" id="table1">
                     <thead>
     <tr>
+    <th>ID Barang</th>
+
         <th>Tanggal Keluar</th>
         <th>QR Code</th>
-        <th>ID Barang</th>
         <th>Nama Barang</th>
         <th>Jenis Peralatan</th>
         <th>Merk</th>
@@ -217,6 +218,8 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         if ($result["status"] === 'keluar') { 
     ?>
     <tr>
+    <td><?php echo $result["id_barang"]; ?></td>
+
     <td><?php echo !empty($result["tanggal_keluar"]) ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
 
         <td style="background-color: #F2F7FF;">
@@ -227,12 +230,11 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     $qrsaved = "qr temp/";
     QRCode::png("$qrcode", $qrsaved . "qrcode" . $result['id_barang'] . ".png", "M", 4, 4);
     ?>
-    <a href="infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
+    <a href="192.168.1.158/warehousemanagement/infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
         <img src="<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png" alt="">
     </a>
 </td>
 
-        <td><?php echo $result["id_barang"]; ?></td>
         <td><?php echo $result["nama_barang"]; ?></td>
         <td><?php echo $result["jenis_peralatan"]; ?></td>
         <td><?php echo $result["merk"]; ?></td>
@@ -414,7 +416,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                         $(node).hide();
                     },
                     exportOptions: {
-                        columns: [0, 2, 3,4,5,6,7,8,9,10]
+                        columns: [0, 2, 3,4,5,6,7,8,9]
                     }
                 },
                 {
@@ -424,7 +426,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                         $(node).hide();
                     },
                     exportOptions: {
-                        columns: [0, 2, 3,4,5,6,7,8,9,10]
+                        columns: [0, 2, 3,4,5,6,7,8,9]
                     }
                 },
                 {
@@ -434,7 +436,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                         $(node).hide();
                     },
                     exportOptions: {
-                        columns: [0, 2, 3,4,5,6,7,8,9,10]
+                        columns: [0, 2, 3,4,5,6,7,8,9]
                     }
                 }, 'colvis'
             ]

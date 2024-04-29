@@ -18,14 +18,19 @@ if (isset($_POST["aksi"])) {
         $lokasi = $_POST["lokasi"]; // Added lokasi
         $teknisi = $_POST["teknisi"]; // Added teknisi
         $foto = $_FILES["foto"]["name"];
+        $file = $_FILES["file"]["name"];
         $keterangan = $_POST["keterangan"];
 
         $dir = "./uploads/";
         $tmpFile = $_FILES["foto"]["tmp_name"];
+        $tmpFile2 = $_FILES["file"]["tmp_name2"];
+
 
         move_uploaded_file($tmpFile, $dir . $foto);
+        move_uploaded_file($tmpFile2, $dir . $file);
 
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal','$tanggal_keluar', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$lokasi','$teknisi','$foto','$keterangan')"; // Modified query with lokasi and teknisi
+
+        $query = "INSERT INTO masuk VALUES(null, '$tanggal','$tanggal_keluar', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$lokasi','$teknisi','$foto',$file,'$keterangan')"; // Modified query with lokasi and teknisi
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
@@ -70,8 +75,19 @@ if (isset($_POST["aksi"])) {
                 "./uploads/" . $_FILES["foto"]["name"]
             );
         }
+
+        if ($_FILES["file"]["name"] == "") {
+            $foto = $result["file"];
+        } else {
+            $foto = $_FILES["file"]["name"];
+            unlink("./uploads/" . $result["file"]);
+            move_uploaded_file(
+                $_FILES["file"]["tmp_name2"],
+                "./uploads/" . $_FILES["file"]["name"]
+            );
+        }
     
-        $query = "UPDATE masuk SET tanggal='$tanggal',tanggal_keluar='$tanggal_keluar', nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto', status='$status', lokasi='$lokasi', teknisi='$teknisi' WHERE id='$id';";
+        $query = "UPDATE masuk SET tanggal='$tanggal',tanggal_keluar='$tanggal_keluar', nama_barang='$nama_barang',jenis_peralatan='$jenis_peralatan',merk='$merk',sn='$sn',asal_perolehan='$asal_perolehan',harga='$harga',keterangan='$keterangan', foto='$foto', file='$file', status='$status', lokasi='$lokasi', teknisi='$teknisi' WHERE id='$id';";
         $sql = mysqli_query($conn, $query);
     
         if ($sql) {

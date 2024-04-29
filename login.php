@@ -31,7 +31,7 @@ if(isset($_SESSION['session_username'])){
 if(isset($_POST['login'])){
     $username   = $_POST['username'];
     $password   = $_POST['password'];
-    $ingataku   = $_POST['ingataku'];
+    // $ingataku   = $_POST['ingataku'];
 
     if($username == '' or $password == ''){
         $err .= "<li>Silakan masukkan username dan juga password.</li>";
@@ -40,11 +40,12 @@ if(isset($_POST['login'])){
         $q1   = mysqli_query($conn2,$sql1);
         $r1   = mysqli_fetch_array($q1);
 
-        if($r1['username'] == ''){
+        if($r1 === null || empty($r1)){
             $err .= "<li>Username <b>$username</b> tidak tersedia.</li>";
         }elseif($r1['password'] != md5($password)){
             $err .= "<li>Password yang dimasukkan tidak sesuai.</li>";
-        }       
+        }
+        
         
         if(empty($err)){
             $_SESSION['session_username'] = $username; //server

@@ -26,7 +26,7 @@ if (isset($_GET["ubah"])) {
     $result = mysqli_fetch_assoc($sqlEdit);
 
     $tanggal = $result["tanggal"];
-    $tanggal = $result["tanggal_keluar"];
+    $tanggal_keluar = $result["tanggal_keluar"];
 
     // $barcode = rand(1000,9999);
     $id_barang = $result["id_barang"];
@@ -264,6 +264,8 @@ if (isset($_GET["ubah"])) {
             <?php } else { ?>
                 <label for="tanggal" class="form-label">Tanggal Masuk</label>
                 <input type="date" id="tanggal" class="form-control" name="tanggal">
+                <input type="hidden" name="tanggal_keluar" value="">
+
             <?php } ?>
         </div>
     </div>
@@ -384,6 +386,16 @@ if (isset($_GET["ubah"])) {
 </div>
 
                   </div>
+
+                  <div class="col-md-6 col-12">
+                  <div class="form-group">
+    <label for="file" class="form-label">File Tambahan</label>
+    <input type="file" id="file" class="form-control" name="file" placeholder="File Tambahan"/>
+</div>
+
+                  </div>
+
+
                   <div class="col-12">
                     <div class="form-group">
                       <label for="keterangan" class="form-label"
@@ -437,8 +449,7 @@ if (isset($_GET["ubah"])) {
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+            <p> <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>

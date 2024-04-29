@@ -289,9 +289,7 @@ while ($result = mysqli_fetch_assoc($sql)) {
 
 
 <div class="row">
-    <!-- Left Column: Pie Chart -->
-    <div class="row">
-    <!-- Left Column: Pie Chart (8 columns) -->
+    <!-- Left Column: Data Barang Keluar Masuk -->
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
@@ -305,19 +303,40 @@ while ($result = mysqli_fetch_assoc($sql)) {
         </div>
     </div>
 
-    <div class="col-md-4 mx-auto"> <!-- Added mx-auto class for centering the card -->
-    <div class="card">
-        <div class="card-header">
-            <h4 class="text-center">Jumlah Barang Masuk dan Keluar</h4> <!-- Centered the header text -->
-        </div>
-        <div class="card-body text-center"> <!-- Centered the content -->
-            <!-- Display incoming item count -->
-            <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
-            <!-- Display outgoing item count -->
-            <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
+    
+    <div class="col-md-4">
+        <div class="row">
+        <div class="card">
+        <div class="col-md-12 text-center">
+            <!-- Time and Date -->
+            <div class="col-md-12 mt-4 mb-4">
+            <iframe src="https://free.timeanddate.com/clock/i9clk01e/n666/tlid38/fn6/fs16/fc9ff/tc000/ftb/bas2/bat1/bacfff/pa8/tt0/tw1/th1/ta1/tb4" frameborder="0" width="212" height="60"></iframe>
+  
+            </div>
         </div>
     </div>
 </div>
+
+
+        <div class="row">
+            <!-- Jumlah Barang Masuk dan Keluar -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Jumlah Barang Masuk dan Keluar</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <!-- Display incoming item count -->
+                        <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
+                        <!-- Display outgoing item count -->
+                        <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -326,7 +345,7 @@ while ($result = mysqli_fetch_assoc($sql)) {
     <div class="card">
         <div class="card-header">
             <h5 class="mb-0">Barang Masuk/Keluar Terakhir</h5> <!-- Added mb-0 to remove bottom margin from h5 -->
-            <p class="mt-3">3 Barang Terakhir</p> <!-- Added mt-3 for top margin -->
+            <p class="mt-3">10 Barang Terakhir</p> <!-- Added mt-3 for top margin -->
         </div>
 
         <div class="card-body">
@@ -350,7 +369,7 @@ while ($result = mysqli_fetch_assoc($sql)) {
                     <tbody>
     <?php
     // Adjust your SQL query to order by tanggal and tanggal_keluar
-    $query = "SELECT * FROM masuk ORDER BY tanggal DESC, tanggal_keluar DESC LIMIT 3";
+    $query = "SELECT * FROM masuk ORDER BY tanggal DESC, tanggal_keluar DESC LIMIT 10";
 $sql = mysqli_query($conn, $query);
 
 // Close the connection after executing the query
@@ -385,7 +404,7 @@ $row_count = 0; // Initialize row counter
             <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
         </tr>
     <?php
-        if ($row_count >= 3) { // Break the loop if 3 rows are reached
+        if ($row_count >= 10) { // Break the loop if 3 rows are reached
             break;
         }
     }

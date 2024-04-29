@@ -201,9 +201,11 @@
                             <thead>
                                 <tr>
                                     <!-- <th>No</th> -->
+                                    <th>ID Barang</th>
+
                                     <th>Tanggal Masuk</th>
                                     <th>QR Code</th>
-                                    <th>ID Barang</th>
+                                
                                     <th>Nama Barang</th>
                                     <th>Jenis Peralatan</th>
                                     <th>Merk</th>
@@ -222,6 +224,8 @@
             if ($result["status"] === 'masuk') { 
         ?>
     <tr>
+            <td><?php echo $result["id_barang"]; ?></td>
+
         <td>
             <?php 
             // Check if the date value is not empty and valid
@@ -243,12 +247,11 @@
         $qrsaved = "qr temp/";
         QRCode::png("$qrcode", $qrsaved . "qrcode" . $result['id_barang'] . ".png", "M", 4, 4);
         ?>
-        <a href="infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
+        <a href="192.168.1.158/warehousemanagement/infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
             <img src="<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png" alt="">
         </a>
     </td>
 
-            <td><?php echo $result["id_barang"]; ?></td>
             <td><?php echo $result["nama_barang"]; ?></td>
             <td><?php echo $result["jenis_peralatan"]; ?></td>
             <td><?php echo $result["merk"]; ?></td>
@@ -414,62 +417,62 @@
         }
     </script>
 
-    <script>
-        var table;
-        $(document).ready(function(){
-            table = $('#table1').DataTable({
-                "bDestroy": true,
-                "paging": false,
-                search: {
-            return: false
-        },
-                "aLengthMenu": [[25,50,100,200,-1], [25,50,100,200, "All"]],
-                iDisplayLength: 25,
-                dom: 'lrt',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        class: 'buttons-excel',
-                        init: function(api, node, config){
-                            $(node).hide();
-                        },
-                        exportOptions: {
-                            columns: [0, 2, 3,4,5,6,7,8,9,10]
-                        }
+<script>
+    var table;
+    $(document).ready(function(){
+        table = $('#table1').DataTable({
+            "bDestroy": true,
+            "paging": false,
+            search: {
+        return: false
+    },
+            "aLengthMenu": [[25,50,100,200,-1], [25,50,100,200, "All"]],
+            iDisplayLength: 25,
+            dom: 'lrt',
+            buttons: [
+                {
+                    extend: 'excel',
+                    class: 'buttons-excel',
+                    init: function(api, node, config){
+                        $(node).hide();
                     },
-                    {
-                        extend: 'print',
-                        class: 'buttons-print',
-                        init: function(api, node, config){
-                            $(node).hide();
-                        },
-                        exportOptions: {
-                            columns: [0, 2, 3,4,5,6,7,8,9,10]
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        class: 'buttons-pdf',
-                        init: function(api, node, config){
-                            $(node).hide();
-                        },
-                        exportOptions: {
-                            columns: [0, 2, 3,4,5,6,7,8,9,10]
-                        }
+                    exportOptions: {
+                        columns: [0, 2, 3,4,5,6,7,8,9]
                     }
-                ]
-            });
+                },
+                {
+                    extend: 'print',
+                    class: 'buttons-print',
+                    init: function(api, node, config){
+                        $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 2, 3,4,5,6,7,8,9]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    class: 'buttons-pdf',
+                    init: function(api, node, config){
+                        $(node).hide();
+                    },
+                    exportOptions: {
+                        columns: [0, 2, 3,4,5,6,7,8,9]
+                    }
+                }, 'colvis'
+            ]
         });
+    });
 
-        $('#btnExcel').on('click', function() {
-            table.button('.buttons-excel').trigger();
-        });
-        $('#btnPrintDetail').on('click', function() {
-            table.button('.buttons-print').trigger();
-        });
-        $('#btnPDF').on('click', function() {
-            table.button('.buttons-pdf').trigger();
-        });
-
+    $('#btnExcel').on('click', function() {
+        table.button('.buttons-excel').trigger();
+    });
+    $('#btnPrintDetail').on('click', function() {
+        table.button('.buttons-print').trigger();
+    });
+    $('#btnPDF').on('click', function() {
+        table.button('.buttons-pdf').trigger();
+    });
+</script> 
         </body>
     </html>

@@ -266,8 +266,7 @@ if (isset($_GET["ubah"])) {
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>
