@@ -232,7 +232,32 @@ while ($result = mysqli_fetch_assoc($sql)) {
 
             </li>
             
-        
+            <li
+            class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+            <i class="bi bi-database"></i>
+                <span>Data Master</span>
+            </a>
+            
+            <ul class="submenu ">
+                
+                
+                <li class="submenu-item  ">
+                    <a href="dataMaster.php" class="submenu-link">Nama Barang</a>
+                    
+                </li>
+                
+                <li class="submenu-item  ">
+                    <a href="dataMaster.php" class="submenu-link">Jenis Peralatan</a>
+                    
+                </li>
+                
+                
+                
+            </ul>
+            
+
+        </li>
             
             <li
             class="sidebar-item  has-sub">
