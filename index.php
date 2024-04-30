@@ -14,24 +14,21 @@ $categories = [];
 $jumlahMasuk = 0;
 $jumlahKeluar = 0;
 
-
-
 // Query untuk menghitung jumlah barang masuk
 $queryMasuk = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'masuk'";
 $resultMasuk = mysqli_query($conn, $queryMasuk);
 if ($rowMasuk = mysqli_fetch_assoc($resultMasuk)) {
-    $jumlahMasuk = $rowMasuk['total'];
+    $jumlahMasuk = $rowMasuk["total"];
 }
 
 // Query untuk menghitung jumlah barang keluar
 $queryKeluar = "SELECT COUNT(*) AS total FROM masuk WHERE status = 'keluar'";
 $resultKeluar = mysqli_query($conn, $queryKeluar);
 if ($rowKeluar = mysqli_fetch_assoc($resultKeluar)) {
-    $jumlahKeluar = $rowKeluar['total'];
+    $jumlahKeluar = $rowKeluar["total"];
 }
 
 // mysqli_close($conn);
-
 
 $total = $jumlahMasuk + $jumlahKeluar;
 $persentaseMasuk = ($jumlahMasuk / $total) * 100;
@@ -39,18 +36,18 @@ $persentaseKeluar = ($jumlahKeluar / $total) * 100;
 
 // Bulatkan persentase jika diperlukan
 $persentaseMasuk = round($persentaseMasuk, 2);
-$persentaseKeluar  = round($persentaseKeluar, 2);
+$persentaseKeluar = round($persentaseKeluar, 2);
 
 // Pastikan total persentase adalah 100%
 // Ini bisa dilakukan dengan menyesuaikan salah satu persentase berdasarkan pembulatan
 $totalPersentase = $persentaseMasuk + $persentaseKeluar;
 if ($totalPersentase > 100) {
-    $persentaseKeluar -= ($totalPersentase - 100);
+    $persentaseKeluar -= $totalPersentase - 100;
 } elseif ($totalPersentase < 100) {
-    $persentaseKeluar += (100 - $totalPersentase);
+    $persentaseKeluar += 100 - $totalPersentase;
 }
 $dataPie = [$persentaseMasuk, $persentaseKeluar];
-$labels_pie = ['Barang Masuk', 'Barang Keluar'];
+$labels_pie = ["Barang Masuk", "Barang Keluar"];
 
 $data_pie_json = json_encode($dataPie);
 $labels_pie_json = json_encode($labels_pie);
@@ -60,18 +57,31 @@ $categories_json = json_encode($categories);
 
 $row_count = 0; // Initialize row counter
 while ($result = mysqli_fetch_assoc($sql)) {
-    $row_count++;
-    ?>
+    $row_count++; ?>
         <tr>
             <!-- Display other table data as before -->
         </tr>
-    <?php
-    if ($row_count >= 3) { // Break the loop if 3 rows are reached
+    <?php if ($row_count >= 3) {
+        // Break the loop if 3 rows are reached
         break;
     }
 }
+// Assuming you have already established a database connection
 
+// Fetch data from your database
+$hitungNama =
+    "SELECT nama_barang, COUNT(*) AS total FROM masuk GROUP BY nama_barang";
+$hasil = mysqli_query($conn, $hitungNama);
 
+// Initialize arrays to store categories and data
+$categories = [];
+$data = [];
+
+// Iterate through the results and populate the arrays
+while ($row = mysqli_fetch_assoc($hasil)) {
+    $categories[] = $row["nama_barang"];
+    $data[] = (int) $row["total"]; // Convert total to integer
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,7 +116,7 @@ while ($result = mysqli_fetch_assoc($sql)) {
             var options = {
         series: [{
             name: 'Jumlah Barang',
-            data: <?php echo $data_json; ?>
+            data: <?php echo json_encode($data); ?>
         }],
         chart: {
             type: 'bar',
@@ -128,7 +138,7 @@ while ($result = mysqli_fetch_assoc($sql)) {
             colors: ['transparent']
         },
         xaxis: {
-            categories: <?php echo $categories_json; ?>
+            categories: <?php echo json_encode($categories); ?>
         },
         yaxis: {
             title: {
@@ -147,7 +157,10 @@ while ($result = mysqli_fetch_assoc($sql)) {
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    var chart = new ApexCharts(document.querySelector("#chart"), options); //CHART BAR
+
+
+
         var optionsPie = {
         series: <?php echo json_encode($dataPie); ?>,
         chart: {
@@ -363,7 +376,18 @@ while ($result = mysqli_fetch_assoc($sql)) {
 </div>
 
 
-
+<div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Data Jumlah Barang</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 <div class="row">
@@ -394,19 +418,23 @@ while ($result = mysqli_fetch_assoc($sql)) {
                     <tbody>
     <?php
     // Adjust your SQL query to order by tanggal and tanggal_keluar
-    $query = "SELECT * FROM masuk ORDER BY tanggal DESC, tanggal_keluar DESC LIMIT 10";
-$sql = mysqli_query($conn, $query);
+    $query =
+        "SELECT * FROM masuk ORDER BY tanggal DESC, tanggal_keluar DESC LIMIT 10";
+    $sql = mysqli_query($conn, $query);
 
-// Close the connection after executing the query
-mysqli_close($conn);
+    // Close the connection after executing the query
+    mysqli_close($conn);
 
-$row_count = 0; // Initialize row counter
+    $row_count = 0; // Initialize row counter
     while ($result = mysqli_fetch_assoc($sql)) {
-        $row_count++;
-    ?>
+        $row_count++; ?>
         <tr>
-            <td><?php echo (new DateTime($result["tanggal"]))->format("d-m-Y"); ?></td>
-            <td><?php echo !empty($result["tanggal_keluar"]) ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
+            <td><?php echo (new DateTime($result["tanggal"]))->format(
+                "d-m-Y"
+            ); ?></td>
+            <td><?php echo !empty($result["tanggal_keluar"])
+                ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y")
+                : "-"; ?></td>
             <td><?php echo $result["nama_barang"]; ?></td>
             <td><?php echo $result["jenis_peralatan"]; ?></td>
             <td><?php echo $result["merk"]; ?></td>
@@ -414,24 +442,24 @@ $row_count = 0; // Initialize row counter
             <td><?php echo $result["asal_perolehan"]; ?></td>
             <td><?php echo $result["keterangan"]; ?></td>
             <td>
-                <?php 
-                if (!empty($result["status"])) { 
+                <?php if (!empty($result["status"])) {
                     if ($result["status"] == "masuk") {
                         echo '<span class="badge bg-success">Masuk</span>';
                     } elseif ($result["status"] == "keluar") {
                         echo '<span class="badge bg-danger">Keluar</span>';
                     } else {
-                        echo $result["status"]; 
-                    } 
-                } 
-                ?>
+                        echo $result["status"];
+                    }
+                } ?>
             </td> 
-            <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+            <td><img src="./uploads/<?php echo $result[
+                "foto"
+            ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
         </tr>
-    <?php
-        if ($row_count >= 10) { // Break the loop if 3 rows are reached
-            break;
-        }
+    <?php if ($row_count >= 10) {
+        // Break the loop if 3 rows are reached
+        break;
+    }
     }
     ?>
 </tbody>
