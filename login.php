@@ -81,6 +81,12 @@ if(isset($_POST['login'])){
   <link rel="stylesheet" crossorigin href="./assets/compiled/css/app.css">
   <link rel="stylesheet" crossorigin href="./assets/compiled/css/app-dark.css">
   <link rel="stylesheet" crossorigin href="./assets/compiled/css/auth.css">
+  <style>
+    body {
+        background-color: #2596be; /* Set your desired background color */
+    }
+</style>
+
 </head>
 
 <body>
@@ -91,7 +97,7 @@ if(isset($_POST['login'])){
     <div class="col-lg-5 col-12">
         <div id="auth-left">
         <div class="auth-logo">
-    <a href="index.php"><img src="assets/compiled/png/logo.png" alt="Logo" style="width: 400px; height: auto;"></a>
+    <a href="index.php"><img src="assets/compiled/png/logo.png" alt="Logo" style="width: 300px; height: auto;"></a>
 </div>
 
             <h1 class="auth-title">Login</h1>

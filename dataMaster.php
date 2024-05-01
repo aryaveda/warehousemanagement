@@ -41,6 +41,9 @@ if (isset($_GET["ubah"])) {
     $teknisi = $result["teknisi"];
     // $foto = $result['foto'];
     $keterangan = $result["keterangan"];
+
+    $currentSection = isset($_GET['section']) ? $_GET['section'] : '';
+
 }
 ?>
 
@@ -123,60 +126,62 @@ if (isset($_GET["ubah"])) {
         </div>
     </div>
     <div class="sidebar-menu">
-        <ul class="menu">
-            <li class="sidebar-title">Menu</li>
-            
-            <li
-                class="sidebar-item  ">
-                <a href="index.php" class='sidebar-link'>
-                    <i class="bi bi-grid-fill"></i>
-                    <span>Dashboard</span>
-                </a>
-                
+    <ul class="menu">
+    <li class="sidebar-title">Menu</li>
+    
+    <li class="sidebar-item">
+        <a href="index.php" class='sidebar-link'>
+            <i class="bi bi-grid-fill"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
 
+    <li class="sidebar-item active has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-database"></i>
+            <span>Data Master</span>
+        </a>
+        
+            <ul class="submenu">
+                <li class="submenu-item <?php echo $activeSubmenu['nama_barang']; ?>">
+                    <a href="dataMaster.php?section=nama_barang" class="submenu-link">Nama Barang</a>
+                </li>
+                
+                <li class="submenu-item <?php echo $activeSubmenu['jenis_peralatan']; ?>">
+                    <a href="dataMaster.php?section=jenis_peralatan" class="submenu-link">Jenis Peralatan</a>
+                </li>
+            </ul>
+        </li>
+
+    <li class="sidebar-item has-sub">
+        <a href="#" class='sidebar-link'>
+            <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+            <span>Tabel Data</span>
+        </a>
+        
+        <ul class="submenu">
+            <li class="submenu-item">
+                <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
             </li>
             
-        
+            <li class="submenu-item">
+                <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
+            </li>
             
-            <li
-            class="sidebar-item active  has-sub">
-            <a href="#" class='sidebar-link'>
-                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                <span>Tabel Data</span>
-            </a>
-            
-            <ul class="submenu ">
-                
-                <li class="submenu-item ">
-                    <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
-                    
-                </li>
-                
-                <li class="submenu-item  ">
-                    <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
-                    
-                </li>
-                <li class="submenu-item  ">
-                    <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
-                    
-                </li>
-                
-            </ul>
-            
-
-        </li>
-       
-            
-            
-            <li class="sidebar-item">
-            <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
-                <i class="bi bi-box-arrow-left"></i>
-                <span>Logout</span>
-            </a>
-        </li>
-        
-            
+            <li class="submenu-item">
+                <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
+            </li>
         </ul>
+    </li>
+
+    <li class="sidebar-item">
+        <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
+            <i class="bi bi-box-arrow-left"></i>
+            <span>Logout</span>
+        </a>
+    </li>
+</ul>
+
     </div>
 </div>
         </div>
