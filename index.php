@@ -255,7 +255,7 @@ while ($row = mysqli_fetch_assoc($hasil)) {
             <ul class="submenu ">
                 
                 <li class="submenu-item  ">
-                    <a href="dataMaster.php" class="submenu-link">Nama Barang</a>
+                    <a href="namaBarang.php" class="submenu-link">Nama Barang</a>
                     
                 </li>
                 

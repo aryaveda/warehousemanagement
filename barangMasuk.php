@@ -267,7 +267,7 @@
             <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=masuk" type="button" class="btn icon btn-primary me-1 aksi-buttons">
                 <i class="bi bi-pencil"></i>
             </a>
-            <a href="#" onclick="confirmDelete(<?php echo $result["id"]; ?>, 'barangMasuk.php')" class="btn icon btn-danger aksi-buttons">
+            <a href="#" onclick="confirmDelete('<?php echo $result["id"]; ?>', 'barangMasuk.php')" class="btn icon btn-danger aksi-buttons">
                 <i class="bi bi-trash"></i>
             </a>
     </td>
