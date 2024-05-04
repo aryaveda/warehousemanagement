@@ -108,6 +108,31 @@
 
                 </li>
                 
+                </li>
+            
+            <li
+            class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+            <i class="bi bi-database"></i>
+                <span>Data Master</span>
+            </a>
+            
+            <ul class="submenu ">
+                
+                <li class="submenu-item  ">
+                    <a href="namaBarang.php" class="submenu-link">Nama Barang</a>
+                    
+                </li>
+                
+                <li class="submenu-item  ">
+                    <a href="jenisPeralatan.php" class="submenu-link">Jenis Peralatan</a>
+                    
+                </li>
+                
+                
+                
+            </ul>
+            
             
                 
                 <li
@@ -247,7 +272,7 @@
         $qrsaved = "qr temp/";
         QRCode::png("$qrcode", $qrsaved . "qrcode" . $result['id_barang'] . ".png", "M", 4, 4);
         ?>
-        <a href="192.168.1.158/warehousemanagement/infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
+        <a href="infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
             <img src="<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png" alt="">
         </a>
     </td>

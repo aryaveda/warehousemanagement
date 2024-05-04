@@ -22,14 +22,14 @@ if (isset($_POST["aksi"])) {
         $keterangan = $_POST["keterangan"];
         $dir = "./uploads/";
         $tmpFile = $_FILES["foto"]["tmp_name"];
-        $tmpFile2 = $_FILES["file"]["tmp_name2"];
+        $tmpFile2 = $_FILES["file"]["tmp_name"];
 
 
         move_uploaded_file($tmpFile, $dir . $foto);
-        move_uploaded_file($tmpFile, $dir . $file);
+        move_uploaded_file($tmpFile2, $dir . $file);
 
 
-        $query = "INSERT INTO masuk VALUES(null, '$tanggal','$tanggal_keluar', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$lokasi','$teknisi','$foto',$file,'$keterangan')"; // Modified query with lokasi and teknisi
+        $query = "INSERT INTO masuk VALUES(null, '$tanggal','$tanggal_keluar', '$id_barang', '$nama_barang', '$jenis_peralatan', '$merk', '$sn', '$asal_perolehan','$harga','$status','$lokasi','$teknisi','$foto','$file','$keterangan')";
         $sql = mysqli_query($conn, $query);
 
         if ($sql) {
@@ -137,14 +137,4 @@ if (isset($_GET["hapus"])) {
     } else {
         echo $query;
     }
-}
-
-// Check if form is submitted for adding new data
-if(isset($_POST['submit'])){
-    $namabarang = $_POST['namabarang'];
- 
-    $query = "INSERT INTO datamaster (namabarang) VALUES ('$namabarang')";
-    mysqli_query($conn, $query);
-    header("Location: ".$_SERVER['PHP_SELF']); // Redirect to avoid form resubmission
-    exit;
 }

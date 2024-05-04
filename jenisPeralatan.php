@@ -3,14 +3,14 @@ include "koneksi.php";
 include "auth.php";
 
 
-$query = "SELECT idbarang, namabarang FROM datanama"; // Fetch both idbarang and namabarang
+$query = "SELECT idjenis, jenisperalatan FROM jenisnama"; // Fetch both idbarang and namabarang
 $sql = mysqli_query($conn, $query);
 
 // Check if form is submitted for adding new data
-if(isset($_POST['submit'])){
-    $namabarang = $_POST['namabarang'];
+if(isset($_POST['submit2'])){
+    $jenisperalatan = $_POST['jenisperalatan'];
  
-    $query = "INSERT INTO datanama (namabarang) VALUES ('$namabarang')";
+    $query = "INSERT INTO jenisnama (jenisperalatan) VALUES ('$jenisperalatan')";
     mysqli_query($conn, $query);
     header("Location: ".$_SERVER['PHP_SELF']); // Redirect to avoid form resubmission
     exit;
@@ -18,7 +18,7 @@ if(isset($_POST['submit'])){
 
 if(isset($_GET['delete'])){
     $id = $_GET['delete']; // Get the idbarang from the URL parameter
-    $query = "DELETE FROM datanama WHERE idbarang = ?"; // Use prepared statement
+    $query = "DELETE FROM jenisnama WHERE idjenis = ?"; // Use prepared statement
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
@@ -26,6 +26,7 @@ if(isset($_GET['delete'])){
     header("Location: ".$_SERVER['PHP_SELF']); // Redirect to avoid form resubmission
     exit;
 }
+
 
 ?>
 
@@ -122,11 +123,11 @@ if(isset($_GET['delete'])){
         </a>
         
             <ul class="submenu">
-                <li class="submenu-item active">
+                <li class="submenu-item">
                     <a href="namaBarang.php" class="submenu-link">Nama Barang</a>
                 </li>
                 
-                <li class="submenu-item">
+                <li class="submenu-item active">
                     <a href="jenisPeralatan.php" class="submenu-link">Jenis Peralatan</a>
                 </li>
             </ul>
@@ -218,21 +219,21 @@ if(isset($_GET['delete'])){
     <div class="row">
         <div class="col-md-6 col-12">
             <div class="form-group">
-                <label for="namabarang" class="form-label">Nama Barang</label>
+                <label for="jenisperalatan" class="form-label">Jenis Peralatan</label>
                 <input
                     type="text"
-                    id="namabarang"
+                    id="jenisperalatan"
                     class="form-control"
                     placeholder="Nama Barang"
-                    name="namabarang"
-                    value="<?php echo isset($namabarang) ? $namabarang : ''; ?>"
+                    name="jenisperalatan"
+                    value="<?php echo isset($jenisperalatan) ? $jenisperalatan : ''; ?>"
                 />
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <button type="submit" name="submit" class="btn icon icon-left btn-primary me-1 mb-1">
+            <button type="submit" name="submit2" class="btn icon icon-left btn-primary me-1 mb-1">
                 <i data-feather="save"></i>
                 Tambahkan
             </button>
@@ -254,9 +255,9 @@ if(isset($_GET['delete'])){
     while ($result = mysqli_fetch_assoc($sql)) {
 ?>
     <tr>
-        <td><?php echo $result["namabarang"]; ?></td>
+        <td><?php echo $result["jenisperalatan"]; ?></td>
         <td>
-            <a href="#" onclick="confirmDelete('<?php echo $result["idbarang"]; ?>', 'namaBarang.php')" class="btn icon btn-danger aksi-buttons">
+            <a href="#" onclick="confirmDelete('<?php echo $result["idjenis"]; ?>', 'jenisPeralatan.php')" class="btn icon btn-danger aksi-buttons">
                 <i class="bi bi-trash"></i>
             </a>
         </td>
@@ -302,8 +303,8 @@ if(isset($_GET['delete'])){
     </div>
 
     <script>
-    function confirmDelete(namabarang, page) {
-  window.location.href = page + "?delete=" + namabarang;
+    function confirmDelete(jenisperalatan, page) {
+  window.location.href = page + "?delete=" + jenisperalatan;
     }
     
 </script>
