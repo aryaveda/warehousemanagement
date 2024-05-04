@@ -390,11 +390,16 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
         "foto"
     ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
     <td>
-        <img src="./uploads/<?php echo $row["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
-        <a href="./uploads/<?php echo $row["file"]; ?>" download><?php echo $row["file"]; ?></a>
-    </td>
-    <td>
-        
+    <?php 
+    $fileName = $row["file"]; // Use $row instead of $result
+    if (strlen($fileName) > 20) {
+        $fileName = substr($fileName, 0, 12) . '...'; // Limiting to 20 characters and adding ellipsis
+    }
+    ?>
+    <img src="./uploads/<?php echo $row["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
+    <a href="./uploads/<?php echo $row["file"]; ?>" download><?php echo $fileName; ?></a>
+</td>
+<td>
         <a href="kelola.php?ubah=<?php echo $row[
             "id"
         ]; ?>" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
