@@ -234,6 +234,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <th>Teknisi PJ</th>
         <th>Keterangan</th>
         <th>Foto</th>
+        <th>File</th> 
         <th>Aksi</th> 
     </tr>
 </thead>
@@ -270,6 +271,10 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         
         <td><?php echo $result["keterangan"]; ?></td>
         <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+        <td>
+            <img src="./uploads/<?php echo $result["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
+            <a href="./uploads/<?php echo $result["file"]; ?>" download><?php echo $result["file"]; ?></a>
+            </td>
         <td>
         <button class="btn icon btn-secondary" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
             <i class="bi bi-qr-code-scan"></i></button>

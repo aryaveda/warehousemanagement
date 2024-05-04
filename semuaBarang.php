@@ -322,6 +322,7 @@ if (
             <th>Status</th>
             <th>Keterangan</th>
             <th>Foto</th>
+            <th>File</th> 
             <th>Aksi</th>
         </tr>
     </thead>
@@ -375,6 +376,10 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
     <td><img src="./uploads/<?php echo $row[
         "foto"
     ]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
+    <td>
+        <img src="./uploads/<?php echo $row["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
+        <a href="./uploads/<?php echo $row["file"]; ?>" download><?php echo $row["file"]; ?></a>
+    </td>
     <td>
         
         <a href="kelola.php?ubah=<?php echo $row[

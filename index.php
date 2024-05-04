@@ -149,9 +149,9 @@ while ($row = mysqli_fetch_assoc($hasil)) {
             opacity: 1
         },
         tooltip: {
-            y: {
-                formatter: function (val) {
-                    return val + " buah"
+        y: {
+            formatter: function (val) {
+                return Math.floor(val) + " buah";
                 }
             }
         }
