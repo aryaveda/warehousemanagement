@@ -91,8 +91,8 @@ while ($row = mysqli_fetch_assoc($hasil)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Warehouse Management BMKG</title>
     
-    <link rel="shortcut icon" href="./assets/compiled/png/logo.svg" type="image/x-icon">
-    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC" type="image/png">
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjppbWFnZVdpZHRoPSIzMyIKICAgdGlmZjppbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC" type="image/png">
     
   <link rel="stylesheet" href="./assets/compiled/css/app.css">
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
@@ -103,90 +103,109 @@ while ($row = mysqli_fetch_assoc($hasil)) {
 <body>
     
     <script src="assets/static/js/initTheme.js"></script>
+
+    <script src="assets/static/js/initTheme.js"></script>
+
     <script>
-        window.onload = function() {
-            document.getElementById('toggle-dark').addEventListener('click', function() {
-                var logo = document.querySelector('.logoBMKG img');
-                if (this.checked) {
-                    logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
-                } else {
-                    logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
-                }
-            });
-            var options = {
-        series: [{
-            name: 'Jumlah Barang',
-            data: <?php echo json_encode($data); ?>
-        }],
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '55%',
-                endingShape: 'rounded'
-            },
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
-        },
-        xaxis: {
-            categories: <?php echo json_encode($categories); ?>
-        },
-        yaxis: {
-            title: {
-                text: 'Jumlah Barang'
+    window.onload = function() {
+        var toggleDark = document.getElementById('toggle-dark');
+        var logo = document.querySelector('.logoBMKG img');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
             }
-        },
-        fill: {
-            opacity: 1
-        },
-        tooltip: {
-        y: {
-            formatter: function (val) {
-                return Math.floor(val) + " buah";
-                }
+            // Reload the page only if light theme is selected
+            if (!this.checked) {
+                location.reload();
             }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
         }
-    };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options); //CHART BAR
+        var options = {
+            series: [{
+                name: 'Jumlah Barang',
+                data: <?php echo json_encode($data); ?>
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 0.5,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: <?php echo json_encode($categories); ?>
+            },
+            yaxis: {
+                title: {
+                    text: 'Jumlah Barang'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return Math.floor(val) + " buah";
+                    }
+                }
+            }
+        };
 
-
+        var chart = new ApexCharts(document.querySelector("#chart"), options); //CHART BAR
 
         var optionsPie = {
-        series: <?php echo json_encode($dataPie); ?>,
-        chart: {
-          width: 380,
-          type: 'pie',
-        },
-        labels: <?php echo $labels_pie_json; ?>,
-        responsive: [{
-          breakpoint: 200,
-          options: {
+    series: <?php echo json_encode($dataPie); ?>,
+    chart: {
+        width: 480,
+        type: 'pie',
+        toolbar: {
+            show: false
+        }
+    },
+    labels: [
+        '<?php echo $labels_pie_json[0] . "Jumlah Barang Masuk: " . $jumlahMasuk; ?>',
+        '<?php echo $labels_pie_json[1] . "Jumlah Barang Keluar: " . $jumlahKeluar; ?>'
+    ],
+    responsive: [{
+        breakpoint: 750,
+        options: {
             chart: {
-              width: 200
+                width: 320
             },
             legend: {
-              position: 'bottom'
+                position: 'bottom'
             }
-          }
-        }]
-        };
+        }
+    }]
+};
 
         var chartPie = new ApexCharts(document.querySelector("#chartPie"), optionsPie);
         chartPie.render();
         chart.render();
+    };
+</script>
 
-        };
-    </script>
 
     <div id="app">
         
@@ -260,7 +279,7 @@ while ($row = mysqli_fetch_assoc($hasil)) {
                 </li>
                 
                 <li class="submenu-item  ">
-                    <a href="dataMaster.php" class="submenu-link">Jenis Peralatan</a>
+                    <a href="jenisPeralatan.php" class="submenu-link">Jenis Peralatan</a>
                     
                 </li>
                 
@@ -323,79 +342,42 @@ while ($row = mysqli_fetch_assoc($hasil)) {
     <h3>Warehouse Management BMKG</h3>
 </div> 
 
-
-
 <div class="row">
     <!-- Left Column: Data Barang Keluar Masuk -->
-    <div class="col-md-8">
-        <div class="card">
+    <div class="col-12">
+        <div class="card mb-3">
             <div class="card-header">
                 <h4>Data Barang Keluar Masuk</h4>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-center">
-                    <div id="chartPie"></div>
+                <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                    <div id="chartPie" style="width: 300px; height: 100%;"></div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    
-    <div class="col-md-4">
-        <div class="row">
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Data Jumlah Barang</h4>
+            </div>
+            <div class="card-body">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
         <div class="card">
-        <div class="col-md-12 text-center">
-            <!-- Time and Date -->
-            <div class="col-md-12 mt-4 mb-4">
-            <iframe src="https://free.timeanddate.com/clock/i9clk01e/n666/tlid38/fn6/fs16/fc9ff/tc000/ftb/bas2/bat1/bacfff/pa8/tt0/tw1/th1/ta1/tb4" frameborder="0" width="212" height="60"></iframe>
-  
+            <div class="card-header">
+                <h5 class="mb-0">Barang Masuk/Keluar Terakhir</h5>
+                <p class="mt-3">10 Barang Terakhir</p>
             </div>
-        </div>
-    </div>
-</div>
-
-
-        <div class="row">
-            <!-- Jumlah Barang Masuk dan Keluar -->
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="text-center">Jumlah Barang Masuk dan Keluar</h4>
-                    </div>
-                    <div class="card-body text-center">
-                        <!-- Display incoming item count -->
-                        <p>Jumlah Barang Masuk: <?php echo $jumlahMasuk; ?></p>
-                        <!-- Display outgoing item count -->
-                        <p>Jumlah Barang Keluar: <?php echo $jumlahKeluar; ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Data Jumlah Barang</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-<div class="row">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="mb-0">Barang Masuk/Keluar Terakhir</h5> <!-- Added mb-0 to remove bottom margin from h5 -->
-            <p class="mt-3">10 Barang Terakhir</p> <!-- Added mt-3 for top margin -->
-        </div>
-
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table">
@@ -468,6 +450,8 @@ while ($row = mysqli_fetch_assoc($hasil)) {
         </div>
     </div>
 </div>
+</div>
+
 
 
             <footer>
@@ -475,13 +459,33 @@ while ($row = mysqli_fetch_assoc($hasil)) {
         <div class="float-start">
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
-        <div class="float-end">
+        <div class="float-end" id="footerText">
             <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>
+
         </div>
     </div>
+    <script>
+    // Function to hide footer text on small screens
+    // Function to hide footer text on small screens
+function toggleFooterText() {
+    var footerText = document.getElementById('footerText');
+    if (window.innerWidth <= 768) { // Change the width condition as needed
+        footerText.style.display = 'none';
+    } else {
+        footerText.style.display = 'block';
+    }
+}
+
+// Call the function on page load and when the window is resized
+window.addEventListener('DOMContentLoaded', function() {
+    toggleFooterText(); // Call the function after DOM content is loaded
+});
+
+window.onresize = toggleFooterText; // Keep the window.onresize event as it is
+</script>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     

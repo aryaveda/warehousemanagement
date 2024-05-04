@@ -36,18 +36,31 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 
     
     <script src="assets/static/js/initTheme.js"></script>
-    <script>
-        window.onload = function() {
-            document.getElementById('toggle-dark').addEventListener('click', function() {
-                var logo = document.querySelector('.logoBMKG img');
-                if (this.checked) {
-                    logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
-                } else {
-                    logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
-                }
-            });
-        };
-    </script>
+    <script src="assets/static/js/initTheme.js"></script>
+<script>
+    window.onload = function() {
+        var logo = document.querySelector('.logoBMKG img');
+        var toggleDark = document.getElementById('toggle-dark');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+            }
+            // Reload the page only if dark theme is selected
+            if (!this.checked) {
+                location.reload();
+            }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
+        }
+    };
+</script>
+
     <div id="app">
         
         <div id="sidebar">
@@ -272,10 +285,16 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <td><?php echo $result["keterangan"]; ?></td>
         <td><img src="./uploads/<?php echo $result["foto"]; ?>" alt="Photo" style="max-width: 100px; max-height: 100px;"></td>
         <td>
-            <img src="./uploads/<?php echo $result["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
-            <a href="./uploads/<?php echo $result["file"]; ?>" download><?php echo $result["file"]; ?></a>
+                <?php 
+                $fileName = $result["file"];
+                if (strlen($fileName) > 20) {
+                    $fileName = substr($fileName, 0, 12) . '...'; // Limiting to 20 characters and adding ellipsis
+                }
+                ?>
+                <img src="./uploads/<?php echo $result["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
+                <a href="./uploads/<?php echo $result["file"]; ?>" download><?php echo $fileName; ?></a>
             </td>
-        <td>
+            <td>
         <button class="btn icon btn-secondary" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
             <i class="bi bi-qr-code-scan"></i></button>
         <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=keluar" type="button" class="btn icon btn-primary"><i class="bi bi-pencil"></i></a>
@@ -384,16 +403,6 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 
 </div>
 
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2024 &copy; Stasiun Geofisika Sleman</p>
-        </div>
-        <div class="float-end">
-            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
-        </div>
-    </div>
-</footer>
         </div>
     </div>
     <script src="assets/static/js/components/dark.js"></script>

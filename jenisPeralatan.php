@@ -50,18 +50,30 @@ if(isset($_GET['delete'])){
 
 <body>
 <script src="assets/static/js/initTheme.js"></script>
-    <script>
-        window.onload = function() {
-            document.getElementById('toggle-dark').addEventListener('click', function() {
-                var logo = document.querySelector('.logoBMKG img');
-                if (this.checked) {
-                    logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
-                } else {
-                    logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
-                }
-            });
-        };
-    </script>
+<script>
+    window.onload = function() {
+        var logo = document.querySelector('.logoBMKG img');
+        var toggleDark = document.getElementById('toggle-dark');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+            }
+            // Reload the page only if dark theme is selected
+            if (!this.checked) {
+                location.reload();
+            }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
+        }
+    };
+</script>
+
     <div id="app">
         
         <div id="sidebar">
@@ -196,9 +208,9 @@ if(isset($_GET['delete'])){
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              Tabel Data
+              Data Master
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Kelola</li>
+            <li class="breadcrumb-item active" aria-current="page">Jenis Peralatan</li>
           </ol>
         </nav>
       </div>
@@ -288,17 +300,6 @@ if(isset($_GET['delete'])){
   <!-- // Basic multiple Column Form section end -->
 </div>            
 
-
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2024 &copy; Stasiun Geofisika Sleman</p>
-        </div>
-        <div class="float-end">
-            <p> <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
-        </div>
-    </div>
-</footer>
         </div>
     </div>
 

@@ -32,15 +32,40 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 
 <body>
     <script src="assets/static/js/initTheme.js"></script>
+    <script>
+    window.onload = function() {
+        var logo = document.querySelector('.logoBMKG img');
+        var toggleDark = document.getElementById('toggle-dark');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+            }
+            // Reload the page only if dark theme is selected
+            if (!this.checked) {
+                location.reload();
+            }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
+        }
+    };
+</script>
     <div id="app">
+        
         <div id="sidebar">
-            <div class="sidebar-wrapper active">
-    <div class="sidebar-header position-relative">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-            <a href="index.php"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
+            <div class="sidebar-wrapper">
+                
+    <div class="sidebar-header position-relative m-0">
+        <div class="justify-content-between align-items-center">
+            <div class="logoBMKG">
+                <a href="index.php"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
             </div>
-            <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+            <div class="theme-toggle d-flex gap-2  align-items-center mt-4">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                     role="img" class="iconify iconify--system-uicons" width="20" height="20"
                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -75,37 +100,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     </div>
     <div class="sidebar-menu">
         <ul class="menu">
-            <li class="sidebar-title">Menu</li>
-
-            <?php if ($userLoggedIn || $rememberMe) { ?>
-                <li class="sidebar-item">
-                    <a href="index.php" class="sidebar-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-            <?php } ?>
-
             <!-- Tabel Data -->
-            <?php if ($userLoggedIn || $rememberMe) { ?>
-                <li class="sidebar-item has-sub">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                        <span>Tabel Data</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item">
-                            <a href="barangMasuk.php" class="submenu-link">Barang Masuk</a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="barangKeluar.php" class="submenu-link">Barang Keluar</a>
-                        </li>
-                        <li class="submenu-item">
-                            <a href="semuaBarang.php" class="submenu-link">Semua Barang</a>
-                        </li>
-                    </ul>
-                </li>
-            <?php } ?>
             <?php if ($userLoggedIn || $rememberMe) { ?>
                 <li class="sidebar-item">
                     <a href="logout.php" class="btn btn-outline-danger btn-block">
@@ -142,7 +137,6 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Informasi Barang</li>
                     </ol>
                 </nav>
@@ -265,12 +259,28 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         <div class="float-start">
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
-        <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+        <div class="float-end" id="footerText">
+            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>
+
+<script>
+    // Function to hide footer text on small screens
+    function toggleFooterText() {
+        var footerText = document.getElementById('footerText');
+        if (window.innerWidth <= 768) { // Change the width condition as needed
+            footerText.style.display = 'none';
+        } else {
+            footerText.style.display = 'block';
+        }
+    }
+
+    // Call the function on page load and when the window is resized
+    window.onload = toggleFooterText;
+    window.onresize = toggleFooterText;
+</script>
+
         </div>
     </div>
     <script src="assets/static/js/components/dark.js"></script>

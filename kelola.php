@@ -4,6 +4,8 @@ include "auth.php";
 
 $query = "SELECT * FROM masuk;";
 $sql = mysqli_query($conn, $query);
+
+
 $no = 0;
 
 $tanggal = "";
@@ -67,18 +69,30 @@ if (isset($_GET["ubah"])) {
 
 <body>
 <script src="assets/static/js/initTheme.js"></script>
-    <script>
-        window.onload = function() {
-            document.getElementById('toggle-dark').addEventListener('click', function() {
-                var logo = document.querySelector('.logoBMKG img');
-                if (this.checked) {
-                    logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
-                } else {
-                    logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
-                }
-            });
-        };
-    </script>
+<script>
+    window.onload = function() {
+        var logo = document.querySelector('.logoBMKG img');
+        var toggleDark = document.getElementById('toggle-dark');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+            }
+            // Reload the page only if dark theme is selected
+            if (!this.checked) {
+                location.reload();
+            }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
+        }
+    };
+</script>
+
     <div id="app">
         
         <div id="sidebar">
@@ -135,8 +149,26 @@ if (isset($_GET["ubah"])) {
                 
 
             </li>
+            <li
+            class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+            <i class="bi bi-database"></i>
+                <span>Data Master</span>
+            </a>
             
-        
+            <ul class="submenu ">
+                
+                <li class="submenu-item">
+                    <a href="namaBarang.php" class="submenu-link">Nama Barang</a>
+                    
+                </li>
+                
+                <li class="submenu-item  ">
+                    <a href="jenisPeralatan.php" class="submenu-link">Jenis Peralatan</a>
+                    
+                </li>
+                
+            </ul>
             
             <li
             class="sidebar-item active  has-sub">
@@ -180,6 +212,8 @@ if (isset($_GET["ubah"])) {
     </div>
 </div>
         </div>
+
+
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -218,7 +252,7 @@ if (isset($_GET["ubah"])) {
         </nav>
       </div>
     </div>
-  </div>
+  </div> 
 
   <!-- // Basic multiple Column Form section start -->
   <section id="multiple-column-form">
@@ -255,9 +289,12 @@ if (isset($_GET["ubah"])) {
                 <input type="hidden" name="lokasi" value="">
                  <input type="hidden" name="teknisi" value="">
                  <input type="hidden" name="id_barang" id="id_barang">
+
+
+
                 <div class="row">
                 <div class="col-md-6 col-12">
-        <div class="">
+        <div class="form-group">
             <?php if (isset($_GET["status"]) && $_GET["status"] === 'keluar') { ?>
                 <label for="tanggal_keluar" class="form-label">Tanggal Keluar</label>
                 <input type="date" id="tanggal_keluar" class="form-control" name="tanggal_keluar">
@@ -269,37 +306,47 @@ if (isset($_GET["ubah"])) {
             <?php } ?>
         </div>
     </div>
-                  
-                  <!-- hapus ID Barang -->
+</div>
 
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="nama_barang" class="form-label">Nama Barang</label>
-                      <input
-                        type="text"
-                        id="nama_barang"
-                        class="form-control"
-                        placeholder="Nama Barang"
-                        name="nama_barang"
-                        value="<?php echo $nama_barang; ?>"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="jenis_peralatan" class="form-label"
-                        >Jenis Peralatan</label
-                      >
-                      <input
-                        type="text"
-                        id="jenis_peralatan"
-                        class="form-control"
-                        name="jenis_peralatan"
-                        placeholder="Jenis Peralatan"
-                        value="<?php echo $jenis_peralatan; ?>"
-                      />
-                    </div>
-                  </div>
+          <div class="row">
+          <div class="col-md-6 col-12">
+              <div class="form-group">
+                  <label for="nama_barang" class="form-label">Nama Barang</label>
+                  <select id="nama_barang" class="form-control" name="nama_barang">
+                      <option value="">Pilih Nama Barang</option>
+                      <?php
+                      $sql = "SELECT namabarang FROM datanama";
+                      $result = $conn->query($sql);
+
+                      // If data is found, generate dropdown options
+                      if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                              echo "<option value='" . $row['namabarang'] . "'>" . $row['namabarang'] . "</option>";
+                          }
+                      }
+                      ?>
+                  </select>
+              </div>
+          </div>
+          <div class="col-md-6 col-12">
+              <div class="form-group">
+                  <label for="jenis_peralatan" class="form-label">Jenis Peralatan</label>
+                  <select id="jenis_peralatan" class="form-control" name="jenis_peralatan">
+                      <option value="">Pilih Jenis Peralatan</option>
+                      <?php
+                      $sql = "SELECT jenisperalatan FROM jenisnama";
+                      $result = $conn->query($sql);
+
+                      // If data is found, generate dropdown options
+                      if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                              echo "<option value='" . $row['jenisperalatan'] . "'>" . $row['jenisperalatan'] . "</option>";
+                          }
+                      }
+                      ?>
+                  </select>
+              </div>
+          </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
                       <label for="merk" class="form-label"
@@ -448,11 +495,28 @@ if (isset($_GET["ubah"])) {
         <div class="float-start">
             <p>2024 &copy; Stasiun Geofisika Sleman</p>
         </div>
-        <div class="float-end">
-            <p> <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
+        <div class="float-end" id="footerText">
+            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
         </div>
     </div>
 </footer>
+
+<script>
+    // Function to hide footer text on small screens
+    function toggleFooterText() {
+        var footerText = document.getElementById('footerText');
+        if (window.innerWidth <= 768) { // Change the width condition as needed
+            footerText.style.display = 'none';
+        } else {
+            footerText.style.display = 'block';
+        }
+    }
+
+    // Call the function on page load and when the window is resized
+    window.onload = toggleFooterText;
+    window.onresize = toggleFooterText;
+</script>
+
         </div>
     </div>
     <script src="assets/static/js/components/dark.js"></script>

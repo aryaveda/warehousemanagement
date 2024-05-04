@@ -66,18 +66,31 @@ if (
 
     
     <script src="assets/static/js/initTheme.js"></script>
-    <script>
-        window.onload = function() {
-            document.getElementById('toggle-dark').addEventListener('click', function() {
-                var logo = document.querySelector('.logoBMKG img');
-                if (this.checked) {
-                    logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
-                } else {
-                    logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
-                }
-            });
-        };
-    </script>
+    <script src="assets/static/js/initTheme.js"></script>
+<script>
+    window.onload = function() {
+        var logo = document.querySelector('.logoBMKG img');
+        var toggleDark = document.getElementById('toggle-dark');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+            }
+            // Reload the page only if dark theme is selected
+            if (!this.checked) {
+                location.reload();
+            }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
+        }
+    };
+</script>
+
     <div id="app">
         
         <div id="sidebar">
@@ -436,16 +449,6 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
 
 </div>
 
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2024 &copy; Stasiun Geofisika Sleman</p>
-        </div>
-        <div class="float-end">
-            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
-        </div>
-    </div>
-</footer>
         </div>
     </div>
     <script src="assets/static/js/components/dark.js"></script>
