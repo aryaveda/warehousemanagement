@@ -297,22 +297,22 @@ if (isset($_GET["ubah"])) {
         <div class="form-group">
             <?php if (isset($_GET["status"]) && $_GET["status"] === 'keluar') { ?>
                 <label for="tanggal_keluar" class="form-label">Tanggal Keluar</label>
-                <input type="date" id="tanggal_keluar" class="form-control" name="tanggal_keluar">
+                <input type="date" id="tanggal_keluar" class="form-control" name="tanggal_keluar" required>
             <?php } else { ?>
                 <label for="tanggal" class="form-label">Tanggal Masuk</label>
-                <input type="date" id="tanggal" class="form-control" name="tanggal">
+                <input type="date" id="tanggal" class="form-control" name="tanggal" required>
                 <input type="hidden" name="tanggal_keluar" value="">
 
             <?php } ?>
         </div>
     </div>
 </div>
-
+                
           <div class="row">
-          <div class="col-md-6 col-12">
-              <div class="form-group">
-                  <label for="nama_barang" class="form-label">Nama Barang</label>
-                  <select id="nama_barang" class="form-control" name="nama_barang">
+            <div class="col-md-6 col-12">
+                                <h6>Nama Barang</h6>
+                                <div class="form-group position-relative has-icon-right">
+                                <select id="nama_barang" class="form-control" name="nama_barang" class="form-select" required>
                       <option value="">Pilih Nama Barang</option>
                       <?php
                       $sql = "SELECT namabarang FROM datanama";
@@ -322,16 +322,21 @@ if (isset($_GET["ubah"])) {
                       if ($result->num_rows > 0) {
                           while ($row = $result->fetch_assoc()) {
                               echo "<option value='" . $row['namabarang'] . "'>" . $row['namabarang'] . "</option>";
+                              
                           }
                       }
                       ?>
                   </select>
-              </div>
-          </div>
-          <div class="col-md-6 col-12">
-              <div class="form-group">
-                  <label for="jenis_peralatan" class="form-label">Jenis Peralatan</label>
-                  <select id="jenis_peralatan" class="form-control" name="jenis_peralatan">
+                                    <div class="form-control-icon">
+                                    <i class="bi bi-caret-down-fill"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <h6>Jenis Peralatan</h6>
+                                <div class="form-group position-relative has-icon-right">
+                                <select id="jenis_peralatan" class="form-control" name="jenis_peralatan" required>
                       <option value="">Pilih Jenis Peralatan</option>
                       <?php
                       $sql = "SELECT jenisperalatan FROM jenisnama";
@@ -345,8 +350,13 @@ if (isset($_GET["ubah"])) {
                       }
                       ?>
                   </select>
-              </div>
-          </div>
+                                    <div class="form-control-icon">
+                                    <i class="bi bi-caret-down-fill"></i>
+
+                                    </div>
+                                </div>
+                            </div>
+          
                   <div class="col-md-6 col-12">
                     <div class="form-group">
                       <label for="merk" class="form-label"
@@ -359,6 +369,7 @@ if (isset($_GET["ubah"])) {
                         name="merk"
                         placeholder="Merk"
                         value="<?php echo $merk; ?>"
+                        required
 
                                     
                       />
@@ -376,6 +387,7 @@ if (isset($_GET["ubah"])) {
                         name="sn"
                         placeholder="Serial Number"
                         value="<?php echo $sn; ?>"
+                        required
                       />
                     </div>
                   </div>
@@ -391,6 +403,7 @@ if (isset($_GET["ubah"])) {
                         name="asal_perolehan"
                         placeholder="Asal Perolehan"
                         value="<?php echo $asal_perolehan; ?>"
+                        required
                         
                       />
                     </div>
@@ -408,7 +421,7 @@ if (isset($_GET["ubah"])) {
                         name="harga"
                         placeholder="Harga Barang"
                         value="<?php echo $harga; ?>"
-                        
+                        required
                       />
                     </div>
                   </div>
@@ -437,7 +450,7 @@ if (isset($_GET["ubah"])) {
                   <div class="col-md-6 col-12">
                   <div class="form-group">
     <label for="file" class="form-label">File Tambahan</label>
-    <input type="file" id="file" class="form-control" name="file" placeholder="File Tambahan"/>
+    <input type="file" id="file" class="form-control" name="file" placeholder="File Tambahan" onchange="validateFileSize1(this)"/>
 </div>
 
                   </div>
@@ -454,7 +467,8 @@ if (isset($_GET["ubah"])) {
     name="keterangan"
     placeholder="Keterangan"
     rows="3"
-><?php echo isset($keterangan) ? $keterangan : ''; ?></textarea>
+><?php echo isset($keterangan) ? $keterangan : '';?></textarea>
+
 
                     </div>
                   </div>
@@ -490,16 +504,6 @@ if (isset($_GET["ubah"])) {
 </div>            
 
 
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2024 &copy; Stasiun Geofisika Sleman</p>
-        </div>
-        <div class="float-end" id="footerText">
-            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
-        </div>
-    </div>
-</footer>
 
 <script>
     // Function to hide footer text on small screens
@@ -545,6 +549,14 @@ if (isset($_GET["ubah"])) {
 function validateFileSize(input) {
     if (input.files[0].size > 5 * 1024 * 1024) { // 5MB in bytes
         alert("Maximum file size allowed is 5MB");
+        input.value = ''; // Clear the input field
+    }
+}
+</script>
+<script>
+function validateFileSize1(input) {
+    if (input.files[0].size > 20 * 1024 * 1024) { // 5MB in bytes
+        alert("Maximum file size allowed is 20MB");
         input.value = ''; // Clear the input field
     }
 }

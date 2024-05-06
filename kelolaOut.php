@@ -27,15 +27,41 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 
 <body>
     <script src="assets/static/js/initTheme.js"></script>
-    <div id="app">
+    <script src="assets/static/js/initTheme.js"></script>
+    <script>
+    window.onload = function() {
+        var logo = document.querySelector('.logoBMKG img');
+        var toggleDark = document.getElementById('toggle-dark');
+
+        toggleDark.addEventListener('click', function() {
+            if (this.checked) {
+                logo.src = './assets/compiled/png/logo.png'; // Change to your dark logo path
+            } else {
+                logo.src = './assets/compiled/png/logoblack.png'; // Change to your light logo path
+            }
+            // Reload the page only if dark theme is selected
+            if (!this.checked) {
+                location.reload();
+            }
+        });
+
+        // Check the initial theme setting on page load
+        if (!toggleDark.checked) {
+            logo.src = './assets/compiled/png/logoblack.png'; // Set the initial logo based on light theme
+        }
+    };
+</script>
+<div id="app">
+        
         <div id="sidebar">
-            <div class="sidebar-wrapper active">
-    <div class="sidebar-header position-relative">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-            <a href="index.php"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
+            <div class="sidebar-wrapper">
+                
+    <div class="sidebar-header position-relative m-0">
+        <div class="justify-content-between align-items-center">
+            <div class="logoBMKG">
+                <a href="index.php"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
             </div>
-            <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+            <div class="theme-toggle d-flex gap-2  align-items-center mt-4">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                     role="img" class="iconify iconify--system-uicons" width="20" height="20"
                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -63,7 +89,7 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     </path>
                 </svg>
             </div>
-            <div class="sidebar-toggler  x">
+            <div class="sidebar-toggler x">
                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
             </div>
         </div>
@@ -203,19 +229,19 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                         <input type="hidden" value="<?php echo $result["id"]; ?>" name="id">
     <div class="form-group">
         <label for="tanggal" class="form-label">Tanggal Keluar</label>
-        <input type="date" name="tanggal_keluar" id="tanggal_keluar" class="form-control" placeholder="Tanggal Keluar">
+        <input type="date" name="tanggal_keluar" id="tanggal_keluar" class="form-control" placeholder="Tanggal Keluar" required>
     </div>
     <div class="form-group">
         <label for="lokasi" class="form-label">Lokasi Tujuan</label>
-        <input type="text" name="lokasi" id="lokasi" class="form-control" placeholder="Lokasi Tujuan">
+        <input type="text" name="lokasi" id="lokasi" class="form-control" placeholder="Lokasi Tujuan" required>
     </div>
     <div class="form-group">
         <label for="teknisi" class="form-label">Teknisi Penanggungjawab</label>
-        <input type="text" name="teknisi" id="teknisi" class="form-control" placeholder="Nama Teknisi">
+        <input type="text" name="teknisi" id="teknisi" class="form-control" placeholder="Nama Teknisi" required>
     </div>
     <div class="form-group">
         <label for="keterangan" class="form-label">Keterangan</label>
-        <input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan">
+        <input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan" required>
     </div>
     <div class="row">
         <div class="col-12 d-flex justify-content-end">
@@ -242,17 +268,6 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     </section>
 </div>
     
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2024 &copy; Stasiun Geofisika Sleman</p>
-        </div>
-        <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
-        </div>
-    </div>
-</footer>
         </div>
     </div>
     <script src="assets/static/js/components/dark.js"></script>

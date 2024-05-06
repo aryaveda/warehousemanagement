@@ -258,13 +258,13 @@ if (
                 <button id="btnExcel" class="btn icon icon-left btn-success"><i class="bi bi-file-earmark-excel"></i> Download Excel</button>
                 <button id="btnPDF" class="btn icon icon-left btn-danger"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
                 </div>
-
+                
                 
                 <!-- FILTER DISINI WOOII-->
-                <div class="container">
+                <div class="container card-body">
                     <div class="row">
                     <form class="form" method="POST" action="">
-                    <div class="col-6 col-md-4">
+                    <div class="col-6 ">
                         <div class="form-group">
                         <label>Date:</label>
                         <input type="date" class="form-control" placeholder="Start"  name="date1" value="<?php echo isset(
@@ -275,7 +275,7 @@ if (
                         </div>
                     </div>
     
-                    <div class="col-6 col-md-4">
+                    <div class="col-6 ">
                         <div class="form-group">
                         <label>To</label>
             <input type="date" class="form-control" placeholder="End"  name="date2" value="<?php echo isset(
@@ -286,7 +286,7 @@ if (
                         </div>
                     </div>
           
-            <div class="col-sm">
+            <div class="col-6">
                 <label>Status Barang</label>
     
                 <select name="status" class="form-select">
@@ -303,6 +303,7 @@ if (
                         : ""; ?> >Barang Keluar</option>
                 </select>
             </div>
+            <br>
             <button class="btn btn-primary" name="search"><span class="bi bi-search"></span></button> 
             <a href="index.php" type="button" class="btn btn-success"><span class="bi bi-arrow-clockwise"></span></a>
         </form>
@@ -325,7 +326,6 @@ if (
             <th>Tanggal Masuk</th>
             <th>Tanggal Keluar</th>
             <th>QR Code</th>
-            <th>ID Barang</th>
             <th>Nama Barang</th>
             <th>Jenis Peralatan</th>
             <th>Merk</th>
@@ -351,7 +351,8 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
 
     <td style="background-color: #F2F7FF;">
     <?php
-    $qrcode = "infoBarang.php?id_barang=" . $row["id_barang"];
+        $qrcode = "192.168.1.154/whm/infoBarang.php?id_barang=" . $row["id_barang"];
+
 
     require_once "phpqrcode/qrlib.php";
     $qrsaved = "qr temp/";
@@ -369,7 +370,6 @@ while ($row = mysqli_fetch_assoc($result)) { ?>
 ]; ?>.png" alt="">
     </a>
 </td>
-    <td><?php echo $row["id_barang"]; ?></td>
     <td><?php echo $row["nama_barang"]; ?></td>
     <td><?php echo $row["jenis_peralatan"]; ?></td>
     <td><?php echo $row["merk"]; ?></td>

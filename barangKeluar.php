@@ -235,8 +235,6 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                     <table class="table" id="table1">
                     <thead>
     <tr>
-    <th>ID Barang</th>
-
         <th>Tanggal Keluar</th>
         <th>QR Code</th>
         <th>Nama Barang</th>
@@ -258,13 +256,12 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
         if ($result["status"] === 'keluar') { 
     ?>
     <tr>
-    <td><?php echo $result["id_barang"]; ?></td>
-
     <td><?php echo !empty($result["tanggal_keluar"]) ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
 
         <td style="background-color: #F2F7FF;">
     <?php 
-    $qrcode = "infoBarang.php?id_barang=" . $result["id_barang"];
+        $qrcode = "192.168.1.154/whm/infoBarang.php?id_barang=" . $result["id_barang"];
+
 
     require_once("phpqrcode/qrlib.php");
     $qrsaved = "qr temp/";

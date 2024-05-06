@@ -239,8 +239,6 @@
                             <thead>
                                 <tr>
                                     <!-- <th>No</th> -->
-                                    <th>ID Barang</th>
-
                                     <th>Tanggal Masuk</th>
                                     <th>QR Code</th>
                                 
@@ -263,7 +261,6 @@
             if ($result["status"] === 'masuk') { 
         ?>
     <tr>
-            <td><?php echo $result["id_barang"]; ?></td>
 
         <td>
             <?php 
@@ -280,7 +277,7 @@
         <td style="background-color: #F2F7FF;">
             <?php 
 
-        $qrcode = "infoBarang.php?id_barang=" . $result["id_barang"];
+        $qrcode = "192.168.1.154/whm/infoBarang.php?id_barang=" . $result["id_barang"];
 
         require_once("phpqrcode/qrlib.php");
         $qrsaved = "qr temp/";
@@ -302,12 +299,16 @@
             <td>
                 <?php 
                 $fileName = $result["file"];
+                // Determine the display name (truncate if too long)
                 if (strlen($fileName) > 20) {
-                    $fileName = substr($fileName, 0, 12) . '...'; // Limiting to 20 characters and adding ellipsis
+                    $fileNameDisplay = substr($fileName, 0, 12) . '...';
+                } else {
+                    $fileNameDisplay = $fileName;
                 }
                 ?>
                 <img src="./uploads/<?php echo $result["file"]; ?>" alt="File Preview" style="max-width: 100px; max-height: 100px;">
-                <a href="./uploads/<?php echo $result["file"]; ?>" download><?php echo $fileName; ?></a>
+                <!-- Append the unique identifier to the file name -->
+                <a href="./uploads/<?php echo $result["file"]; ?>" download="<?php echo $fileName; ?>"><?php echo $fileNameDisplay; ?></a>
             </td>
             <td>
             <button class="btn icon btn-secondary me-1 aksi button" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
@@ -516,3 +517,5 @@
 </script> 
         </body>
     </html>
+
+    <script> confirmDelete" "

@@ -95,6 +95,28 @@ $sql = mysqli_query($conn, $query);
                 
 
             </li>
+            <li
+            class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+            <i class="bi bi-database"></i>
+                <span>Data Master</span>
+            </a>
+            
+            <ul class="submenu ">
+                
+                <li class="submenu-item  ">
+                    <a href="namaBarang.php" class="submenu-link">Nama Barang</a>
+                    
+                </li>
+                
+                <li class="submenu-item  ">
+                    <a href="jenisPeralatan.php" class="submenu-link">Jenis Peralatan</a>
+                    
+                </li>
+                
+                
+                
+            </ul>
             
         
             
@@ -206,10 +228,6 @@ if (isset($_GET["ubah"])) {
                     <table class="table" id="table1">
                         <thead>
                             <tr>
-                                <!-- <th>No</th> -->
-                                <!-- <th>Tanggal</th> -->
-                                <!-- <th>QR Code</th> -->
-                                <th>ID Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jenis Peralatan</th>
                                 <th>Merk</th>
@@ -228,9 +246,6 @@ if (isset($_GET["ubah"])) {
         if ($result["status"] === 'masuk') { // Check if the status is 'masuk'
     ?>
     <tr>
-        
-
-        <td><?php echo $result["id_barang"]; ?></td>
         <td><?php echo $result["nama_barang"]; ?></td>
         <td><?php echo $result["jenis_peralatan"]; ?></td>
         <td><?php echo $result["merk"]; ?></td>
@@ -259,17 +274,6 @@ if (isset($_GET["ubah"])) {
   <!-- // Basic multiple Column Form section end -->
 </div>            
 
-
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2024 &copy; Stasiun Geofisika Sleman</p>
-        </div>
-        <div class="float-end">
-            <p><a href="#"> Tim MBKM BMKG Stasiun Geofisika Sleman</a></p>
-        </div>
-    </div>
-</footer>
         </div>
     </div>
     <script src="assets/static/js/components/dark.js"></script>

@@ -2,32 +2,43 @@
 include "koneksi.php";
 include "auth.php";
 
-
 $query = "SELECT idjenis, jenisperalatan FROM jenisnama"; // Fetch both idbarang and namabarang
 $sql = mysqli_query($conn, $query);
 
 // Check if form is submitted for adding new data
-if(isset($_POST['submit2'])){
-    $jenisperalatan = $_POST['jenisperalatan'];
- 
+if (isset($_POST["submit"])) {
+    $jenisperalatan = $_POST["jenisperalatan"];
+
     $query = "INSERT INTO jenisnama (jenisperalatan) VALUES ('$jenisperalatan')";
     mysqli_query($conn, $query);
-    header("Location: ".$_SERVER['PHP_SELF']); // Redirect to avoid form resubmission
-    exit;
+    header("Location: " . $_SERVER["PHP_SELF"]); // Redirect to avoid form resubmission
+    exit();
 }
 
-if(isset($_GET['delete'])){
-    $id = $_GET['delete']; // Get the idbarang from the URL parameter
+$sql2 = "SELECT jenisperalatan FROM jenisnama";
+$result = $conn->query($sql2);
+
+// Array to store existing values
+$existingValues = array();
+
+// Check if there are any existing values
+if ($result->num_rows > 0) {
+    // Loop through each row and add namabarang to the array
+    while($row = $result->fetch_assoc()) {
+        $existingValues[] = $row["jenisperalatan"];
+    }
+} 
+
+if (isset($_GET["delete"])) {
+    $id = $_GET["delete"]; // Get the idbarang from the URL parameter
     $query = "DELETE FROM jenisnama WHERE idjenis = ?"; // Use prepared statement
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("Location: ".$_SERVER['PHP_SELF']); // Redirect to avoid form resubmission
-    exit;
+    header("Location: " . $_SERVER["PHP_SELF"]); // Redirect to avoid form resubmission
+    exit();
 }
-
-
 ?>
 
 <head>
@@ -49,6 +60,7 @@ if(isset($_GET['delete'])){
 </head>
 
 <body>
+<script src="assets/static/js/initTheme.js"></script>
 <script src="assets/static/js/initTheme.js"></script>
 <script>
     window.onload = function() {
@@ -187,18 +199,16 @@ if(isset($_GET['delete'])){
   <div class="page-title">
     <div class="row">
     <div class="col-12 col-md-6 order-md-1 order-last">
-    <?php
-    if (isset($_GET['status'])) {
-        $status = $_GET['status'];
-        if ($status === 'masuk') {
-            echo '<h3>Data Barang Masuk</h3>';
-        } elseif ($status === 'keluar') {
-            echo '<h3>Data Barang Keluar</h3>';
+    <?php if (isset($_GET["status"])) {
+        $status = $_GET["status"];
+        if ($status === "masuk") {
+            echo "<h3>Data Barang Masuk</h3>";
+        } elseif ($status === "keluar") {
+            echo "<h3>Data Barang Keluar</h3>";
         }
     } else {
-        echo '<h3>Data Barang</h3>';
-    }
-    ?>
+        echo "<h3>Jenis Peralatan</h3>";
+    } ?>
 </div>
       <div class="col-12 col-md-6 order-md-2 order-first">
         <nav
@@ -220,14 +230,12 @@ if(isset($_GET['delete'])){
   <!-- // Basic multiple Column Form section start -->
   <section id="multiple-column-form">
     <div class="row match-height">
-        <div class="col-12">
+        <!-- <div class="col-12"> -->
             <div class="card">
-                <div class="card-header">
-                </div>
                 <div class="card-content">
                     <div class="card-body">
-                    <!-- Bagian form untuk menambahkan data -->
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="form" enctype="multipart/form-data">
+                        <!-- Form to add data -->
+                        <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>" class="form" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6 col-12">
             <div class="form-group">
@@ -236,16 +244,18 @@ if(isset($_GET['delete'])){
                     type="text"
                     id="jenisperalatan"
                     class="form-control"
-                    placeholder="Nama Barang"
+                    placeholder="Masukkan Jenis Peralatan"
                     name="jenisperalatan"
-                    value="<?php echo isset($jenisperalatan) ? $jenisperalatan : ''; ?>"
+                    value="<?php echo isset($jenisperalatan) ? $jenisperalatan : ""; ?>"
+                    required 
                 />
+                <span id="error-message" style="color: red;"></span>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <button type="submit" name="submit2" class="btn icon icon-left btn-primary me-1 mb-1">
+            <button type="submit" name="submit" class="btn icon icon-left btn-primary me-1 mb-1" onclick="return validateForm()">
                 <i data-feather="save"></i>
                 Tambahkan
             </button>
@@ -253,50 +263,52 @@ if(isset($_GET['delete'])){
     </div>
 </form>
 
-<!-- Bagian tabel untuk menampilkan data -->
-<div class="table-responsive">
-    <table class="table" id="table1">
-        <thead>
-            <tr>
-                <th>Nama Barang</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-<?php
-    while ($result = mysqli_fetch_assoc($sql)) {
-?>
-    <tr>
-        <td><?php echo $result["jenisperalatan"]; ?></td>
-        <td>
-            <a href="#" onclick="confirmDelete('<?php echo $result["idjenis"]; ?>', 'jenisPeralatan.php')" class="btn icon btn-danger aksi-buttons">
-                <i class="bi bi-trash"></i>
-            </a>
-        </td>
-    </tr>
-<?php
+<script>
+    function validateForm() {
+        var input = document.getElementById("jenisperalatan").value;
+        var existingValues = <?php echo json_encode($existingValues); ?>; // Replace $existingValues with your array of existing values
+        
+        // Check if the input value already exists in the array
+        if (existingValues.includes(input)) {
+            document.getElementById("error-message").innerText = "Jenis peralatan ini sudah ada. Mohon masukkan nama lain";
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
     }
-?>
+</script>
 
 
 
-        </tbody>
-    </table>
-</div>
-
-</div>
-
-
-
+                        <!-- Table to display data -->
+                        <div class="table-responsive">
+                            <table class="table" id="table1">
+                                <thead>
+                                    <tr>
+                                        <th>Jenis Peralatan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($result = mysqli_fetch_assoc($sql)) { ?>
+                                        <tr>
+                                            <td><?php echo $result["jenisperalatan"]; ?></td>
+                                            <td>
+                                                <a href="#" onclick="confirmDelete('<?php echo $result["idjenis"]; ?>', 'jenisPeralatan.php')" class="btn icon btn-danger aksi-buttons">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                
-              </form>
             </div>
-          </div>
-        </div>
-      </div>
+        <!-- </div> -->
     </div>
-  </section>
+</section>
+
   <!-- // Basic multiple Column Form section end -->
 </div>            
 

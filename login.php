@@ -81,11 +81,7 @@ if(isset($_POST['login'])){
   <link rel="stylesheet" crossorigin href="./assets/compiled/css/app.css">
   <link rel="stylesheet" crossorigin href="./assets/compiled/css/app-dark.css">
   <link rel="stylesheet" crossorigin href="./assets/compiled/css/auth.css">
-  <style>
-    body {
-        background-color: #2596be; /* Set your desired background color */
-    }
-</style>
+
 
 </head>
 
@@ -96,12 +92,13 @@ if(isset($_POST['login'])){
 <div class="row h-100">
     <div class="col-lg-5 col-12">
         <div id="auth-left">
-        <div class="auth-logo">
-    <a href="index.php"><img src="assets/compiled/png/logo.png" alt="Logo" style="width: 300px; height: auto;"></a>
+        <div class="">
+    <!-- <a href="index.php"><img src="assets/compiled/png/logo.png" alt="Logo" style="width: 300px; height: auto;"></a> -->
 </div>
 
-            <h1 class="auth-title">Login</h1>
-            <p class="auth-subtitle mb-5">Login untuk mengakses database barang</p>
+
+            <h5 class="auth-title mt-5">Login</h5>
+            <p class="auth-subtitle mb-5">Warehouse Management BMKG</p>
             <!-- PERINGATAN ERROR -->
             <?php if($err){ ?>
                     <div id="login-alert" class="alert alert-danger col-sm-12">
@@ -125,7 +122,7 @@ if(isset($_POST['login'])){
                 </div>
                 <!-- INGAT AKU -->
                 <div class="form-check form-check-lg d-flex align-items-end">
-                <input id="flexCheckDefault" class="form-check-input me-2" type="checkbox" name="ingataku" value="1" <?php if($ingataku == '1') echo "checked"?>> Ingat Aku
+                <input id="flexCheckDefault" class="form-check-input me-2" type="checkbox" name="ingataku" value="1" <?php if($ingataku == '1') echo "checked"?>> Ingat Saya
                     <!-- <input id="login-remember" name="ingataku" value="1" class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault"> -->
                     <label class="form-check-label text-gray-600" for="flexCheckDefault">
                     </label>
