@@ -282,7 +282,7 @@ while ($row = mysqli_fetch_assoc($resultKeluar)) {
     <div class="sidebar-header position-relative m-0">
         <div class="justify-content-between align-items-center">
             <div class="logoBMKG">
-                <a href="index.html"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
+                <a href="index.php"><img src="./assets/compiled/png/logo.png" alt="Logo" style="width: 240px; height: auto;" srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-4">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -386,6 +386,26 @@ while ($row = mysqli_fetch_assoc($resultKeluar)) {
             
 
         </li>
+
+        <li
+                class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-circle"></i>
+                    <span>Akun</span>
+                </a>
+                
+                <ul class="submenu">
+                    
+                    <li class="submenu-item ">
+                        <a href="akun.php" class="submenu-link">Keamanan</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
+
         <li class="sidebar-item">
             <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
                 <i class="bi bi-box-arrow-left"></i>

@@ -176,7 +176,24 @@
 
             </li>
 
-        
+            <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-circle"></i>
+                    <span>Akun</span>
+                </a>
+                
+                <ul class="submenu ">
+                    
+                    <li class="submenu-item  ">
+                        <a href="akun.php" class="submenu-link">Keamanan</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
             
                 
             <li class="sidebar-item">
@@ -275,20 +292,41 @@
             ?>
         </td>
         <td style="background-color: #F2F7FF;">
-            <?php 
+    <?php
+    // Assuming $result['id_barang'] contains the ID of the item
+    $id_barang = $result['id_barang'];
+    $qrContent = "192.168.1.132/whm/infoBarang.php?id_barang=$id_barang";
+    ?>
+    <!-- Create a div to hold the QR code -->
+    <div id="qrcode<?php echo $id_barang; ?>"></div>
 
-        $qrcode = "192.168.1.154/whm/infoBarang.php?id_barang=" . $result["id_barang"];
+    <!-- Include the qrcode.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@latest/qrcode.min.js"></script>
 
-        require_once("phpqrcode/qrlib.php");
-        $qrsaved = "qr temp/";
-        QRCode::png("$qrcode", $qrsaved . "qrcode" . $result['id_barang'] . ".png", "M", 4, 4);
-        ?>
-        <a href="infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
-            <img src="<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png" alt="">
-        </a>
-    </td>
+    <!-- Generate QR code -->
+    <script>
+        // Content to be encoded in the QR code
+        var qrContent = "<?php echo $qrContent; ?>";
 
-            <td><?php echo $result["nama_barang"]; ?></td>
+        // Get the div element where the QR code will be displayed
+        var qrcodeDiv = document.getElementById("qrcode<?php echo $id_barang; ?>");
+
+        // Generate QR code
+        new QRCode(qrcodeDiv, {
+            text: qrContent,
+            width: 128,
+            height: 128
+        });
+    </script>
+
+    <!-- Display the QR code as an image -->
+    <a href="infoBarang.php?id_barang=<?php echo $result["id_barang"]; ?>">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=<?php echo urlencode($qrContent); ?>&size=100x100" alt="QRCode" style="max-width: 100px; max-height: 100px;">
+</td>
+
+
+            <td><?php echo $result["nama_barang"]; 
+            $nama_barang = $result['nama_barang'];?></td>
             <td><?php echo $result["jenis_peralatan"]; ?></td>
             <td><?php echo $result["merk"]; ?></td>
             <td><?php echo $result["sn"]; ?></td>
@@ -311,7 +349,7 @@
                 <a href="./uploads/<?php echo $result["file"]; ?>" download="<?php echo $fileName; ?>"><?php echo $fileNameDisplay; ?></a>
             </td>
             <td>
-            <button class="btn icon btn-secondary me-1 aksi button" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData('<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png', '<?php echo $result['nama_barang']; ?>')">
+            <button class="btn icon btn-secondary me-1 aksi button" data-bs-toggle="modal" data-bs-target="#modalPrintQR" onclick="setQRCodeData()">
             <i class="bi bi-qr-code-scan"></i></a></button>
             <a href="kelola.php?ubah=<?php echo $result["id"]; ?>&status=masuk" type="button" class="btn icon btn-primary me-1 aksi-buttons">
                 <i class="bi bi-pencil"></i>
@@ -360,35 +398,35 @@
     </div>
 </div>
 
-
 <script>
-    var qrCodeData = {};
-
-    function setQRCodeData(imageSrc, productName) {
-            qrCodeData.imageSrc = imageSrc;
-            qrCodeData.productName = productName;
-        }
-
-        function printQRCode() {
-        var jumlahQR = document.getElementById('jumlahQR').value; 
-        var imageSrc = qrCodeData.imageSrc;
-        var productName = qrCodeData.productName;
-        
+    function printQRCode() {
+        var nama_barang = "<?php echo $nama_barang; ?>";
         var printWindow = window.open('', '_blank');
-        printWindow.document.write('<html><head><title>Print QR Code</title></head><body>');
+        printWindow.document.write('<html><head><title>' + nama_barang + '</title></head><body>');
 
+        // Loop to add QR codes to print window
         for (var i = 0; i < jumlahQR; i++) {
-            printWindow.document.write('<img src="' + imageSrc + '">');
+            // Content to be encoded in the QR code
+            var qrContent = "<?php echo $qrContent; ?>";
+
+            // Generate QR code
+            var qrcodeDiv = document.createElement("div");
+            qrcodeDiv.id = "qrcode" + i; // Set unique id for each QR code
+            printWindow.document.body.appendChild(qrcodeDiv);
+
+            new QRCode(qrcodeDiv, {
+                text: qrContent,
+                width: 128,
+                height: 128
+            });
         }
-        
-        printWindow.document.write('</body></html>');
+
         printWindow.document.close();
         printWindow.print();
         printWindow.close();
         location.reload();
     }
 </script>
-
 
             <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
                                                 aria-labelledby="myModalLabel120" aria-hidden="true">

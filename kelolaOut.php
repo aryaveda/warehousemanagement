@@ -140,7 +140,24 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 
         <!-- <li class="sidebar-title active">Informasi</li> -->
             
-        
+        <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-circle"></i>
+                    <span>Akun</span>
+                </a>
+                
+                <ul class="submenu ">
+                    
+                    <li class="submenu-item  ">
+                        <a href="akun.php" class="submenu-link">Keamanan</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
         <li class="sidebar-item">
             <a id="background" href="logout.php" class="btn btn-outline-danger btn-block">
                 <i class="bi bi-box-arrow-left"></i>

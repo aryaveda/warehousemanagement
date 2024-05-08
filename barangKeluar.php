@@ -174,6 +174,25 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 
         </li>
 
+        <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-person-circle"></i>
+                    <span>Akun</span>
+                </a>
+                
+                <ul class="submenu ">
+                    
+                    <li class="submenu-item  ">
+                        <a href="akun.php" class="submenu-link">Keamanan</a>
+                        
+                    </li>
+                    
+                </ul>
+                
+
+            </li>
+
        
            
             
@@ -258,19 +277,39 @@ $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
     <tr>
     <td><?php echo !empty($result["tanggal_keluar"]) ? (new DateTime($result["tanggal_keluar"]))->format("d-m-Y") : "-"; ?></td>
 
-        <td style="background-color: #F2F7FF;">
-    <?php 
-        $qrcode = "192.168.1.154/whm/infoBarang.php?id_barang=" . $result["id_barang"];
-
-
-    require_once("phpqrcode/qrlib.php");
-    $qrsaved = "qr temp/";
-    QRCode::png("$qrcode", $qrsaved . "qrcode" . $result['id_barang'] . ".png", "M", 4, 4);
+    <td style="background-color: #F2F7FF;">
+    <?php
+    // Assuming $result['id_barang'] contains the ID of the item
+    $id_barang = $result['id_barang'];
+    $qrContent = "192.168.1.154/whm/infoBarang.php?id_barang=$id_barang";
     ?>
-    <a href="infoBarang.php?id_barang=<?php echo $result['id_barang']; ?>">
-        <img src="<?php echo $qrsaved; ?>qrcode<?php echo $result['id_barang']; ?>.png" alt="">
-    </a>
+    <!-- Create a div to hold the QR code -->
+    <div id="qrcode<?php echo $id_barang; ?>"></div>
+
+    <!-- Include the qrcode.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@latest/qrcode.min.js"></script>
+
+    <!-- Generate QR code -->
+    <script>
+        // Content to be encoded in the QR code
+        var qrContent = "<?php echo $qrContent; ?>";
+
+        // Get the div element where the QR code will be displayed
+        var qrcodeDiv = document.getElementById("qrcode<?php echo $id_barang; ?>");
+
+        // Generate QR code
+        new QRCode(qrcodeDiv, {
+            text: qrContent,
+            width: 128,
+            height: 128
+        });
+    </script>
+
+    <!-- Display the QR code as an image -->
+    <a href="infoBarang.php?id_barang=<?php echo $result["id_barang"]; ?>">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=<?php echo urlencode($qrContent); ?>&size=100x100" alt="QRCode" style="max-width: 100px; max-height: 100px;">
 </td>
+
 
         <td><?php echo $result["nama_barang"]; ?></td>
         <td><?php echo $result["jenis_peralatan"]; ?></td>
